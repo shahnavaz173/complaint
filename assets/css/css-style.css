@@ -1,0 +1,102 @@
+body{
+	background-color: #FFF;
+}
+.navbar
+{
+	background-color: #775f37 !important;
+}
+.navbar-brand
+{
+	color: #FFF !important;
+}
+ul li a
+{
+	color: #FFF !important;
+	transition-duration:1s;
+}
+
+ul li a:hover
+{
+	color: #f0deb7 !important;
+}
+ul li a.active
+{
+	color: #f0deb7 !important;
+}
+.container-main
+{
+	padding:0px;
+	padding-bottom: 2em;
+}
+.container-login,.container-reg,.container-home,.assign-worker
+{
+	background-color: #eaeaea;
+	padding-bottom: 2em;
+}
+
+.jumbotron-main
+{
+	background-color: #95724f !important;
+	padding:1em;
+	text-align:center;
+}
+.jumbotron-main h1
+{
+	padding:0px;
+	color: #eaeaea;
+	margin:0px;
+	font-size:2em;
+}
+.jumbotron-box
+{
+	background-color: #775f37 !important;
+	padding:1em;
+	text-align:center;
+}
+
+.jumbotron-box h2
+{
+	padding:0px;
+	color: #FFF;
+	margin:0px;
+}
+.form-group label
+{
+	color:#333;
+}
+.container-box
+{
+	background-color: #FFF;
+	box-shadow: 0px 0px 6px 0px #000;
+	text-align: center;
+}
+table
+{
+	background-color: #FFF;
+}
+table tr td
+{
+	font-size:1.1em;
+	padding:0.2em 0.5em;
+}
+.form-buttons
+{
+	background-color: #95724f !important;
+	border: 1px solid #95724f !important;
+
+}
+.input-group
+{
+	border: 1px solid #ecdede !important;
+}
+.form-group .radio
+{
+	margin-left:2em;
+}
+footer
+{
+	margin-top: 1em;
+	padding:1em;
+	background-color: #95724f !important;
+	color:#FFF;
+}
