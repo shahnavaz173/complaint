@@ -148,5 +148,58 @@ $(document).ready(function()
 				$("#address").prop('disabled',false);
 		}
 	});
+<<<<<<< HEAD
 });
+=======
+});	/*$("#empnumber").change(function()
+	{
+		alert($(this).val());
+	});*/
+	function validateUnique(element)
+	{
+		alert("called");
+	/*	validateField(element);
+		var eventsource = $("#"+element.id);
+		var path;
+		var dataString='value='+eventsource.val();
+		switch(element.id)
+	  {
+	    case 'empnumber':
+				path='validate/ValidateUniqueEmpnumber';
+	    break;
+	    case '':
+				path='validate/ValidateUniqueEmail';
+	    break;
+	    case '':
+				path='validate/ValidateUniqueContact';
+	    break;
+	  }
+		$.ajax
+		({
+			type: "POST",
+			url:path,
+			data: dataString,
+			cache: false,
+			success: function(data)
+			{
+				if(data.localeCompare('success'))
+				{
+					eventsource.parentsUntil('.form-group').removeClass('has-error');
+			    eventsource.next('span').removeClass('glyphicon-warning-sign');
+			    eventsource.parentsUntil('.form-group').addClass('has-success');
+			    eventsource.next('span').addClass('glyphicon-ok');
+			    eventsource.parent().next('.validation-error').html(null);
+				}
+				else
+				{
+					eventsource.parentsUntil('.form-group').removeClass('has-success');
+			    eventsource.parentsUntil('.form-group').addClass('has-error');
+			    eventsource.next('span').addClass('glyphicon-warning-sign');
+			    eventsource.parent().next('.validation-error').html(data);
+			    eventsource.next('span').removeClass('glyphicon-ok');
+				}
+			}
+		})*/
+	}
+>>>>>>> 788b76bac5f444c724a09cc4f01b5648022a0d0b
 </script>
