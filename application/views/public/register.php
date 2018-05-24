@@ -42,7 +42,7 @@
 				<label for="empnumber">Enter Employee Number: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-pencil"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="en" ></p>
