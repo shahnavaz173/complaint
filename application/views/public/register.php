@@ -42,7 +42,7 @@
 				<label for="empnumber">Enter Employee Number: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-pencil"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="en" ></p>
@@ -148,9 +148,54 @@ $(document).ready(function()
 				$("#address").prop('disabled',false);
 		}
 	});
-
-});
-
-
-
+});	/*$("#empnumber").change(function()
+	{
+		alert($(this).val());
+	});*/
+	function validateUnique(element)
+	{
+		alert("called");
+	/*	validateField(element);
+		var eventsource = $("#"+element.id);
+		var path;
+		var dataString='value='+eventsource.val();
+		switch(element.id)
+	  {
+	    case 'empnumber':
+				path='validate/ValidateUniqueEmpnumber';
+	    break;
+	    case '':
+				path='validate/ValidateUniqueEmail';
+	    break;
+	    case '':
+				path='validate/ValidateUniqueContact';
+	    break;
+	  }
+		$.ajax
+		({
+			type: "POST",
+			url:path,
+			data: dataString,
+			cache: false,
+			success: function(data)
+			{
+				if(data.localeCompare('success'))
+				{
+					eventsource.parentsUntil('.form-group').removeClass('has-error');
+			    eventsource.next('span').removeClass('glyphicon-warning-sign');
+			    eventsource.parentsUntil('.form-group').addClass('has-success');
+			    eventsource.next('span').addClass('glyphicon-ok');
+			    eventsource.parent().next('.validation-error').html(null);
+				}
+				else
+				{
+					eventsource.parentsUntil('.form-group').removeClass('has-success');
+			    eventsource.parentsUntil('.form-group').addClass('has-error');
+			    eventsource.next('span').addClass('glyphicon-warning-sign');
+			    eventsource.parent().next('.validation-error').html(data);
+			    eventsource.next('span').removeClass('glyphicon-ok');
+				}
+			}
+		})*/
+	}
 </script>

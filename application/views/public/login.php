@@ -3,7 +3,6 @@
 			<h1>Login or Track Your Complaint</h1>
 		</div>
 	<div class="row">
-
 		<div class="col-md-4 col-md-offset-1" style="background-color:#FFF" >
 			<div class="row">
 				<div class="jumbotron jumbotron-box">

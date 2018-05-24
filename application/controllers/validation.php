@@ -3,6 +3,31 @@
 defined('BASEPATH') OR exit('Direct Script Access not Allowed!');
 class validation extends CI_Controller
 {
+  public function ValidateUniqueEmpnumber()
+  {
+      $this->load->library('form_validation');
+      $this->form_validation->set_rules('empnumber','Employee number','is_unique[user.emp_no]');
+      if($this->form_validation->run())
+      {
+        echo "success";
+      }
+      else
+      {
+        echo validation_errors();
+      }
+  }
+/*  public function ValidateUniqueEmail()
+  {
+      $this->load->library('form_validation');
+    //$empnumber = $this->input->post('empnumber');
+    $this->form_validation->set_rules('empnumber','Employee number','is_unique[user.emp_no]');
+  }
+  public function ValidateUniqueContact()
+  {
+      $this->load->library('form_validation');
+    //$empnumber = $this->input->post('empnumber');
+    $this->form_validation->set_rules('empnumber','Employee number','is_unique[user.emp_no]');
+  }*/
   public function Login()
   {
     $this->load->library('form_validation');
