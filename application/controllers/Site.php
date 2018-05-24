@@ -17,11 +17,11 @@ class Site extends CI_Controller
 			$data['islogin'] = FALSE;
 		}
 		if($page == 'register')
-		{	
+		{
 			$this->load->model('User');
 			$data['departments']=$this->User->get_department();
 		}
-		if($page == 'login')
+		else if($page == 'login')
 		{
 			if($this->session->userdata('user_id'))
 				$page = 'home';
@@ -32,8 +32,9 @@ class Site extends CI_Controller
 			if($this->session->userdata('check_login') == TRUE )
 				$data['logincheck'] = TRUE;
 		}
-		else if($page == 'adminhome' || $page == 'worker')
+		else if( $page == 'complaintregister')
 		{
+			$this->load->model('ComplaintModel');
 			$data['complain_caategory'] = $this->ComplaintModel->get_complaint_category();
 		}
 

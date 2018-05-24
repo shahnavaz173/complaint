@@ -29,7 +29,7 @@ class Login extends CI_Controller
   			redirect(base_url('login'));
   		}
     }
-    else if($utype == 'employee' || $utype == 'recident' || $utype == 'student')
+    else
     {
       $login_id = $this->LoginModel->user_login($logindata);
 

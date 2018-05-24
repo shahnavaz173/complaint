@@ -34,11 +34,12 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
 				<ul class="nav navbar-nav ">
 				<?php	if(strcmp($viewuser,'public') == 0): ?>
-					<li role = "presentation" ><a href = "<?=base_url(); ?>" <?php if($title=='Home'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-home">	</span> Home</a></li>
+						<li role = "presentation" ><a href = "<?=base_url(); ?>" <?php if($title=='Home'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-home">	</span> Home</a></li>
 					<?php if(!$islogin):?>
 						<li role = "presentation" ><a href = "<?=base_url('register'); ?>" <?php if($title=='Register'){ echo "class='active'"; }?>  ><span class = "glyphicon glyphicon-user">	</span> Register</a></li>
 						<li role = "presentation" ><a href = "<?=base_url('login'); ?>" <?php if($title=='Login'){ echo "class='active'"; }?>  ><span class = "glyphicon glyphicon-log-in" > </span> Login</a></li>
-
+					<?php else: ?>
+						<li role = "presentation" ><a href = "<?=base_url('complaintregister'); ?>" <?php if($title=='Complaintregister'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-plus">	</span> Complaint Register</a></li>
 					<?php endif; ?>
 
 
@@ -52,7 +53,7 @@
 					</ul>
 				<?php if($islogin):?>
 					<ul class="nav navbar-nav" style="float:right;">
-							<li role = "presentation" ><a href = "<?=base_url('Login/logout'); ?>" ><span class = "glyphicon glyphicon-lock">	</span> Logout</a></li>
+							<li role = "presentation" ><a href = "<?=base_url('Login/logout'); ?>" ><span class = "glyphicon glyphicon-log-out">	</span> Logout</a></li>
 					</ul>
 				<?php endif;	?>
 
