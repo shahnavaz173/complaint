@@ -52,6 +52,7 @@ class ComplaintModel extends CI_Model
       $q = $this->db->get();
       return $q->result();
   }
+  
   public function get_worker_list($cate_id)
   {
     //$this->db->select(array('w_id','w_name'));

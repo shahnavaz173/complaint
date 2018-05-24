@@ -27,7 +27,7 @@
 		</div>
 		<div class='row'>
 			<div class="form-group  col-md-6">
-				<label for="department">E Department: </label>
+				<label for="department">Enter Department: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
 					<input list="department" name="department" class="form-control">
@@ -148,9 +148,5 @@ $(document).ready(function()
 				$("#address").prop('disabled',false);
 		}
 	});
-
 });
-
-
-
 </script>

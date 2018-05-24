@@ -14,7 +14,7 @@
 			<div class="row">
 				<div class = "form-group col-md-10 col-md-offset-1 ">
 					<label for = "usertype">Select User Type: 	</label>
-							<?=form_dropdown('usertype',array('admin' => 'Admin','student' => 'Student', 'employee' => 'Employee', 'resident' => 'Resident'),'Admin',array('class' => 'form-control', 'name'=>'usertype','id' => 'usertype', 'required' => 'true')); ?>
+							<?=form_dropdown('usertype',array('admin' => 'Admin','student' => 'student', 'employee' => 'Employee', 'resident' => 'Resident'),'Admin',array('class' => 'form-control', 'name'=>'usertype','id' => 'usertype', 'required' => 'true')); ?>
 						<div class = "glyphicon  form-control-feedback"></div>
 
 					<!--<h4 class = "bg-danger text-danger error-msg" id = "em-err"><span class = "glyphicon glyphicon-exclamation-sign"></span> Enter Valid E-mail!</h4> -->
