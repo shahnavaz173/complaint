@@ -1,5 +1,6 @@
 function validateField(element)
 {
+  //alert("called 2");
   var eventsource = $("#"+element.id);
   var regex,errmsg;
   switch(element.id)

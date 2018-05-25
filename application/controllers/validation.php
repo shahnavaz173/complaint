@@ -6,28 +6,42 @@ class validation extends CI_Controller
   public function ValidateUniqueEmpnumber()
   {
       $this->load->library('form_validation');
-      $this->form_validation->set_rules('empnumber','Employee number','is_unique[user.emp_no]');
+      $this->form_validation->set_rules('value','Employee number','is_unique[user.emp_no]');
       if($this->form_validation->run())
       {
         echo "success";
       }
       else
       {
-        echo validation_errors();
+        echo "Employee Number Should be Unique!";
       }
   }
-/*  public function ValidateUniqueEmail()
+public function ValidateUniqueEmail()
   {
-      $this->load->library('form_validation');
-    //$empnumber = $this->input->post('empnumber');
-    $this->form_validation->set_rules('empnumber','Employee number','is_unique[user.emp_no]');
+    $this->load->library('form_validation');
+    $this->form_validation->set_rules('value','Email','is_unique[user.email]');
+    if($this->form_validation->run())
+    {
+       echo "success";
+    }
+    else
+    {
+      echo "Employee Number Should be Unique!";
+    }
   }
   public function ValidateUniqueContact()
   {
-      $this->load->library('form_validation');
-    //$empnumber = $this->input->post('empnumber');
-    $this->form_validation->set_rules('empnumber','Employee number','is_unique[user.emp_no]');
-  }*/
+    $this->load->library('form_validation');
+    $this->form_validation->set_rules('value','Contact Number','is_unique[user.ph_no]');
+    if($this->form_validation->run())
+    {
+      echo "success";
+    }
+    else
+    {
+      echo "Employee Number Should be Unique!";
+    }
+  }
   public function Login()
   {
     $this->load->library('form_validation');
