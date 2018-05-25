@@ -12,6 +12,22 @@ class ComplaintModel extends CI_Model
     $this->db->join('complaint_location','complaint_location.c_id = complaint_register.c_id');
     $this->db->join('worker','complaint_register.w_id = worker.w_id','LEFT');
   }
+  public function get_complaints_by_address($uid)
+  {
+    $this->db->select(array('user.address','user_dept.office_location'));
+    $this->db->from('user');
+    $this->db->join('user_dept','user.u_id = user_dept.u_id','LEFT');
+    $this->db->where('user.u_id',$uid);
+    $add = $this->db->get();
+    $add_result = $add->result();
+    $address = $add_result[0]->address;
+    $office = $add_result[0]->office_location;
+    $this->complaint_list();
+    $this->db->where('complaint_location.location',$address);
+    $this->db->or_where('complaint_location.location',$office);
+    $res = $this->db->get();
+    return $res->result();
+  }
   public function get_old_complaint_list_cat($interval,$category)
   {
         $this->complaint_list();
@@ -52,7 +68,7 @@ class ComplaintModel extends CI_Model
       $q = $this->db->get();
       return $q->result();
   }
-  
+
   public function get_worker_list($cate_id)
   {
     //$this->db->select(array('w_id','w_name'));
@@ -79,6 +95,14 @@ class ComplaintModel extends CI_Model
     $this->db->where('c_id',$cid);
     $this->db->update('complaint_register');
     redirect(base_url('admin'));
+  }
+  public function get_category_description($cid)
+  {
+    $this->db->select('description');
+    $this->db->from('complaint');
+    $this->db->where('cate_id',$cid);
+    $q = $this->db->get();
+    return $q->result();
   }
 }
 ?>

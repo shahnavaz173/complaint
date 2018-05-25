@@ -2,6 +2,12 @@
 defined('BASEPATH') OR exit("NO Direct Script Access Allowed");
 class Site extends CI_Controller
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('User');
+		$this->load->model('ComplaintModel','cm');
+	}
 	public function view($page = 'home')
 	{
 		if(!file_exists(APPPATH.'views/public/'.$page.'.php'))
@@ -10,6 +16,7 @@ class Site extends CI_Controller
 		}
 		if($this->session->userdata('user_id'))
 		{
+			$data['uid'] = $this->session->userdata('user_id');
 			$data['islogin'] = TRUE;
 		}
 		else
@@ -18,7 +25,6 @@ class Site extends CI_Controller
 		}
 		if($page == 'register')
 		{
-			$this->load->model('User');
 			$data['departments']=$this->User->get_department();
 		}
 		else if($page == 'login')
@@ -34,8 +40,9 @@ class Site extends CI_Controller
 		}
 		else if( $page == 'complaintregister')
 		{
-			$this->load->model('ComplaintModel');
-			$data['complain_caategory'] = $this->ComplaintModel->get_complaint_category();
+			$data['usertype'] = $this->session->userdata('usertype');
+			$data['complain_caategory'] = $this->cm->get_complaint_category();
+			$data['complaints'] = $this->cm->get_complaints_by_address($this->session->userdata('user_id'));
 		}
 
 		$data['title']=ucfirst($page);
@@ -47,6 +54,10 @@ class Site extends CI_Controller
 		if($this->session->userdata('check_login'))
 			$this->session->unset_userdata('check_login');
 	}
-
+	public function get_user()
+	{
+		$uid = $this->input->post('uid');
+		echo json_encode($this->User->get_user($uid));
+	}
 }
 ?>

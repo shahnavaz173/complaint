@@ -12,15 +12,17 @@ class Login extends CI_Controller
 	public function validate_login()
 	{
     $utype=$this->input->post('usertype');
-		$logindata = array('email' => $this->input->post('email'), 'password' => $this->input->post('password'));
-    if($utype=='admin')
+	  if($utype=='admin')
     {
+			$logindata = array('email' => $this->input->post('email'), 'password' => $this->input->post('password'));
+
       $login_id = $this->LoginModel->admin_login($logindata);
 
       if($login_id)
   		{
   				$this->session->set_userdata('check_login',FALSE);
   				$this->session->set_userdata('admin_id',$login_id);
+					$this->session->set_userdata('usertype',$utype);
   				redirect(base_url('admin/adminhome'));
   		}
   		else
@@ -31,12 +33,14 @@ class Login extends CI_Controller
     }
     else
     {
+			$logindata = array('email' => $this->input->post('email'), 'password' => $this->input->post('password'),'u_type' => $this->input->post('usertype'));
       $login_id = $this->LoginModel->user_login($logindata);
 
       if($login_id)
   		{
   				$this->session->set_userdata('check_login',FALSE);
   				$this->session->set_userdata('user_id',$login_id);
+					$this->session->set_userdata('usertype',$utype);
   				redirect(base_url('home'));
   		}
   		else

@@ -9,8 +9,8 @@ $(document).ready(function()
 	$("tr:odd").addClass('text-info');
 	$("tr:even").css('background','#F9F7F7');
 });
-
 </script>
+
 <div class="container-login">
 		<div class="jumbotron jumbotron-main">
 			<h1>Register Your Complaint</h1>
@@ -30,47 +30,26 @@ $(document).ready(function()
 							<th>Status</th>
 							<th>Assigned to</th>
 						</tr>
-						<tr>
-							<td>1234567891</td>
-							<td>Shahnawaz S Saiyad</td>
-							<td>Electrical</td>
-							<td>Fan Not Working</td>
-							<td>Post Graduation Boys Hostel Room No 29</td>
-							<td>2018-05-10</td>
-							<td>Pending</td>
-							<td>Ramesh Bhai</td>
-						</tr>
-						<tr>
-							<td>1234567891</td>
-							<td>Shahnawaz S Saiyad</td>
-							<td>Electrical</td>
-							<td>Fan Not Working</td>
-							<td>Post Graduation Boys Hostel Room No 29</td>
-							<td>2018-05-10</td>
-							<td>Pending</td>
-							<td>Ramesh Bhai</td>
-						</tr>
-						<tr>
-							<td>1234567891</td>
-							<td>Shahnawaz S Saiyad</td>
-							<td>Electrical</td>
-							<td>Fan Not Working</td>
-							<td>Post Graduation Boys Hostel Room No 29</td>
-							<td>2018-05-10</td>
-							<td>Pending</td>
-							<td>Ramesh Bhai</td>
-						</tr>
-						<tr>
-							<td>1234567891</td>
-							<td>Shahnawaz S Saiyad</td>
-							<td>Electrical</td>
-							<td>Fan Not Working</td>
-							<td>Post Graduation Boys Hostel Room No 29</td>
-							<td>2018-05-10</td>
-							<td>Pending</td>
-							<td>Ramesh Bhai</td>
-						</tr>
-						</tr>
+						<?php foreach($complaints as $complaint): ?>
+							<tr>
+								<td><?=$complaint->c_id; ?></td>
+								<td><?=$complaint->full_name; ?></td>
+								<td><?=$complaint->category; ?></td>
+								<td><?=$complaint->c_description; ?></td>
+								<td><?=$complaint->location; ?></td>
+								<td><?=$complaint->c_date; ?></td>
+								<td><?=$complaint->c_status; ?></td>
+								<td>
+									<?php
+									if($complaint->w_name == null)
+									 	echo "Not Assigned";
+									else
+										echo $complaint->w_name;
+									?>
+								</td>
+							</tr>
+
+						<?php endforeach; ?>
 					</table>
 				</div>
 			</div>
@@ -84,7 +63,7 @@ $(document).ready(function()
 						<label for="empnumber">Employee/Enrolment Number: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-pencil"></span></span>
-							<?=form_input(array('class' => 'form-control','value' => '11708118', 'id' => 'empnumber', 'name' => 'empnumber','readonly' => 'readonly','style' => 'cursor:not-allowed')); ?>
+							<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber','readonly' => 'readonly','style' => 'cursor:not-allowed')); ?>
 							<span class="glyphicon glyphicon-ok  form-control-feedback"></span>
 						</div>
 					</div>
@@ -92,7 +71,7 @@ $(document).ready(function()
 						<label for="fullname">Your Full Name: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
-							<?=form_input(array('class' => 'form-control','value' => 'Shahnawaz S Saiyad', 'id' => 'fullname', 'name' => 'fullname','readonly' => 'readonly','style' => 'cursor:not-allowed' )); ?>
+							<?=form_input(array('class' => 'form-control', 'id' => 'fullname', 'name' => 'fullname','readonly' => 'readonly','style' => 'cursor:not-allowed' )); ?>
 							<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 						</div>
 					</div>
@@ -101,8 +80,6 @@ $(document).ready(function()
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
 							<select name="complaintype" class="form-control complaintype">
-								<option value="">Select Category</option>
-								<option value="all">All</option>
 								<?php foreach ($complain_caategory as $category): ?>
 									<?php if($category->cate_id == 1): ?>
 										<option value="<?php echo $category->cate_id; ?>" selected><?php echo $category->category; ?></option>
@@ -119,7 +96,7 @@ $(document).ready(function()
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
 							<input list="cdescription" name="cdescription" class="form-control" placeholder="Enter Complaint Description:">
 								<datalist id="cdescription">
-										<option value = "Fan Not Working">
+
 								</datalist>
 								<span class="glyphicon  form-control-feedback"></span>
 						</div>
@@ -128,12 +105,19 @@ $(document).ready(function()
 						<label for="cdescription">Complaint Location: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
-							<select name="clocation" class="form-control">
+							<select name="clocation" class="form-control clocation">
 								<option value="">Select Location</option>
-								<option value="hostel">Hostel</option>
-								<option value="department">Department</option>
-								<option value="department">Residance</option>
-								<option value="other">Other</option>
+								<?php if($usertype == "student"): ?>
+									<option value="hostel">Hostel</option>
+									<option value="department">Department</option>
+								<?php elseif($usertype == "employee"): ?>
+									<option value="department">Department</option>
+									<option value="residance">Residance</option>
+									<option value="other">Other</option>
+								<?php else: ?>
+									<option value="residance">Residance</option>
+									<option value="other">Other</option>
+								<?php endif; ?>
 							</select>
 						</div>
 					</div>
@@ -160,3 +144,47 @@ $(document).ready(function()
 
 		</div>
 </div>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$(window).load(function()
+	{
+		var id = <?=$uid; ?>;
+		var datastring = 'uid='+id;
+		$.ajax
+		({
+			type: "POST",
+			url: "<?=base_url('Site/get_user'); ?>",
+			data: datastring,
+			cache: false,
+			success: function(data)
+			{
+				var user = JSON.parse(data);
+				$("#empnumber").val(user[0].u_id);
+				$("#fullname").val(user[0].full_name);
+			}
+		});
+	});
+	$(".complaintype").change(function()
+	{
+		$("datalist").find("option").remove();
+		var id = $(this).val();
+		var datastring = 'id='+id;
+		$.ajax
+		({
+			type: "POST",
+			url: "<?=base_url('Complaint/get_category'); ?>",
+			data: datastring,
+			cache: false,
+			success: function(data)
+			{
+				var descriptions = JSON.parse(data);
+				for(var i=0;i<descriptions.length;i++)
+				{
+					$("datalist").append("<option value='"+descriptions[i].description+"'>");
+				}
+			}
+		});
+	});
+});
+</script>
