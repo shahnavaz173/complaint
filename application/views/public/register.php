@@ -177,8 +177,7 @@ $(document).ready(function()
 			cache: false,
 			success: function(data)
 			{
-				//alert(data);
-				if(data.localeCompare('success')==0)
+				if(data == true)
 				{
 					eventsource.parentsUntil('.form-group').removeClass('has-error');
 			    eventsource.next('span').removeClass('glyphicon-warning-sign');
@@ -188,7 +187,6 @@ $(document).ready(function()
 				}
 				else
 				{
-					alert("part2");
 					eventsource.parentsUntil('.form-group').removeClass('has-success');
 					eventsource.parentsUntil('.form-group').addClass('has-error');
 					eventsource.next('span').addClass('glyphicon-warning-sign');

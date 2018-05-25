@@ -9,7 +9,7 @@ class validation extends CI_Controller
       $this->form_validation->set_rules('value','Employee number','is_unique[user.emp_no]');
       if($this->form_validation->run())
       {
-        echo "success";
+        echo TRUE;
       }
       else
       {
