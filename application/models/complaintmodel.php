@@ -23,8 +23,8 @@ class ComplaintModel extends CI_Model
     $address = $add_result[0]->address;
     $office = $add_result[0]->office_location;
     $this->complaint_list();
-    $this->db->where('complaint_location.location',$address);
-    $this->db->or_where('complaint_location.location',$office);
+    $this->db->like('complaint_location.location',$address);
+    $this->db->or_like('complaint_location.location',$office);
     $res = $this->db->get();
     return $res->result();
   }
