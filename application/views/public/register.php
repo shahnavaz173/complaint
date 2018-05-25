@@ -54,7 +54,7 @@
 				<label for="email">Enter E-mail Address: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-					<?=form_input(array('class' => 'form-control', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Enter E-mail', 'onkeyup'=> 'validateField(this)','onchange' => 'validateField(this)' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Enter E-mail', 'onkeyup'=> 'validateField(this)','onchange' => 'validateUnique(this)' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="em" ></p>
@@ -63,7 +63,7 @@
 				<label for="contact">Enter Contact Number: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></div>
-					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)')); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)')); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="ph" ></p>
@@ -148,30 +148,25 @@ $(document).ready(function()
 				$("#address").prop('disabled',false);
 		}
 	});
-<<<<<<< HEAD
+
 });
-=======
-});	/*$("#empnumber").change(function()
-	{
-		alert($(this).val());
-	});*/
+
 	function validateUnique(element)
 	{
-		alert("called");
-	/*	validateField(element);
+		validateField(element);
 		var eventsource = $("#"+element.id);
 		var path;
 		var dataString='value='+eventsource.val();
 		switch(element.id)
 	  {
 	    case 'empnumber':
-				path='validate/ValidateUniqueEmpnumber';
+				path='<?=base_url('validation/ValidateUniqueEmpnumber');?>';
 	    break;
-	    case '':
-				path='validate/ValidateUniqueEmail';
+	    case 'email':
+				path='<?=base_url('validation/ValidateUniqueEmail');?>';
 	    break;
-	    case '':
-				path='validate/ValidateUniqueContact';
+	    case 'contact':
+			path='<?=base_url('validation/ValidateUniqueContact');?>';
 	    break;
 	  }
 		$.ajax
@@ -182,7 +177,8 @@ $(document).ready(function()
 			cache: false,
 			success: function(data)
 			{
-				if(data.localeCompare('success'))
+				//alert(data);
+				if(data.localeCompare('success')==0)
 				{
 					eventsource.parentsUntil('.form-group').removeClass('has-error');
 			    eventsource.next('span').removeClass('glyphicon-warning-sign');
@@ -192,14 +188,15 @@ $(document).ready(function()
 				}
 				else
 				{
+					//alert("part2");
 					eventsource.parentsUntil('.form-group').removeClass('has-success');
-			    eventsource.parentsUntil('.form-group').addClass('has-error');
-			    eventsource.next('span').addClass('glyphicon-warning-sign');
-			    eventsource.parent().next('.validation-error').html(data);
-			    eventsource.next('span').removeClass('glyphicon-ok');
+					eventsource.parentsUntil('.form-group').addClass('has-error');
+					eventsource.next('span').addClass('glyphicon-warning-sign');
+					eventsource.parent().next('.validation-error').html(data);
+					eventsource.next('span').removeClass('glyphicon-ok');
 				}
 			}
-		})*/
+		})
 	}
->>>>>>> 788b76bac5f444c724a09cc4f01b5648022a0d0b
+
 </script>
