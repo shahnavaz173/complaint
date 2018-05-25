@@ -188,7 +188,7 @@ $(document).ready(function()
 				}
 				else
 				{
-					//alert("part2");
+					alert("part2");
 					eventsource.parentsUntil('.form-group').removeClass('has-success');
 					eventsource.parentsUntil('.form-group').addClass('has-error');
 					eventsource.next('span').addClass('glyphicon-warning-sign');
