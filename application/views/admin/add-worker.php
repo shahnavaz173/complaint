@@ -1,3 +1,7 @@
+<?php
+	if(!$islogin)
+		redirect(base_url('login'));
+?>
 <script type="text/javascript" src="<?=base_url();?>assets/js/validation.js"></script>
 
 <div class="row add-new-worker">

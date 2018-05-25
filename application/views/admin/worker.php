@@ -1,6 +1,6 @@
 <?php
 	if(!$islogin)
-		redirect(base_url()."admin/login");
+		redirect(base_url('login'));
 ?>
 <div class="container-home worker-main">
   <div class="jumbotron jumbotron-main">
