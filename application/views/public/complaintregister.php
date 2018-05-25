@@ -110,6 +110,7 @@ $(document).ready(function()
 								<?php if($usertype == "student"): ?>
 									<option value="hostel">Hostel</option>
 									<option value="department">Department</option>
+									<option value="other">Other</option>
 								<?php elseif($usertype == "employee"): ?>
 									<option value="department">Department</option>
 									<option value="residance">Residance</option>
