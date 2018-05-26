@@ -54,7 +54,7 @@ $(document).ready(function()
 				</div>
 			</div>
 			<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="box-shadow:0px 0px 3px 0px #000;border:1px solid #999;background:#F9F7F7;margin-top:1em;">
-				<?=form_open(base_url('validation/register'),array('class' => 'form-register')); ?>
+				<?=form_open(base_url('Complaint/register'),array('class' => 'form-register')); ?>
 				<div class='row'>
 					<div class="form-group has-feedback has-success col-md-8 ">
 						<h2>Register Your Complaint</h2>
@@ -63,7 +63,7 @@ $(document).ready(function()
 						<label for="empnumber">Employee/Enrolment Number: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-pencil"></span></span>
-							<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber','readonly' => 'readonly','style' => 'cursor:not-allowed')); ?>
+							<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber','readonly' => 'readonly','style' => 'cursor:not-allowed','required' => 'required')); ?>
 							<span class="glyphicon glyphicon-ok  form-control-feedback"></span>
 						</div>
 					</div>
@@ -71,7 +71,7 @@ $(document).ready(function()
 						<label for="fullname">Your Full Name: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
-							<?=form_input(array('class' => 'form-control', 'id' => 'fullname', 'name' => 'fullname','readonly' => 'readonly','style' => 'cursor:not-allowed' )); ?>
+							<?=form_input(array('class' => 'form-control', 'id' => 'fullname', 'name' => 'fullname','readonly' => 'readonly','style' => 'cursor:not-allowed','required' => 'required' )); ?>
 							<span class="glyphicon glyphicon-ok form-control-feedback"></span>
 						</div>
 					</div>
@@ -79,7 +79,7 @@ $(document).ready(function()
 						<label for="ctype">Select Complaint Type: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
-							<select name="complaintype" class="form-control complaintype">
+							<select name="complaintype" class="form-control complaintype" required>
 								<?php foreach ($complain_caategory as $category): ?>
 									<?php if($category->cate_id == 1): ?>
 										<option value="<?php echo $category->cate_id; ?>" selected><?php echo $category->category; ?></option>
@@ -94,7 +94,7 @@ $(document).ready(function()
 						<label for="cdescription">Complaint Description: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
-							<input list="cdescription" name="cdescription" class="form-control" placeholder="Enter Complaint Description:">
+							<input list="cdescription" name="cdescription" class="form-control" placeholder="Enter Complaint Description:" required>
 								<datalist id="cdescription">
 
 								</datalist>
@@ -105,7 +105,7 @@ $(document).ready(function()
 						<label for="cdescription">Complaint Location: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
-							<select name="clocation" class="form-control clocation">
+							<select name="clocation" class="form-control clocation" required>
 								<option value="">Select Location</option>
 								<?php if($usertype == "student"): ?>
 									<option value="hostel">Hostel</option>
@@ -126,7 +126,7 @@ $(document).ready(function()
 						<label for="address">Full Address: (Building No/Room No)</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
-								<?=form_textarea(array('class' => 'form-control', 'rows' => '2', 'name' => 'address', 'id' => 'address', 'placeholder' => 'address', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)')); ?>
+								<?=form_textarea(array('class' => 'form-control', 'rows' => '2', 'name' => 'address', 'id' => 'address', 'placeholder' => 'address', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)','required' => 'required')); ?>
 								<span class="glyphicon  form-control-feedback"></span>
 						</div>
 						<p class="bg-danger text-danger validation-error" ></p>
@@ -186,6 +186,29 @@ $(document).ready(function()
 				}
 			}
 		});
+	});
+	$(".clocation").change(function()
+	{
+		if($(this).val().localeCompare('other') != 0)
+		{
+			var obj = {uid: $("#empnumber").val() ,usertype: '<?=$usertype; ?>', location: $(this).val()};
+			var datastring = 'obj='+JSON.stringify(obj);
+			$.ajax
+			({
+				type: "POST",
+				url: "<?=base_url('Complaint/get_user_address'); ?>",
+				data: datastring,
+				cache: false,
+				success: function(address)
+				{
+					$("#address").val(address);
+				}
+		});
+	}
+	else
+	{
+		$("#address").val("");
+	}
 	});
 });
 </script>

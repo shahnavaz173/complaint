@@ -21,6 +21,13 @@ class User extends CI_Model
       $q = $this->db->get();
       return $q->result();
     }
-
+    public function get_ofice_location($uid)
+    {
+      $this->db->select('office_location');
+      $this->db->from('user_dept');
+      $this->db->where('u_id',$uid);
+      $q = $this->db->get();
+      return $q->result();
+    }
 }
  ?>
