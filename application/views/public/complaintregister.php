@@ -89,19 +89,7 @@ $(document).ready(function()
 									<?php endforeach; ?>
 							</select>
 						</div>
-					</div>
-					<div class="form-group has-feedback col-md-6">
-						<label for="cdescription">Complaint Description: </label>
-						<div class="input-group">
-							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
-							<input list="cdescription" name="cdescription" class="form-control" placeholder="Enter Complaint Description:" required>
-								<datalist id="cdescription">
-
-								</datalist>
-								<span class="glyphicon  form-control-feedback"></span>
-						</div>
-					</div>
-					<div class="form-group has-feedback col-md-6">
+					</div><div class="form-group has-feedback col-md-6">
 						<label for="cdescription">Complaint Location: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
@@ -122,6 +110,18 @@ $(document).ready(function()
 							</select>
 						</div>
 					</div>
+					<div class="form-group has-feedback col-md-6">
+						<label for="cdescription">Complaint Description: </label>
+						<div class="input-group">
+							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
+							<input list="cdescription" name="cdescription" class="form-control" placeholder="Enter Complaint Description:" required>
+								<datalist id="cdescription">
+
+								</datalist>
+								<span class="glyphicon  form-control-feedback"></span>
+						</div>
+					</div>
+
 					<div class="form-group has-feedback col-md-6" id="ad2">
 						<label for="address">Full Address: (Building No/Room No)</label>
 						<div class="input-group">
@@ -168,9 +168,36 @@ $(document).ready(function()
 	});
 	$(".complaintype").change(function()
 	{
+		if($(".clocation").val() != "")
+		{
+			$("datalist").find("option").remove();
+			var id = $(this).val();
+			var obj = {id: id,  location: $(".clocation").val()};
+			var datastring = 'obj='+JSON.stringify(obj);
+			$.ajax
+			({
+				type: "POST",
+				url: "<?=base_url('Complaint/get_category'); ?>",
+				data: datastring,
+				cache: false,
+				success: function(data)
+				{
+					var descriptions = JSON.parse(data);
+					for(var i=0;i<descriptions.length;i++)
+					{
+						$("datalist").append("<option value='"+descriptions[i].description+"'>");
+					}
+				}
+			});
+		}
+
+	});
+	$(".clocation").change(function()
+	{
 		$("datalist").find("option").remove();
-		var id = $(this).val();
-		var datastring = 'id='+id;
+		var id = $(".complaintype").val();
+		var obj = {id: id,  location: $(this).val()};
+		var datastring = 'obj='+JSON.stringify(obj);
 		$.ajax
 		({
 			type: "POST",

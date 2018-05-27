@@ -2,13 +2,16 @@
 defined('BASEPATH')OR exit("No Direct Script Access Allowed");
 class ComplaintModel extends CI_Model
 {
+  public function __construct()
+  {
+    parent::__construct();
+  }
   public function complaint_list()
   {
     $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','worker.w_name'));
     $this->db->from('complaint_register');
     $this->db->join('user','complaint_register.u_id = user.u_id','INNER');
-    $this->db->join('complaint','complaint.co_id = complaint_register.co_id');
-    $this->db->join('category','category.cate_id = complaint.cate_id');
+    $this->db->join('category','category.cate_id = complaint_register.cate_id','LEFT');
     $this->db->join('complaint_location','complaint_location.c_id = complaint_register.c_id');
     $this->db->join('worker','complaint_register.w_id = worker.w_id','LEFT');
   }
@@ -96,13 +99,23 @@ class ComplaintModel extends CI_Model
     $this->db->update('complaint_register');
     redirect(base_url('admin'));
   }
-  public function get_category_description($cid)
+  public function get_category_description($cid,$level)
   {
     $this->db->select('description');
     $this->db->from('complaint');
     $this->db->where('cate_id',$cid);
+    if($level == 2)
+      $this->db->where('c_level!=',$level);
     $q = $this->db->get();
     return $q->result();
+  }
+  public function register_complaint($cinfo,$location)
+  {
+    $cid = $this->generate_complaint_id($cinfo->'u_id');
+  }
+  public function generate_complaint_id($uid)
+  {
+
   }
 }
 ?>

@@ -7,11 +7,16 @@ class Complaint extends CI_Controller
     parent::__construct();
     $this->load->model('ComplaintModel');
     $this->load->model('User');
+    date_default_timezone_set('Asia/kolkata');
   }
   public function get_category()
   {
-    $id = $this->input->post('id');
-    echo json_encode($this->ComplaintModel->get_category_description($id));
+    $json_obj = $this->input->post('obj');
+    $obj = json_decode($json_obj);
+    if($obj->location == 'residance')
+      echo json_encode($this->ComplaintModel->get_category_description($obj->id,2));
+    else
+      echo json_encode($this->ComplaintModel->get_category_description($obj->id,1));
   }
   public function get_user_address()
   {
@@ -30,7 +35,13 @@ class Complaint extends CI_Controller
   }
   public function register()
   {
-
+    $cate_id = $this->input->post('complaintype');
+    $uid = $this->input->post('empnumber');
+    $description = $this->input->post('cdescription');
+    $date = date('Y-m-d');
+    $location = $this->input->post('address');
+    $cnfo = array('cate_id' => $cate_id, 'u_id' => $uid, 'c_description' => $description, 'c_date' => $date);
+    $this->ComplaintModel->register_complaint($cinfo,$location);
   }
 }
  ?>
