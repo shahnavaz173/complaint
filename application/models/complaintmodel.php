@@ -111,11 +111,42 @@ class ComplaintModel extends CI_Model
   }
   public function register_complaint($cinfo,$location)
   {
-    $cid = $this->generate_complaint_id($cinfo->'u_id');
+    $cid = $this->generate_complaint_id($cinfo['u_id']);
+    $cinfo = array_merge(array('c_id' => $cid),$cinfo);
+    echo "<pre>";
+    print_r($cinfo);
+    echo "</pre>";
+    $this->db->insert('complaint_register',$cinfo);
+    $this->db->insert('complaint_location',array('c_id' => $cid, 'location' => $location));
   }
   public function generate_complaint_id($uid)
   {
+    $this->db->select('complaint_register.c_id');
+    $this->db->from('complaint_register');
+    $this->db->join('complaint_location','complaint_location.c_id = complaint_register.c_id','INNER');
+    $this->db->order_by('complaint_location.loc_id','DESC');
+    $this->db->limit(1);
+    $q = $this->db->get();
+    $last = $q->result();
+    $today = date('Ymd-');
+    $user = substr($uid,-3);
+    if(sizeof($last) == 0)
+    {
+      return $today."".$user."-0001";
+    }
+    else
+    {
+      $last_cid = substr($last[0]->c_id,14);
+      $last_cid = intval($last_cid)+1;
+      if($last_cid <= 9)
+        $last_cid = "000".$last_cid;
+      else if($last_cid <= 99)
+        $last_cid = "00".$last_cid;
+      else if($last_cid <= 999)
+        $last_cid = "0".$last_cid;
 
+      return $today."".$user."-".$last_cid;
+    }
   }
 }
 ?>

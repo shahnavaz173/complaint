@@ -81,7 +81,7 @@ $(document).ready(function()
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
 							<select name="complaintype" class="form-control complaintype" required>
 								<?php foreach ($complain_caategory as $category): ?>
-									<?php if($category->cate_id == 1): ?>
+									<?php if($category->cate_id == $ctype): ?>
 										<option value="<?php echo $category->cate_id; ?>" selected><?php echo $category->category; ?></option>
 									<?php else: ?>
 										<option value="<?php echo $category->cate_id; ?>"><?php echo $category->category; ?></option>
@@ -114,7 +114,7 @@ $(document).ready(function()
 						<label for="cdescription">Complaint Description: </label>
 						<div class="input-group">
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-list-alt"></span></span>
-							<input list="cdescription" name="cdescription" class="form-control" placeholder="Enter Complaint Description:" required>
+							<input list="cdescription" name="cdescription" class="form-control" placeholder="Enter Complaint Description:" autocomplete="off" required>
 								<datalist id="cdescription">
 
 								</datalist>

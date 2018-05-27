@@ -40,7 +40,7 @@ class Complaint extends CI_Controller
     $description = $this->input->post('cdescription');
     $date = date('Y-m-d');
     $location = $this->input->post('address');
-    $cnfo = array('cate_id' => $cate_id, 'u_id' => $uid, 'c_description' => $description, 'c_date' => $date);
+    $cinfo = array('cate_id' => $cate_id, 'u_id' => $uid, 'c_description' => $description, 'c_date' => $date,'c_status' => 'Pending');
     $this->ComplaintModel->register_complaint($cinfo,$location);
   }
 }

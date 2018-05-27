@@ -40,6 +40,7 @@ class Site extends CI_Controller
 		}
 		else if( $page == 'complaintregister')
 		{
+			$data['ctype'] = $this->uri->segment(2);
 			$data['usertype'] = $this->session->userdata('usertype');
 			$data['complain_caategory'] = $this->cm->get_complaint_category();
 			$data['complaints'] = $this->cm->get_complaints_by_address($this->session->userdata('user_id'));
