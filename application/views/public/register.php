@@ -15,14 +15,14 @@
 				<label for="fullname">Select User Type: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
-						<?=form_dropdown('usertype',array('select user type' => 'Select user type','employee' => 'Employee', 'recident' => 'Recident'),'Selct User Type',array('class' => 'form-control', 'id' => 'usertype')); ?>
+						<?=form_dropdown('usertype',array('' => 'Select user type','employee' => 'Employee', 'recident' => 'Recident'),'Selct User Type',array('class' => 'form-control', 'id' => 'usertype', 'required' => 'required')); ?>
 				</div>
 			</div>
 			<div class="form-group has-feedback col-md-6">
 				<label for="fullname">Enter Your Full Name: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'fullname', 'name' => 'fullname', 'placeholder' => 'Enter Full Name', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)', 'autocomplete' => 'off' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'fullname', 'name' => 'fullname', 'placeholder' => 'Enter Full Name', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)', 'autocomplete' => 'off', 'required' => 'required' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="fn" ></p>
@@ -33,7 +33,7 @@
 				<label for="department">Enter Department: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
-						<select name="department" id="department" class="form-control selectpicker" data-live-search="true" >
+						<select name="department" id="department" class="form-control selectpicker" data-live-search="true" required>
 							<?php foreach($departments as $d): ?>
 									<option value="<?= $d->deptid;?>"><?= $d->Dept_Name;?></option>
 							<?php endforeach; ?>
@@ -44,7 +44,7 @@
 				<label for="empnumber">Enter Employee Number: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-pencil"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number','onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)','autocomplete' => 'off' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number','onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)','autocomplete' => 'off',  'required' => 'required' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="en" ></p>
@@ -56,7 +56,7 @@
 				<label for="email">Enter E-mail Address: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-					<?=form_input(array('class' => 'form-control', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Enter E-mail', 'onkeyup'=> 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Enter E-mail', 'onkeyup'=> 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off',  'required' => 'required' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="em" ></p>
@@ -65,7 +65,7 @@
 				<label for="contact">Enter Contact Number: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></div>
-					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off')); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off',  'required' => 'required')); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="ph" ></p>
@@ -73,10 +73,10 @@
 		</div>
 		<div class="row" >
 			<div class="form-group has-feedback col-md-6" id="ad1">
-				<label for="address">Enter Office Address: (Building No/Room No)</label>
+				<label for="address">Enter Office Address: (Office No/Room No)</label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
-						<?=form_textarea(array('class' => 'form-control', 'rows' => '2', 'name' => 'oaddress', 'id' => 'oaddress', 'placeholder' => 'Office address', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)')); ?>
+						<?=form_textarea(array('class' => 'form-control', 'rows' => '2', 'name' => 'oaddress', 'id' => 'oaddress', 'placeholder' => 'Office address', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)',  'required' => 'required')); ?>
 						<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" ></p>
@@ -96,10 +96,10 @@
 			<div class="form-group col-md-12">
 				<label for="gender">Gender:</label>
 					<div class="radio-inline">
-						<?=form_radio(array('class' => 'gender', 'id' => 'genderm', 'name' => 'gender'),'M','checked'); ?>: Male
+						<?=form_radio(array('class' => 'gender', 'id' => 'genderm', 'name' => 'gender', 'required' => 'required'),'M','checked'); ?>: Male
 					</div>
 					<div class="radio-inline">
-						<?=form_radio(array('class' => 'gender', 'id' => 'genderf', 'name' => 'gender'),'F'); ?>: Female
+						<?=form_radio(array('class' => 'gender', 'id' => 'genderf', 'name' => 'gender',  'required' => 'required'),'F'); ?>: Female
 					</div>
 			</div>
 		</div>
@@ -109,7 +109,7 @@
 				<label for="password">Enter Password: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-					<?=form_password(array('name' => 'password', 'class' => 'form-control', 'id' => 'password','placeholder' => 'Enter Password','onkeyup' => 'validateField(this)')); ?>
+					<?=form_password(array('name' => 'password', 'class' => 'form-control', 'id' => 'password','placeholder' => 'Enter Password','onkeyup' => 'validateField(this)',  'required' => 'required')); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="pwd" ></p>
@@ -118,7 +118,7 @@
 				<label for="cpassword">Confirm Password: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-					<?=form_password(array('name' => 'cpassword', 'class' => 'form-control', 'id' => 'cpassword','placeholder' => 'Confirm Password','onkeyup' => 'validate_pwd(this)')); ?>
+					<?=form_password(array('name' => 'cpassword', 'class' => 'form-control', 'id' => 'cpassword','placeholder' => 'Confirm Password','onkeyup' => 'validate_pwd(this)',  'required' => 'required')); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="cpwd" ></p>
@@ -138,22 +138,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-$(document).ready(function()
-{
-	$("#usertype").change(function()
-	{
-		var dep = $(this).val();
-		if(dep == "employee")
-		{
-			$("#address").prop('disabled',true);
-		}
-		else
-		{
-				$("#address").prop('disabled',false);
-		}
-	});
 
-});
 
 	function validateUnique(element)
 	{

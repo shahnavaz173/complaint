@@ -45,6 +45,10 @@ class Site extends CI_Controller
 			$data['complain_caategory'] = $this->cm->get_complaint_category();
 			$data['complaints'] = $this->cm->get_complaints_by_address($this->session->userdata('user_id'));
 		}
+		else if($page == 'trackcomplaint')
+		{
+			$data['cdetails'] = $this->session->userdata('cdetails');
+		}
 
 		$data['title']=ucfirst($page);
 		$data['viewuser'] = 'public';

@@ -80,7 +80,7 @@
 					<h2>Track Complaint</h2>
 				</div>
 			</div>
-			<?=form_open('');?>
+			<?=form_open('Complaint/track');?>
 			<div class="row">
 				<div class="form-group col-md-10 col-md-offset-1">
 					<label for="complainid">Enter Complain id:

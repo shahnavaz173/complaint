@@ -99,10 +99,11 @@ public function ValidateUniqueEmail()
 		}
     if($this->form_validation->run())
     {
-        //  $data['title']='Register';
-        echo "yes";
-         $data['valid']=0;
-          $user_data=array(
+
+      $this->load->model('User');
+      $deptname = $this->User->get_single_department($this->input->post('department'));
+      $office_loc = $deptname[0]->Dept_Name." ".$this->input->post('oaddress');
+      $user_data=array(
                 'u_id' => $this->input->post('empnumber'),
 								'full_name' => $this->input->post('fullname'),
 								'emp_no' => $this->input->post('empnumber'),
@@ -113,11 +114,13 @@ public function ValidateUniqueEmail()
                 'gender'=>$this->input->post('gender'),
 								'password' =>$this->input->post('password'));
             $dept_data = array(
+              'u_id' => $this->input->post('empnumber'),
               'deptid' => $this->input->post('department'),
-              'office_location' => $this->input->post('oaddress'));
-            $this->load->model('User');
+              'office_location' => $office_loc);
             $this->User->register($user_data,$dept_data);
-
+            $this->session->set_userdata('user_id',$this->input->post('empnumber'));
+            $this->session->set_userdata('usertype',$this->input->post('usertype'));
+            redirect(base_url('home'));
     }
  else
     {

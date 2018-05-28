@@ -8,28 +8,12 @@ class ComplaintModel extends CI_Model
   }
   public function complaint_list()
   {
-    $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','worker.w_name'));
+    $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','worker.w_name','worker.ph_no'));
     $this->db->from('complaint_register');
     $this->db->join('user','complaint_register.u_id = user.u_id','INNER');
     $this->db->join('category','category.cate_id = complaint_register.cate_id','LEFT');
     $this->db->join('complaint_location','complaint_location.c_id = complaint_register.c_id');
     $this->db->join('worker','complaint_register.w_id = worker.w_id','LEFT');
-  }
-  public function get_complaints_by_address($uid)
-  {
-    $this->db->select(array('user.address','user_dept.office_location'));
-    $this->db->from('user');
-    $this->db->join('user_dept','user.u_id = user_dept.u_id','LEFT');
-    $this->db->where('user.u_id',$uid);
-    $add = $this->db->get();
-    $add_result = $add->result();
-    $address = $add_result[0]->address;
-    $office = $add_result[0]->office_location;
-    $this->complaint_list();
-    $this->db->like('complaint_location.location',$address);
-    $this->db->or_like('complaint_location.location',$office);
-    $res = $this->db->get();
-    return $res->result();
   }
   public function get_old_complaint_list_cat($interval,$category)
   {
@@ -63,6 +47,23 @@ class ComplaintModel extends CI_Model
         $new->flag = '1';
       }
       return $news;
+    }
+
+    public function get_complaints_by_address($uid)
+    {
+      $this->db->select(array('user.address','user_dept.office_location'));
+      $this->db->from('user');
+      $this->db->join('user_dept','user.u_id = user_dept.u_id','LEFT');
+      $this->db->where('user.u_id',$uid);
+      $add = $this->db->get();
+      $add_result = $add->result();
+      $address = $add_result[0]->address;
+      $office = $add_result[0]->office_location;
+      $this->complaint_list();
+      $this->db->like('complaint_location.location',$address);
+      $this->db->or_like('complaint_location.location',$office);
+      $res = $this->db->get();
+      return $res->result();
     }
   public function get_complaint_category()
   {
@@ -147,6 +148,13 @@ class ComplaintModel extends CI_Model
 
       return $today."".$user."-".$last_cid;
     }
+  }
+  public function track_complaint($cid)
+  {
+    $this->complaint_list();
+    $this->db->where('complaint_register.c_id',$cid);
+    $q = $this->db->get();
+    return $q->result();
   }
 }
 ?>

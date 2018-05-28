@@ -43,5 +43,15 @@ class Complaint extends CI_Controller
     $cinfo = array('cate_id' => $cate_id, 'u_id' => $uid, 'c_description' => $description, 'c_date' => $date,'c_status' => 'Pending');
     $this->ComplaintModel->register_complaint($cinfo,$location);
   }
+  public function track()
+  {
+    $cid = $this->input->post('complainid');
+    $details = $this->ComplaintModel->track_complaint($cid);
+    if(sizeof($details) != 0)
+    {
+      $this->session->set_userdata('cdetails',$details);
+      redirect(base_url('trackcomplaint'));
+    }
+  }
 }
  ?>

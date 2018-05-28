@@ -13,6 +13,14 @@ class User extends CI_Model
       $r=$this->db->get();
       return $r->result();
     }
+    public function get_single_department($deptid)
+    {
+      $this->db->select(array('Dept_Name','deptid'));
+      $this->db->from('deptmst');
+      $this->db->where('deptid',$deptid);
+      $r=$this->db->get();
+      return $r->result();
+    }
     public function get_user($uid)
     {
       $this->db->select(array('u_id','full_name','address'));
