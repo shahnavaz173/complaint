@@ -30,7 +30,7 @@ class Admin extends CI_Controller
 			else
 				$data['logincheck'] = FALSE;
 		}
-		else if($page == 'adminhome' || $page == 'worker')
+		else if($page == 'adminhome' || $page == 'worker' || $page == 'category')
 		{
 			$data['complain_caategory'] = $this->ComplaintModel->get_complaint_category();
 		}

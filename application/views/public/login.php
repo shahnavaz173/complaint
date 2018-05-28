@@ -83,10 +83,10 @@
 			<?=form_open('Complaint/track');?>
 			<div class="row">
 				<div class="form-group col-md-10 col-md-offset-1">
-					<label for="complainid">Enter Complain id:
+					<label for="complainid">Enter Complaint id:
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-							<?=form_input(array('name' => 'complainid', 'class' => 'form-control', 'id' => 'complainid', 'placeholder' => 'Enter Complain Id', 'required' => 'true'));?>
+							<?=form_input(array('name' => 'complainid', 'class' => 'form-control', 'id' => 'complainid', 'placeholder' => 'Enter Complaint Id', 'required' => 'true'));?>
 						</div>
 					</label>
 				</div>

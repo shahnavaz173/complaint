@@ -47,7 +47,10 @@ class Site extends CI_Controller
 		}
 		else if($page == 'trackcomplaint')
 		{
-			$data['cdetails'] = $this->session->userdata('cdetails');
+			if($this->session->userdata('cdetails'))
+				$data['cdetails'] = $this->session->userdata('cdetails');
+			else
+				$data['cdetails'] = FALSE;
 		}
 
 		$data['title']=ucfirst($page);

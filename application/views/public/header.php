@@ -45,7 +45,7 @@
 					<li role = "presentation" ><a href = "<?=base_url('admin/adminhome'); ?>" <?php if($title=='Adminhome'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-home">	</span> Home</a></li>
 					<?php if($islogin):?>
 						<li role = "presentation" ><a href = "<?=base_url('admin/worker'); ?>" <?php if($title=='Worker'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> Worker</a></li>
-
+						<li role = "presentation" ><a href = "<?=base_url('admin/category'); ?>" <?php if($title=='Category'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Category</a></li>
 					<?php endif; ?>
 				<?php endif ?>
 					</ul>
