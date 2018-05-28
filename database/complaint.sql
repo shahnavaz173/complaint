@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 22, 2018 at 12:20 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Host: 127.0.0.1:3306
+-- Generation Time: May 28, 2018 at 04:14 AM
+-- Server version: 5.7.19
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,11 +28,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
   `a_id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `password` varchar(14) NOT NULL
+  `password` varchar(14) NOT NULL,
+  PRIMARY KEY (`a_id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -48,10 +51,12 @@ INSERT INTO `admin` (`a_id`, `name`, `email`, `password`) VALUES
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
-  `cate_id` int(11) NOT NULL,
-  `category` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE IF NOT EXISTS `category` (
+  `cate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(20) NOT NULL,
+  PRIMARY KEY (`cate_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -70,12 +75,15 @@ INSERT INTO `category` (`cate_id`, `category`) VALUES
 -- Table structure for table `complaint`
 --
 
-CREATE TABLE `complaint` (
-  `co_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `complaint`;
+CREATE TABLE IF NOT EXISTS `complaint` (
+  `co_id` int(11) NOT NULL AUTO_INCREMENT,
   `cate_id` int(11) DEFAULT NULL,
   `c_level` int(1) DEFAULT NULL,
-  `description` longtext
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `description` longtext,
+  PRIMARY KEY (`co_id`),
+  KEY `cate_id` (`cate_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaint`
@@ -92,21 +100,22 @@ INSERT INTO `complaint` (`co_id`, `cate_id`, `c_level`, `description`) VALUES
 -- Table structure for table `complaint_location`
 --
 
-CREATE TABLE `complaint_location` (
-  `loc_id` int(11) NOT NULL,
-  `c_id` int(11) NOT NULL,
-  `location` varchar(100) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `complaint_location`;
+CREATE TABLE IF NOT EXISTS `complaint_location` (
+  `loc_id` int(11) NOT NULL AUTO_INCREMENT,
+  `c_id` varchar(20) NOT NULL,
+  `location` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`loc_id`,`c_id`),
+  KEY `c_id` (`c_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaint_location`
 --
 
 INSERT INTO `complaint_location` (`loc_id`, `c_id`, `location`) VALUES
-(1, 1234567890, 'Computer Science Department Room No 3'),
-(2, 1234567891, 'Post Graduation Boys Hostel Room No 29'),
-(3, 1234567892, 'PG Boys Hostel Bathroom no 3'),
-(4, 1234567894, 'Computer Science Department Room No 2');
+(1, '20180527-101-0001', 'abcd'),
+(2, '20180527-101-0002', 'abcd');
 
 -- --------------------------------------------------------
 
@@ -114,27 +123,30 @@ INSERT INTO `complaint_location` (`loc_id`, `c_id`, `location`) VALUES
 -- Table structure for table `complaint_register`
 --
 
-CREATE TABLE `complaint_register` (
+DROP TABLE IF EXISTS `complaint_register`;
+CREATE TABLE IF NOT EXISTS `complaint_register` (
   `c_id` varchar(20) NOT NULL,
-  `co_id` int(11) DEFAULT NULL,
+  `cate_id` int(11) DEFAULT NULL,
   `u_id` varchar(10) DEFAULT NULL,
   `c_description` longtext,
-  `c_date` date DEFAULT NULL,
+  `c_date` date DEFAULT '1996-05-02',
   `s_date` date DEFAULT NULL,
   `c_status` varchar(10) DEFAULT NULL,
   `response` varchar(40) DEFAULT NULL,
-  `w_id` int(11) DEFAULT NULL
+  `w_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`c_id`),
+  KEY `ct_id` (`cate_id`),
+  KEY `u_id` (`u_id`),
+  KEY `w_id` (`w_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaint_register`
 --
 
-INSERT INTO `complaint_register` (`c_id`, `co_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `response`, `w_id`) VALUES
-('1234567890', 1, '101', 'Fan Not Working', '2018-05-03', NULL, 'Pending', NULL, NULL),
-('1234567891', 2, '101', 'Tube Light Not Working', '2018-05-04', '2018-05-09', 'Solved', NULL, 1),
-('1234567892', 3, '101', 'Pipe Leakage', '2018-05-18', NULL, 'Pending', NULL, 2),
-('1234567894', 2, '101', 'Tube Light Not Working', '2018-05-19', NULL, 'Pending', NULL, NULL);
+INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `response`, `w_id`) VALUES
+('20180527-101-0001', 1, '101', 'Fan Not Working', '2018-05-27', NULL, NULL, NULL, NULL),
+('20180527-101-0002', 1, '101', 'Tube Light Not Working', '2018-05-27', NULL, 'Pending', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -142,13 +154,16 @@ INSERT INTO `complaint_register` (`c_id`, `co_id`, `u_id`, `c_description`, `c_d
 -- Table structure for table `deptmst`
 --
 
-CREATE TABLE `deptmst` (
-  `deptid` int(11) NOT NULL,
+DROP TABLE IF EXISTS `deptmst`;
+CREATE TABLE IF NOT EXISTS `deptmst` (
+  `deptid` int(11) NOT NULL AUTO_INCREMENT,
   `Dept_Name` varchar(100) NOT NULL,
   `HOD` varchar(50) NOT NULL,
   `Pho_No` varchar(20) NOT NULL,
-  `Email` varchar(40) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Email` varchar(40) NOT NULL,
+  PRIMARY KEY (`deptid`),
+  UNIQUE KEY `Dept_Name` (`Dept_Name`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `deptmst`
@@ -164,7 +179,8 @@ INSERT INTO `deptmst` (`deptid`, `Dept_Name`, `HOD`, `Pho_No`, `Email`) VALUES
 -- Table structure for table `studmst`
 --
 
-CREATE TABLE `studmst` (
+DROP TABLE IF EXISTS `studmst`;
+CREATE TABLE IF NOT EXISTS `studmst` (
   `Stud_ID` varchar(10) NOT NULL,
   `Pwd` varchar(20) NOT NULL,
   `Stud_Name` varchar(200) NOT NULL,
@@ -186,7 +202,8 @@ CREATE TABLE `studmst` (
   `curr_sem` int(2) NOT NULL,
   `Repeat_sem` varchar(15) NOT NULL,
   `activated` tinyint(1) NOT NULL,
-  `studImage` blob
+  `studImage` blob,
+  PRIMARY KEY (`Stud_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -202,7 +219,8 @@ INSERT INTO `studmst` (`Stud_ID`, `Pwd`, `Stud_Name`, `stud_name_eng`, `Email`, 
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
   `u_id` varchar(10) NOT NULL,
   `full_name` varchar(60) NOT NULL,
   `emp_no` varchar(15) NOT NULL,
@@ -211,7 +229,9 @@ CREATE TABLE `user` (
   `address` longtext NOT NULL,
   `u_type` varchar(10) NOT NULL,
   `gender` char(1) NOT NULL,
-  `password` varchar(14) NOT NULL
+  `password` varchar(14) NOT NULL,
+  PRIMARY KEY (`u_id`),
+  UNIQUE KEY `email` (`email`,`ph_no`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -227,10 +247,13 @@ INSERT INTO `user` (`u_id`, `full_name`, `emp_no`, `email`, `ph_no`, `address`, 
 -- Table structure for table `user_dept`
 --
 
-CREATE TABLE `user_dept` (
+DROP TABLE IF EXISTS `user_dept`;
+CREATE TABLE IF NOT EXISTS `user_dept` (
   `u_id` int(11) NOT NULL,
   `deptid` int(11) NOT NULL,
-  `office_loc` varchar(50) DEFAULT NULL
+  `office_location` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`u_id`,`deptid`),
+  KEY `deptid` (`deptid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -239,132 +262,27 @@ CREATE TABLE `user_dept` (
 -- Table structure for table `worker`
 --
 
-CREATE TABLE `worker` (
-  `w_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `worker`;
+CREATE TABLE IF NOT EXISTS `worker` (
+  `w_id` int(11) NOT NULL AUTO_INCREMENT,
   `w_name` varchar(60) NOT NULL,
   `ph_no` varchar(13) NOT NULL,
   `email` varchar(40) NOT NULL,
   `address` varchar(100) NOT NULL,
   `skill` int(11) NOT NULL,
-  `w_status` varchar(15) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `w_status` varchar(15) NOT NULL,
+  PRIMARY KEY (`w_id`),
+  UNIQUE KEY `ph_no` (`ph_no`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `worker`
 --
 
 INSERT INTO `worker` (`w_id`, `w_name`, `ph_no`, `email`, `address`, `skill`, `w_status`) VALUES
-(1, 'Ramesh', '9657452365', 'ramesh@gmail.com', '110,Usmanpura Ahmedabad,\r\nAhmedabad- 380014', 1, 'Active'),
+(1, 'Ramesh', '9657452365', 'ramesh@gmail.com', '110,Usmanpura Ahmedabad,\nAhmedabad- 380014', 1, 'Active'),
 (2, 'Suresh', '9657452366', 'suresh@gmail.com', '92,Incometax Ahmedabad,\nAhmedabad- 380014', 3, 'Not Active');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`a_id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`cate_id`);
-
---
--- Indexes for table `complaint`
---
-ALTER TABLE `complaint`
-  ADD PRIMARY KEY (`co_id`),
-  ADD KEY `cate_id` (`cate_id`);
-
---
--- Indexes for table `complaint_location`
---
-ALTER TABLE `complaint_location`
-  ADD PRIMARY KEY (`loc_id`,`c_id`),
-  ADD KEY `c_id` (`c_id`);
-
---
--- Indexes for table `complaint_register`
---
-ALTER TABLE `complaint_register`
-  ADD PRIMARY KEY (`c_id`),
-  ADD KEY `ct_id` (`co_id`),
-  ADD KEY `u_id` (`u_id`),
-  ADD KEY `w_id` (`w_id`);
-
---
--- Indexes for table `deptmst`
---
-ALTER TABLE `deptmst`
-  ADD PRIMARY KEY (`deptid`),
-  ADD UNIQUE KEY `Dept_Name` (`Dept_Name`);
-
---
--- Indexes for table `studmst`
---
-ALTER TABLE `studmst`
-  ADD PRIMARY KEY (`Stud_ID`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`u_id`),
-  ADD UNIQUE KEY `email` (`email`,`ph_no`);
-
---
--- Indexes for table `user_dept`
---
-ALTER TABLE `user_dept`
-  ADD PRIMARY KEY (`u_id`,`deptid`),
-  ADD KEY `deptid` (`deptid`);
-
---
--- Indexes for table `worker`
---
-ALTER TABLE `worker`
-  ADD PRIMARY KEY (`w_id`),
-  ADD UNIQUE KEY `ph_no` (`ph_no`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `cate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `complaint`
---
-ALTER TABLE `complaint`
-  MODIFY `co_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `complaint_location`
---
-ALTER TABLE `complaint_location`
-  MODIFY `loc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `deptmst`
---
-ALTER TABLE `deptmst`
-  MODIFY `deptid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `worker`
---
-ALTER TABLE `worker`
-  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
