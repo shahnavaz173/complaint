@@ -11,7 +11,7 @@ class ComplaintModel extends CI_Model
     $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','worker.w_name','worker.ph_no'));
     $this->db->from('complaint_register');
     $this->db->join('user','complaint_register.u_id = user.u_id','INNER');
-    $this->db->join('category','category.cate_id = complaint_register.cate_id','LEFT');
+    $this->db->join('category','complaint_register.cate_id = category.cate_id','LEFT');
     $this->db->join('complaint_location','complaint_location.c_id = complaint_register.c_id');
     $this->db->join('worker','complaint_register.w_id = worker.w_id','LEFT');
   }
@@ -21,7 +21,7 @@ class ComplaintModel extends CI_Model
         if($category == 'all')
           $this->db->where('complaint_register.c_date <= DATE_ADD(CURDATE(),INTERVAL - '.$interval.' DAY)');
         else
-          $this->db->where('complaint_register.c_date <= DATE_ADD(CURDATE(),INTERVAL - '.$interval.' DAY)AND complaint.cate_id = '.$category);
+          $this->db->where('complaint_register.c_date <= DATE_ADD(CURDATE(),INTERVAL - '.$interval.' DAY)AND category.cate_id = '.$category);
         $this->db->order_by('complaint_register.c_date');
         $q = $this->db->get();
         $olds = $q->result();
@@ -37,7 +37,7 @@ class ComplaintModel extends CI_Model
       if($category == 'all')
         $this->db->where('complaint_register.c_date > DATE_ADD(CURDATE(),INTERVAL - '.$interval.' DAY)');
       else
-        $this->db->where('complaint_register.c_date > DATE_ADD(CURDATE(),INTERVAL - '.$interval.' DAY)AND complaint.cate_id = '.$category);
+        $this->db->where('complaint_register.c_date > DATE_ADD(CURDATE(),INTERVAL - '.$interval.' DAY)AND category.cate_id = '.$category);
       $this->db->order_by('complaint_register.c_date');
       $q = $this->db->get();
 
@@ -153,6 +153,16 @@ class ComplaintModel extends CI_Model
   {
     $this->complaint_list();
     $this->db->where('complaint_register.c_id',$cid);
+    $q = $this->db->get();
+    return $q->result();
+  }
+  public function get_common_complaints($id)
+  {
+    $this->db->select(array('category.category','complaint.c_level','complaint.description'));
+    $this->db->from('complaint');
+    $this->db->join('category','category.cate_id = complaint.cate_id');
+    if($id != 'all')
+      $this->db->where('category.cate_id',$id);
     $q = $this->db->get();
     return $q->result();
   }

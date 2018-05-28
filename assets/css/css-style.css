@@ -25,7 +25,7 @@ ul li a.active
 }
 .container-main
 {
-	padding:0px;
+	padding:.7em;
 	padding-bottom: 2em;
 }
 .container-login,.container-reg,.container-home,.assign-worker
@@ -47,6 +47,16 @@ ul li a.active
 	margin:0px;
 	font-size:2em;
 }
+
+.jumbotron-main h3
+{
+	padding:0px;
+	color: #eaeaea;
+	font-size:1em;
+	margin:0px;
+}
+
+
 .jumbotron-box
 {
 	background-color: #775f37 !important;
@@ -73,11 +83,6 @@ ul li a.active
 table
 {
 	background-color: #FFF;
-}
-table tr td
-{
-	font-size:1.1em;
-	padding:0.2em 0.5em;
 }
 .form-buttons
 {

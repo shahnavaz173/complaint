@@ -194,7 +194,7 @@ function display_workers(id)
 				{
 					var html = "\
 					<tr class='lists'>\
-						<td colspan='8' class='bg-info text-info'><h4><center>No Workers Found</center></h4></td>\
+						<td colspan='8' class='bg-warning text-warning'><h4><center>No Workers Found</center></h4></td>\
 					</tr>";
 					$(".skill-row").hide();
 					$(".worker-table").append(html);

@@ -10,15 +10,19 @@
 
 	<?=link_tag(base_url('assets/css/bootstrap.min.css'));?>
 	<?=link_tag(base_url('assets/css/css-style.css'));?>
+	<?=link_tag(base_url('assets/css/datatables.min.css'));?>
 
 	<script type="text/javascript" src="<?=base_url();?>assets/js/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="<?=base_url();?>assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?=base_url();?>assets/js/datatables.min.js"></script>
 
 </head>
 <body>
-<img src="<?=base_url('assets/images/header-bg.jpg'); ?>" width="100%">
+<?php if(strcmp($viewuser,'admin') != 0):?>
+	<img src="<?=base_url('assets/images/header-bg.jpg'); ?>" width="100%">
+<?php endif;?>
 <header>
-	<nav class = "navbar navbar-default">
+	<nav class = "navbar navbar-default" >
 		<div class = "container-fluid">
 			<div class = "navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse" aria-expanded="false">
@@ -61,4 +65,4 @@
 		</div>
 	</nav>
 </header>
-<div class="container container-main">
+<div class="container-fluid container-main">

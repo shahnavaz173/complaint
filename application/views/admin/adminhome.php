@@ -10,17 +10,19 @@
 	<div class="row" >
 		<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
 			<div class="table-responsive">
-				<table class="table  table-bordered complaint-table-worker" >
-					<tr class="list-head ">
-						<th>Complain id</th>
-						<th>Student/Emp Name</th>
-						<th class="ctype-row">Complain Type</th>
-						<th>Description</th>
-						<th>Location</th>
-						<th>Date</th>
-						<th>Status</th>
-						<th>Assigned to</th>
-					</tr>
+				<table class="table  table-bordered complaint-table-worker">
+					<thead>
+						<tr class="list-head ">
+							<th>Complain id</th>
+							<th>Student/Emp Name</th>
+							<th class="ctype-row">Complain Type</th>
+							<th>Description</th>
+							<th>Location</th>
+							<th>Date</th>
+							<th>Status</th>
+							<th>Assigned to</th>
+						</tr>
+					</thead>
 				</table>
 			</div>
 		</div>
@@ -48,10 +50,8 @@
 	</div>
 </div>
 <div class="container-home">
-	<div class="jumbotron jumbotron-main">
-			<h1>Complain List</h1>
-	</div>
-	<div class="row">
+
+	<?php /*<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<?=form_open('',array()); ?>
 			<div class="form-row">
@@ -68,27 +68,49 @@
 			</div>
 			<?=form_close(); ?>
 		</div>
-	</div>
+	</div>*/ ?>
 	<div class="row" >
-		<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+		<div class="col-md-12">
 			<div class="table-responsive">
-				<table class="table  table-bordered complaint-table" >
-					<tr class="list-head ">
-						<th>Complain id</th>
-						<th>Student/Emp Name</th>
-						<th class="ctype-row">Complain Type</th>
-						<th>Description</th>
-						<th>Location</th>
-						<th>Date</th>
-						<th>Status</th>
-						<th class="assign-th">Assigned to</th>
-					</tr>
+				<table class="table  table-bordered complaint-table"  id ="datatable" >
+					<caption><center><h4>Complaint List</h4></center></caption>
+					<thead>
+						<tr class="list-head ">
+							<th>Date</th>
+							<th>User Name</th>
+							<th class="ctype-row">Type</th>
+							<th>Description</th>
+							<th>Complaint Location</th>
+							<th>Status</th>
+							<th class="assign-th">Worker</th>
+						</tr>
+					<thead>
+					<tbody>
+
+					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
+<style>
+.pagination > li > a, .pagination > li > span
+{
+	background-color:#337ab7 !important;
+	opacity:.8;
+	margin-left:1px;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover
+{
+		opacity:1;
+		background-color:#337ab7 !important;
+}
+</style>
 <script type="text/javascript">
+$(function()
+{
+		$("#datatable").dataTable();
+});
 $(document).ready(function()
 {
 	$(".complaintype").change(function()
@@ -115,15 +137,9 @@ function display_complaints(id)
 			cache: false,
 			success: function(data)
 			{
-				$(".lists").remove();
 				var dataArr = JSON.parse(data);
 				if(dataArr.length == 0)
 				{
-					var html = "\
-					<tr class='lists'>\
-						<td colspan='8' class='bg-info text-info'><h3><center>No Complaints Found</center></h3></td>\
-					</tr>";
-					$(".complaint-table").append(html);
 				}
 				else
 				{
@@ -184,7 +200,18 @@ function display_complaints(id)
 								<td class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'> "+worker+" </td>\
 							</tr>";
 						}
-							$(".complaint-table").append(html);
+						var table = $("#datatable").dataTable();
+						var added =	table.fnAddData([
+								dataArr[i].c_date,
+								dataArr[i].full_name,
+								dataArr[i].category,
+								dataArr[i].c_description,
+								dataArr[i].location,
+								dataArr[i].c_status,
+								"<span class = 'worker' style='cursor:pointer;'> <input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'> "+worker+"</span>"
+							]);
+						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
+						ntr.className = chkclass;
 						}
 					}
 				}
@@ -195,7 +222,8 @@ function display_complaints(id)
 	$(".assign-worker").hide();
 	$(".complaint-table").on("click",".worker",function()
 	{
-		$(this).parent().clone().appendTo(".complaint-table-worker");
+		alert("Hello");
+		/*$(this).parent().clone().appendTo(".complaint-table-worker");
 		var cid = $(this).find('.cidhidden').val();
 		var wcate = $(this).find('.wcate').val();
 		var val = $(this).text();
@@ -223,7 +251,7 @@ function display_complaints(id)
 						$(".select-worker").append(hidden);
 				}
 			});
-		}
+		}*/
 	});
 	$(".cancel-assign").click(function()
 	{

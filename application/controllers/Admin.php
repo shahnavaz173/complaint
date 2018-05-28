@@ -45,8 +45,8 @@ class Admin extends CI_Controller
 	public function get_complaint_list()
 	{
 		$cate = $this->input->post('id');
-		$old = $this->ComplaintModel->get_old_complaint_list_cat(5,$cate);
-		$new = $this->ComplaintModel->get_new_complaint_list_cat(5,$cate);
+		$old = $this->ComplaintModel->get_old_complaint_list_cat(4,$cate);
+		$new = $this->ComplaintModel->get_new_complaint_list_cat(4,$cate);
 		echo json_encode(array_merge($old,$new));
 	}
 }

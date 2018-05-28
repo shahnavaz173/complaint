@@ -53,5 +53,11 @@ class Complaint extends CI_Controller
       redirect(base_url('trackcomplaint'));
     }
   }
+  public function get_description()
+  {
+    $id = $this->input->post('id');
+    $result = $this->ComplaintModel->get_common_complaints($id);
+    echo json_encode($result);
+  }
 }
  ?>
