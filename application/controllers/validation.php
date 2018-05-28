@@ -103,6 +103,7 @@ public function ValidateUniqueEmail()
         echo "yes";
          $data['valid']=0;
           $user_data=array(
+                'u_id' => $this->input->post('empnumber'),
 								'full_name' => $this->input->post('fullname'),
 								'emp_no' => $this->input->post('empnumber'),
 								'email' => $this->input->post('email'),
@@ -111,9 +112,12 @@ public function ValidateUniqueEmail()
 								'u_type' => $this->input->post('usertype'),
                 'gender'=>$this->input->post('gender'),
 								'password' =>$this->input->post('password'));
-                $this->db->insert('user', $user_data);
-                echo "data inserted sucessfully";
-                return redirect(base_url('Home'));
+            $dept_data = array(
+              'deptid' => $this->input->post('department'),
+              'office_location' => $this->input->post('oaddress'));
+            $this->load->model('User');
+            $this->User->register($user_data,$dept_data);
+
     }
  else
     {

@@ -88,6 +88,3 @@ function validate_pwd()
     $("#cpassword").next('span').removeClass('glyphicon-ok');
   }
 }
-function validateDepartment(element)
-{
-}

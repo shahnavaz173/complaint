@@ -33,9 +33,8 @@ class Login extends CI_Controller
     }
     else
     {
-			$loginemail = array('email' => $this->input->post('email'), 'password' => $this->input->post('password'),'u_type' => $this->input->post('usertype'));
 			$loginenrol = array('emp_no' => $this->input->post('email'), 'password' => $this->input->post('password'),'u_type' => $this->input->post('usertype'));
-      $login_id = $this->LoginModel->user_login($loginemail,$loginenrol);
+      $login_id = $this->LoginModel->user_login($loginenrol);
 
       if($login_id)
   		{

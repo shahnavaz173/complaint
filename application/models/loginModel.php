@@ -15,13 +15,12 @@ class LoginModel extends CI_Model
     		  return FALSE;
     		}
   	}
-    public function user_login($dataemail,$dataenrol)
+    public function user_login($dataenrol)
     {
        $table='user';
        $this->db->select('u_id');
        $this->db->from($table);
-       $this->db->where($dataemail);
-       $this->db->or_where($dataenrol);
+       $this->db->where($dataenrol);
        $q=$this->db->get();
        if($q->num_rows() == 1)
        {

@@ -25,7 +25,7 @@
 					<label for = "email">E-mail / Enrolment No:
 					<div class = "input-group " >
 						<div class = "input-group-addon"><i class = "glyphicon glyphicon glyphicon-envelope"></i></div>
-						<?=form_input(array('name' => 'email', 'id' => 'email', 'value' => set_value('email'),'placeholder' => 'Enter E-mail', 'class' => 'form-control', 'required' => 'true')); ?>
+						<?=form_input(array('name' => 'email', 'id' => 'email', 'value' => set_value('email'),'placeholder' => 'Enter Enrol/Emp No', 'class' => 'form-control', 'required' => 'true')); ?>
 						<div class = "glyphicon  form-control-feedback"></div>
 					</div>
 					</label>

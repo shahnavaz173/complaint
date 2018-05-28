@@ -29,5 +29,11 @@ class User extends CI_Model
       $q = $this->db->get();
       return $q->result();
     }
+    public function register($user,$department)
+    {
+      $this->db->insert('user',$user);
+      $this->db->insert('user_dept',$department);
+
+    }
 }
  ?>
