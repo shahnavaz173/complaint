@@ -19,7 +19,7 @@ $(document).ready(function()
 			<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="box-shadow:0px 0px 3px 0px #000;border:1px solid #999;background:#F9F7F7;">
 				<div class="table-responsive" style="padding:.5em;height:220px;overflow:scroll;">
 					<table class="table table-bordered complaint-table" style="background:#eaeaea;" >
-						<caption><h2>Complaints that already registered from your location</h2></caption>
+						<caption><h5>Complaints that already registered from your location</h5></caption>
 						<tr class="list-head ">
 							<th>Complain id</th>
 							<th>Student/Emp Name</th>
