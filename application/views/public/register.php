@@ -1,4 +1,7 @@
-<script type="text/javascript" src="<?=base_url();?>assets/js/validation.js"></script>
+
+<?=link_tag(base_url('assets/css/bootstrap-select.min.css'));?>
+<script type="text/javascript" src="<?=base_url('assets/js/validation.js');?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/js/bootstrap-select.min.js');?>"></script>
 <div class="row">
 	<div class="col-md-8 col-md-offset-2 container-reg">
 		<div class="row">
@@ -19,7 +22,7 @@
 				<label for="fullname">Enter Your Full Name: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'fullname', 'name' => 'fullname', 'placeholder' => 'Enter Full Name', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'fullname', 'name' => 'fullname', 'placeholder' => 'Enter Full Name', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)', 'autocomplete' => 'off' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="fn" ></p>
@@ -30,19 +33,18 @@
 				<label for="department">Enter Department: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
-					<input list="department" name="department" class="form-control">
-						<datalist id="department">
+						<select name="department" id="department" class="form-control selectpicker" data-live-search="true" >
 							<?php foreach($departments as $d): ?>
 									<option value="<?= $d->deptid;?>"><?= $d->Dept_Name;?></option>
 							<?php endforeach; ?>
-						</datalist>
+						</select>
 				</div>
 			</div>
 			<div class="form-group has-feedback col-md-6">
 				<label for="empnumber">Enter Employee Number: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-pencil"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'name' => 'empnumber', 'placeholder' => 'Enter Employee Number','onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)','autocomplete' => 'off' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="en" ></p>
@@ -54,7 +56,7 @@
 				<label for="email">Enter E-mail Address: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-					<?=form_input(array('class' => 'form-control', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Enter E-mail', 'onkeyup'=> 'validateField(this)','onchange' => 'validateUnique(this)' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Enter E-mail', 'onkeyup'=> 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="em" ></p>
@@ -63,7 +65,7 @@
 				<label for="contact">Enter Contact Number: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></div>
-					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)')); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off')); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="ph" ></p>
@@ -108,6 +110,7 @@
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
 					<?=form_password(array('name' => 'password', 'class' => 'form-control', 'id' => 'password','placeholder' => 'Enter Password','onkeyup' => 'validateField(this)')); ?>
+					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="pwd" ></p>
 			</div>
@@ -116,6 +119,7 @@
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
 					<?=form_password(array('name' => 'cpassword', 'class' => 'form-control', 'id' => 'cpassword','placeholder' => 'Confirm Password','onkeyup' => 'validate_pwd(this)')); ?>
+					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="cpwd" ></p>
 			</div>
@@ -153,7 +157,7 @@ $(document).ready(function()
 
 	function validateUnique(element)
 	{
-		validateField(element);
+
 		var eventsource = $("#"+element.id);
 		var path;
 		var dataString='value='+eventsource.val();
@@ -179,11 +183,7 @@ $(document).ready(function()
 			{
 				if(data == true)
 				{
-					eventsource.parentsUntil('.form-group').removeClass('has-error');
-			    eventsource.next('span').removeClass('glyphicon-warning-sign');
-			    eventsource.parentsUntil('.form-group').addClass('has-success');
-			    eventsource.next('span').addClass('glyphicon-ok');
-			    eventsource.parent().next('.validation-error').html(null);
+					validateField(element);
 				}
 				else
 				{
@@ -194,7 +194,7 @@ $(document).ready(function()
 					eventsource.next('span').removeClass('glyphicon-ok');
 				}
 			}
-		})
+		});
 	}
 
 </script>

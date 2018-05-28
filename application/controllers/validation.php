@@ -22,7 +22,7 @@ public function ValidateUniqueEmail()
     $this->form_validation->set_rules('value','Email','is_unique[user.email]');
     if($this->form_validation->run())
     {
-       echo "success";
+       echo TRUE;
     }
     else
     {
@@ -35,7 +35,7 @@ public function ValidateUniqueEmail()
     $this->form_validation->set_rules('value','Contact Number','is_unique[user.ph_no]');
     if($this->form_validation->run())
     {
-      echo "success";
+      echo TRUE;
     }
     else
     {

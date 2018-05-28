@@ -10,7 +10,6 @@
 
 	<?=link_tag(base_url('assets/css/bootstrap.min.css'));?>
 	<?=link_tag(base_url('assets/css/css-style.css'));?>
-	<?=link_tag(base_url('assets/css/datepicker.css'));?>
 
 	<script type="text/javascript" src="<?=base_url();?>assets/js/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="<?=base_url();?>assets/js/bootstrap.min.js"></script>

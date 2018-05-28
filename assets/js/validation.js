@@ -7,36 +7,50 @@ function validateField(element)
   {
     case 'fullname':
       regex=/^([a-zA-Z]{2,})(\s|\-)([a-zA-Z]{2,})?(\s|\-)?([a-zA-Z]{2,})?$/;
-      errmsg = "Name is invalid";
-      validate(eventsource,regex,errmsg);
+      errmsg = "First Name should contain Characters and spaces Only!";
+      $label = "First Name";
+      validate(eventsource,regex,errmsg,$label);
     break;
     case 'empnumber':
       regex =/^[0-9]{3,4}$/;
       errmsg = "Employee Number Should Contain 3 or 4 digits";
-      validate(eventsource,regex,errmsg);
+      $label = "Employee Number";
+      validate(eventsource,regex,errmsg,$label);
     break;
     case 'email':
       regex=/^\w\d*[\w-\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/;
       errmsg = "Enter valid email address";
-      validate(eventsource,regex,errmsg);
+      $label = "E-mail";
+      validate(eventsource,regex,errmsg,$label);
     break;
     case 'contact':
       regex=/^\d{10}$/;
-      errmsg = "Mobile number should contain only digits";
-      validate(eventsource,regex,errmsg);
+      errmsg = "Mobile Number should contain 10 digits";
+      $label = "Mobile Number";
+      validate(eventsource,regex,errmsg,$label);
     break;
     case 'password':
       regex=/^.{6,14}$/;
-      errmsg ="Password must be between 6 to 14 characters ";
-      validate(eventsource,regex,errmsg);
+      errmsg ="Length of Password must be  greater then 6 and less then 14";
+      $label = "Password";
+      validate(eventsource,regex,errmsg,$label);
     break;
     default:
   }
 }
-function validate(eventsource,regex,errmsg)
+function validate(eventsource,regex,errmsg,$label)
 {
   var val = eventsource.val();
-  if(regex.test(val))
+
+  if(val == "")
+  {
+    eventsource.parentsUntil('.form-group').removeClass('has-success');
+    eventsource.parentsUntil('.form-group').addClass('has-error');
+    eventsource.next('span').addClass('glyphicon-warning-sign');
+    eventsource.parent().next('.validation-error').html($label+" Field is Required");
+    eventsource.next('span').removeClass('glyphicon-ok');
+  }
+  else if(regex.test(val))
   {
     eventsource.parentsUntil('.form-group').removeClass('has-error');
     eventsource.next('span').removeClass('glyphicon-warning-sign');
@@ -70,7 +84,10 @@ function validate_pwd()
     $("#cpassword").parentsUntil('.form-group').removeClass('has-success');
     $("#cpassword").parentsUntil('.form-group').addClass('has-error');
     $("#cpassword").next('span').addClass('glyphicon-warning-sign');
-    $("#cpassword").parent().next('.validation-error').html("password does not match");
+    $("#cpassword").parent().next('.validation-error').html("Password And Confirm Password Should be same");
     $("#cpassword").next('span').removeClass('glyphicon-ok');
   }
+}
+function validateDepartment(element)
+{
 }
