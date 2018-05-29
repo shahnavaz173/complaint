@@ -172,5 +172,21 @@ class ComplaintModel extends CI_Model
     $q = $this->db->get();
     return $q->result();
   }
+  public function update_complaint_status($status,$cid)
+  {
+    $this->db->select('c_date');
+    $this->db->from('complaint_register');
+    $this->db->where('c_id',$cid);
+    $q = $this->db->get();
+    $q = $q->result();
+    $today = date('Y-m-d');
+    if($status == 'Complete')
+      $this->db->set(array('c_status' => $status, 's_date' => $today, 'solution_duration' => 'DATEDIFF('.$today.','.$q->c_date')'));
+    else
+      $this->db->set(array('c_status' => $status,  's_date' => NULL, 'solution_duration' => NULL));
+    $this->db->where('c_id',$cid);
+    $this->db->update('complaint_register');
+    return TRUE;
+  }
 }
 ?>
