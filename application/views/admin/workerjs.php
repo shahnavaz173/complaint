@@ -1,5 +1,7 @@
 
+
 <script type="text/javascript">
+
 $(document).ready(function()
 {
 	$(".add-new-worker").hide();
@@ -27,18 +29,18 @@ $(document).ready(function()
 		$(".update-worker").css('cursor','not-allowed');
 		$(this).hide();
 		var row = parseInt($(this).next(".row-no").val());
-		var name = document.getElementById("table").rows[row+1].cells[0].innerHTML;
-		document.getElementById("table").rows[row+1].cells[0].innerHTML = "<input type='text' id='wname' class='form-control' value='"+name+"'>";
-		var phno = document.getElementById("table").rows[row+1].cells[1].innerHTML;
-		document.getElementById("table").rows[row+1].cells[1].innerHTML = "<input type='text' id='phno' class='form-control' value='"+phno+"'>";
-		var email = document.getElementById("table").rows[row+1].cells[2].innerHTML;
-		document.getElementById("table").rows[row+1].cells[2].innerHTML = "<input type='text' id='email' class='form-control' value='"+email+"'>";
-		var add = document.getElementById("table").rows[row+1].cells[3].innerHTML;
-		document.getElementById("table").rows[row+1].cells[3].innerHTML = "<textarea id='add' class='form-control'>"+add+"</textarea>";
+		var name = document.getElementById("datatable").rows[row+1].cells[0].innerHTML;
+		document.getElementById("datatable").rows[row+1].cells[0].innerHTML = "<input type='text' id='wname' class='form-control' value='"+name+"'>";
+		var phno = document.getElementById("datatable").rows[row+1].cells[1].innerHTML;
+		document.getElementById("datatable").rows[row+1].cells[1].innerHTML = "<input type='text' id='phno' class='form-control' value='"+phno+"'>";
+		var email = document.getElementById("datatable").rows[row+1].cells[2].innerHTML;
+		document.getElementById("datatable").rows[row+1].cells[2].innerHTML = "<input type='text' id='email' class='form-control' value='"+email+"'>";
+		var add = document.getElementById("datatable").rows[row+1].cells[3].innerHTML;
+		document.getElementById("datatable").rows[row+1].cells[3].innerHTML = "<textarea id='add' class='form-control'>"+add+"</textarea>";
 		var cele = $(this).parent("td").parent("tr").find(".wcate");
 		var catext = cele.text();
 		cele.text("");
-		$(".worker-type").clone().appendTo(cele);
+		$(".worker-skill").clone().appendTo(cele);
 		cele.find("select option").each(function()
 		{
 			if($(this).text() == catext.trim())
@@ -48,6 +50,7 @@ $(document).ready(function()
 		});
 		$(this).after("<button style='background:none;border:none' title='Save Update' class='glyphicon glyphicon-floppy-save text-success save-update'></button>");
 		$(this).parent("td").append("<button style='background:none; border:none' title='Cancel Update' class='glyphicon glyphicon-remove text-danger cancel-update'></button>");
+
 	});
 
 	$(".worker-table").on("click",".save-update",function()
@@ -209,7 +212,7 @@ function display_workers(id)
 							var chkclass = "bg-danger text-danger";
 						else
 							var chkclass = "bg-info text-info";
-	          if(id == 'all')
+	          /*if(id == 'all')
 	          {
 	            $(".skill-row").show();
 	            html = "\
@@ -219,7 +222,7 @@ function display_workers(id)
 	              <td>"+dataArr[i].email+"</td>\
 	              <td>"+dataArr[i].address+"</td>\
 	              <td class='wcate'>"+dataArr[i].category+" </td>\
-	              <td style='cursor:pointer' class='change-status'>"+dataArr[i].w_status+"<input type='hidden' class='worker-id' value='"+dataArr[i].w_id+"' ></td>\
+	              <td style='cursor:pointer' class='change-status'><span class='change-status'>"+dataArr[i].w_status+"<input type='hidden' class='worker-id' value='"+dataArr[i].w_id+"' ></td>\
 								<td style='cursor:pointer'>\
 									<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-worker'></button>\
 									<input type='hidden' class='row-no' value='"+i+"' >\
@@ -247,8 +250,18 @@ function display_workers(id)
 									<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>\
 								</td>\
 	            </tr>";
-	          }
-	          $(".worker-table").append(html);
+	          }*/
+						var table = $("#datatable").dataTable();
+						var added =	table.fnAddData([
+								dataArr[i].w_name,
+								dataArr[i].ph_no,
+								dataArr[i].email,
+								dataArr[i].address,
+								dataArr[i].category,
+								"<span style='cursor:pointer' class='change-status'>"+dataArr[i].w_status+"<input type='hidden' class='worker-id' value='"+dataArr[i].w_id+"' ></span>",
+								"<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-worker'></button><input type='hidden' class='row-no' value='"+i+"' >",
+								"<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>"
+							]);
 	        }
 				}
 			}

@@ -13,12 +13,11 @@
 				<table class="table  table-bordered complaint-table-worker">
 					<thead>
 						<tr class="list-head ">
-							<th>Complain id</th>
+							<th>Date</th>
 							<th>Student/Emp Name</th>
 							<th class="ctype-row">Complain Type</th>
 							<th>Description</th>
 							<th>Location</th>
-							<th>Date</th>
 							<th>Status</th>
 							<th>Assigned to</th>
 						</tr>
@@ -208,7 +207,7 @@ function display_complaints(id)
 								dataArr[i].c_description,
 								dataArr[i].location,
 								dataArr[i].c_status,
-								"<span class = 'worker' style='cursor:pointer;'> <input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'> "+worker+"</span>"
+								"<span class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'>"+worker+"</span>"
 							]);
 						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
 						ntr.className = chkclass;
@@ -222,13 +221,13 @@ function display_complaints(id)
 	$(".assign-worker").hide();
 	$(".complaint-table").on("click",".worker",function()
 	{
-		alert("Hello");
-		/*$(this).parent().clone().appendTo(".complaint-table-worker");
+		$(this).parent().parent().clone().appendTo(".complaint-table-worker");
 		var cid = $(this).find('.cidhidden').val();
 		var wcate = $(this).find('.wcate').val();
 		var val = $(this).text();
-		if(val.localeCompare(" Click To Assign ") == 0)
+		if(val.localeCompare("Click To Assign") == 0)
 		{
+
 			$(".assign-worker").slideDown("slow");
 			$(".container-home").hide();
 			//var id = wcate;
@@ -251,7 +250,7 @@ function display_complaints(id)
 						$(".select-worker").append(hidden);
 				}
 			});
-		}*/
+		}
 	});
 	$(".cancel-assign").click(function()
 	{
