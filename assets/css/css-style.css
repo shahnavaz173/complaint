@@ -84,6 +84,15 @@ table
 {
 	background-color: #FFF;
 }
+table tbody tr
+{
+	white-space: nowrap;
+}
+table tbody tr
+{
+	height: 20px !important;
+	overflow: hidden !important;
+}
 .form-buttons
 {
 	background-color: #95724f !important;

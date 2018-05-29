@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-row">
-				<div class="form-group col-md-3 col-md-offset-10">
+				<div class="form-group col-md-2 col-md-offset-10">
 					<button class="btn btn-warning click-to-add" ><span class="glyphicon glyphicon-plus"></span> Click To Add Worker </button>
 				</div>
 			</div>
@@ -19,14 +19,14 @@
 				<table class="table table-striped table-bordered worker-table"  id ="datatable" >
 					<thead>
 						<tr class="list-head ">
-							<th>Worker Name</th>
-							<th>Phone Number</th>
+							<th>Name</th>
+							<th>Phone</th>
 							<th>E-mail</th>
 							<th>Address</th>
-							<th class="skill-row">Skill</th>
-							<th>Status</th>
-							<th>Update</th>
-							<th>Delete</th>
+							<th class="skill-row" style="width:1em">Skill</th>
+							<th style="width:1em">Status</th>
+							<th style="width:1em">Update</th>
+							<th style="width:1em">Delete</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -40,7 +40,7 @@
 <script type="text/javascript">
 	$(function()
 	{
-			$("#datatable").dataTable();
+			var table = $("#datatable").dataTable();
 	});
 </script>
 <?php

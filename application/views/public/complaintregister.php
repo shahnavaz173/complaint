@@ -12,44 +12,47 @@ $(document).ready(function()
 </script>
 
 <div class="container-login">
-		<div class="jumbotron jumbotron-main">
-			<h1>Register Your Complaint</h1>
-		</div>
+
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="box-shadow:0px 0px 3px 0px #000;border:1px solid #999;background:#F9F7F7;">
-				<div class="table-responsive" style="padding:.5em;height:220px;overflow:scroll;">
-					<table class="table table-bordered complaint-table" style="background:#eaeaea;" >
-						<caption><h5>Complaints that already registered from your location</h5></caption>
-						<tr class="list-head ">
-							<th>Complain id</th>
-							<th>Student/Emp Name</th>
-							<th class="ctype-row">Complain Type</th>
-							<th>Description</th>
-							<th>Location</th>
-							<th>Date</th>
-							<th>Status</th>
-							<th>Assigned to</th>
-						</tr>
-						<?php foreach($complaints as $complaint): ?>
-							<tr>
-								<td><?=$complaint->c_id; ?></td>
-								<td><?=$complaint->full_name; ?></td>
-								<td><?=$complaint->category; ?></td>
-								<td><?=$complaint->c_description; ?></td>
-								<td><?=$complaint->location; ?></td>
-								<td><?=$complaint->c_date; ?></td>
-								<td><?=$complaint->c_status; ?></td>
-								<td>
-									<?php
-									if($complaint->w_name == null)
-									 	echo "Not Assigned";
-									else
-										echo $complaint->w_name;
-									?>
-								</td>
+				<div class="table-responsive" style="padding:.5em;height:250px;overflow:scroll;">
+					<table class="table table-bordered complaint-table" style="background:#eaeaea;" id="datatable">
+						<caption><h5><b>Complaints that already registered from your location</b></h5></caption>
+						<thead>
+							<tr class="list-head ">
+								<th>Complain id</th>
+								<th>Student/Emp Name</th>
+								<th class="ctype-row">Complain Type</th>
+								<th>Description</th>
+								<th>Location</th>
+								<th>Date</th>
+								<th>Status</th>
+								<th>Assigned to</th>
 							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($complaints as $complaint): ?>
+								<tr>
+									<td><?=$complaint->c_id; ?></td>
+									<td><?=$complaint->full_name; ?></td>
+									<td><?=$complaint->category; ?></td>
+									<td><?=$complaint->c_description; ?></td>
+									<td><?=$complaint->location; ?></td>
+									<td><?=$complaint->c_date; ?></td>
+									<td><?=$complaint->c_status; ?></td>
+									<td>
+										<?php
+										if($complaint->w_name == null)
+										 	echo "Not Assigned";
+										else
+											echo $complaint->w_name;
+										?>
+									</td>
+								</tr>
 
-						<?php endforeach; ?>
+							<?php endforeach; ?>
+						</tbody>
+
 					</table>
 				</div>
 			</div>
@@ -146,6 +149,10 @@ $(document).ready(function()
 		</div>
 </div>
 <script type="text/javascript">
+$(function()
+{
+		$("#datatable").dataTable();
+});
 $(document).ready(function()
 {
 	$(window).load(function()

@@ -257,11 +257,12 @@ function display_workers(id)
 								dataArr[i].ph_no,
 								dataArr[i].email,
 								dataArr[i].address,
-								dataArr[i].category,
+								"<span class='wcate'>"+dataArr[i].category+"</span>",
 								"<span style='cursor:pointer' class='change-status'>"+dataArr[i].w_status+"<input type='hidden' class='worker-id' value='"+dataArr[i].w_id+"' ></span>",
 								"<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-worker'></button><input type='hidden' class='row-no' value='"+i+"' >",
 								"<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>"
 							]);
+						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
 	        }
 				}
 			}
