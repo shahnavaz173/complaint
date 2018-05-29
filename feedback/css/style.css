@@ -1,0 +1,47 @@
+
+form#smileys input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 90px;
+  height: 90px;
+  border: none;
+  cursor: pointer;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+form#smileys input[type="radio"]:hover, form#smileys input[type="radio"]:checked {
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
+}
+form#smileys input[type="radio"]:focus {
+  outline: 0;
+}
+form#smileys input[type="radio"].happy {
+  background: url("happy_ampvnc.svg") center;
+  background-size: cover;
+}
+form#smileys input[type="radio"].neutral {
+  background: url("neutral_t3q8hz.svg") center;
+  background-size: cover;
+}
+form#smileys input[type="radio"].sad {
+  background: url("sad_bj1tuj.svg") center;
+  background-size: cover;
+}
+
+.mtt {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  color: #999;
+  text-decoration: none;
+}
+.mtt span {
+  color: #e74c3c;
+}
+.mtt:hover {
+  color: #666;
+}
+.mtt:hover span {
+  color: #c0392b;
+}
