@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2018 at 07:36 AM
+-- Generation Time: May 29, 2018 at 02:31 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -121,8 +121,8 @@ CREATE TABLE `complaint_register` (
   `c_description` longtext,
   `c_date` date DEFAULT '1996-05-02',
   `s_date` date DEFAULT NULL,
-  `c_status` varchar(10) DEFAULT NULL,
-  `response` varchar(40) DEFAULT NULL,
+  `c_status` varchar(20) DEFAULT NULL,
+  `solution_duration` int(11) DEFAULT NULL,
   `w_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -130,11 +130,11 @@ CREATE TABLE `complaint_register` (
 -- Dumping data for table `complaint_register`
 --
 
-INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `response`, `w_id`) VALUES
-('20180528-101-0001', 1, '101', 'Fan Not Working', '2018-05-28', NULL, 'Pending', NULL, 1),
-('20180528-102-0002', 1, '102', 'Tube Light Not Working', '2018-05-03', NULL, 'Pending', NULL, 1),
-('20180528-101-0003', 3, '101', 'Pipe Leakage', '2018-05-28', NULL, 'Pending', NULL, NULL),
-('20180528-101-0004', 4, '101', 'Door is Broken', '2018-05-24', NULL, 'Pending', NULL, NULL);
+INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `solution_duration`, `w_id`) VALUES
+('20180528-101-0001', 1, '101', 'Fan Not Working', '2018-05-28', '2018-05-29', 'Complete', NULL, 1),
+('20180528-102-0002', 1, '102', 'Tube Light Not Working', '2018-05-03', NULL, 'Under Construction', NULL, 1),
+('20180528-101-0003', 3, '101', 'Pipe Leakage', '2018-05-28', NULL, 'Under Construction', NULL, NULL),
+('20180528-101-0004', 4, '101', 'Door is Broken', '2018-05-24', NULL, 'Under Construction', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -373,7 +373,7 @@ ALTER TABLE `deptmst`
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
-  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
