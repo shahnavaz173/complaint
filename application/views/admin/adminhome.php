@@ -206,7 +206,7 @@ function display_complaints(id)
 								dataArr[i].category,
 								dataArr[i].c_description,
 								dataArr[i].location,
-								dataArr[i].c_status,
+								"<span class='change status'>"+dataArr[i].c_status+"</status>",
 								"<span class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'>"+worker+"</span>"
 							]);
 						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
