@@ -36,7 +36,7 @@ $(document).ready(function()
 		var email = document.getElementById("datatable").rows[row+1].cells[2].innerHTML;
 		document.getElementById("datatable").rows[row+1].cells[2].innerHTML = "<input type='text' id='email' class='form-control' value='"+email+"'>";
 		var add = document.getElementById("datatable").rows[row+1].cells[3].innerHTML;
-		document.getElementById("datatable").rows[row+1].cells[3].innerHTML = "<textarea id='add' class='form-control'>"+add+"</textarea>";
+		document.getElementById("datatable").rows[row+1].cells[3].innerHTML = "<textarea id='add' rows='3' cols='30' class='form-control'>"+add+"</textarea>";
 		var cele = $(this).parent("td").parent("tr").find(".wcate");
 		var catext = cele.text();
 		cele.text("");

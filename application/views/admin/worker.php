@@ -41,7 +41,9 @@
 <script type="text/javascript">
 	$(function()
 	{
-			var table = $("#datatable").dataTable();
+			var table = $("#datatable").dataTable({
+					"ordering": false
+				});
 	});
 </script>
 <?php

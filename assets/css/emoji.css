@@ -1,0 +1,47 @@
+
+form#smileys input[type="radio"] {
+  -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 90px;
+    height: 90px;
+  border: none;
+  cursor: pointer;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+form#smileys input[type="radio"]:hover, form#smileys input[type="radio"]:checked {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+  border-radius:100%;
+  background-color: #75c8f5 !important;
+}
+form#smileys input[type="radio"]:focus {
+  outline: 0;
+}
+form#smileys input[type="radio"].happy {
+  background: url("../images/happy_ampvnc.svg") center;
+  background-size: cover;
+}
+
+form#smileys input[type="radio"].happy:hover, form#smileys input[type="radio"].happy:checked
+{
+  background-color: #dff0d8 !important;
+}
+
+form#smileys input[type="radio"].neutral {
+  background: url("../images/neutral_t3q8hz.svg") center;
+  background-size: cover;
+}
+form#smileys input[type="radio"].neutral:hover, form#smileys input[type="radio"].neutral:checked
+{
+  background-color: #fcf8e3 !important;
+}
+form#smileys input[type="radio"].sad {
+  background: url("../images/sad_bj1tuj.svg") center;
+  background-size: cover;
+}
+
+form#smileys input[type="radio"].sad:hover, form#smileys input[type="radio"].sad:checked
+{
+  background-color: #f2dede !important;
+}

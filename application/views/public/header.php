@@ -49,7 +49,6 @@
 					<?php else: ?>
 						<li role = "presentation" ><a href = "<?=base_url('complaintregister'); ?>" <?php if($title=='Complaintregister'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-plus">	</span> Complaint Register</a></li>
 						<li role = "presentation" ><a href = "<?=base_url('complaints'); ?>" <?php if($title=='Complaints'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Complaints By You</a></li>
-						<li role = "presentation" ><a href = "<?=base_url('userprofile'); ?>" <?php if($title=='userprofile'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Profile</a></li>
 					<?php endif; ?>
 
 
@@ -63,7 +62,12 @@
 					</ul>
 				<?php if($islogin):?>
 					<ul class="nav navbar-nav" style="float:right;">
+						<?php if(strcmp($viewuser,'admin') == 0): ?>
 							<li role = "presentation" ><a href = "<?=base_url('Login/logout'); ?>" ><span class = "glyphicon glyphicon-log-out">	</span> Logout</a></li>
+						<?php else: ?>
+							<li role = "presentation" ><a href = "<?=base_url('userprofile'); ?>" <?php if($title=='userprofile'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> User Profile</a></li>
+							<li role = "presentation" ><a href = "<?=base_url('Login/logout'); ?>" ><span class = "glyphicon glyphicon-log-out">	</span> Logout</a></li>
+						<?php endif; ?>
 					</ul>
 				<?php endif;	?>
 

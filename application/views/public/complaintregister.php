@@ -11,7 +11,7 @@ $(document).ready(function()
 });
 </script>
 
-<div class="container-login">
+<div class="container-complaint-registers">
 
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="box-shadow:0px 0px 3px 0px #000;border:1px solid #999;background:#F9F7F7;">
@@ -151,7 +151,9 @@ $(document).ready(function()
 <script type="text/javascript">
 $(function()
 {
-		$("#datatable").dataTable();
+		$("#datatable").dataTable({
+			ordering:false;
+		});
 });
 $(document).ready(function()
 {

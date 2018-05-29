@@ -125,6 +125,7 @@ class ComplaintModel extends CI_Model
     echo "</pre>";
     $this->db->insert('complaint_register',$cinfo);
     $this->db->insert('complaint_location',array('c_id' => $cid, 'location' => $location));
+    $this->session->set_userdata('registered_complaint',$cid);
   }
   public function generate_complaint_id($uid)
   {

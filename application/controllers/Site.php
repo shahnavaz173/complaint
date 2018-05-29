@@ -58,7 +58,6 @@ class Site extends CI_Controller
 			if($this->session->userdata('cdetails'))
 			{
 					$data['cdetails'] = $this->session->userdata('cdetails');
-					$this->session->unset_userdata('cdetails');
 			}
 			else
 				$data['cdetails'] = FALSE;
@@ -71,6 +70,10 @@ class Site extends CI_Controller
 		{
 			$data['udetails'] = $this->User->get_user_detail($this->session->userdata('user_id'));
 			$data['departments']=$this->User->get_department();
+		}
+		else if($page == 'complaintsuccess')
+		{
+			$data['registered_complaint'] = $this->session->userdata('registered_complaint');
 		}
 
 		$data['title']=ucfirst($page);

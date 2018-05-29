@@ -1,4 +1,7 @@
-
+<?php
+	if(!$islogin)
+		redirect(base_url('login'));
+?>
 <?=link_tag(base_url('assets/css/bootstrap-select.min.css'));?>
 <script type="text/javascript" src="<?=base_url('assets/js/validation.js');?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/js/bootstrap-select.min.js');?>"></script>

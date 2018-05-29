@@ -43,7 +43,9 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
-  var table = $("#datatable").dataTable();
+  var table = $("#datatable").dataTable({
+		ordering:false;
+	});
   table.find("tr:odd").addClass('bg-info');
   table.find("tr:odd").addClass('text-info');
 });

@@ -42,6 +42,7 @@ class Complaint extends CI_Controller
     $location = $this->input->post('address');
     $cinfo = array('cate_id' => $cate_id, 'u_id' => $uid, 'c_description' => $description, 'c_date' => $date,'c_status' => 'Pending');
     $this->ComplaintModel->register_complaint($cinfo,$location);
+    redirect(base_url('complaintsuccess'));
   }
   public function track()
   {
