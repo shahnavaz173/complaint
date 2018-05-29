@@ -181,7 +181,7 @@ class ComplaintModel extends CI_Model
     $q = $q->result();
     $today = date('Y-m-d');
     if($status == 'Complete')
-      $this->db->set(array('c_status' => $status, 's_date' => $today, 'solution_duration' => 'DATEDIFF('.$today.','.$q->c_date')'));
+      $this->db->set(array('c_status' => $status, 's_date' => $today));
     else
       $this->db->set(array('c_status' => $status,  's_date' => NULL, 'solution_duration' => NULL));
     $this->db->where('c_id',$cid);

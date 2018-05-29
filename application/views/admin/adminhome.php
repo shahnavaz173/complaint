@@ -202,22 +202,19 @@ $(".complaint-table").on("change",".select-status",function()
 		cache: false,
 		success: function(data)
 		{
+				$(".select-status").prev('span').text(data);
+				$(".select-status").remove();
+				$(".change-status").prop("disabled",false);
+
 			if(data.localeCompare("Pending")  == 0)
 			{
-					$(".select-status").prev('span').text(data);
-					$(".select-status").remove();
 			}
 			else if(data.localeCompare("Under Construction") == 0)
 			{
-					$(".select-status").prev('span').text(data);
-					$(".select-status").remove();
 			}
 			else if(data.localeCompare("Complete") == 0)
 			{
-					$(".select-status").prev('span').text(data);
-					$(".select-status").remove();
 			}
-			$(".change-status").prop("disabled",false);
 		}
 	});
 });

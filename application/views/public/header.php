@@ -31,7 +31,13 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<?=base_url(); ?>">GVP Complaint	</a>
+				<a class="navbar-brand" href="<?=base_url(); ?>">
+					<?php if(strcmp($viewuser,'admin') == 0):?>
+						Dash Board
+					<?php else: ?>
+						GVP Complaint
+					<?php endif;?>
+				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
 				<ul class="nav navbar-nav ">
