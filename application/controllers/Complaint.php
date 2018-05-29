@@ -52,6 +52,11 @@ class Complaint extends CI_Controller
       $this->session->set_userdata('cdetails',$details);
       redirect(base_url('trackcomplaint'));
     }
+    else
+    {
+      $this->session->set_userdata('cdetails',"error");
+      redirect(base_url('login'));
+    }
   }
   public function get_description()
   {

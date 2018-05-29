@@ -91,6 +91,12 @@
 					</label>
 				</div>
 			</div>
+
+			<div  class = "form-group col-md-10 col-md-offset-1">
+				<div class="track-err">
+						<center><p class="bg-danger text-danger">No Complaint Found Enter Valid Complaint id</p></center>
+				</div>
+			</div>
 			<div class = "row" >
 				<div  class = "form-group col-md-10 col-md-offset-1">
 						<?=form_submit('track','Track',array('class' => 'btn btn-primary btn-md btn-block form-buttons')); ?>
@@ -126,18 +132,20 @@
 	</script>
 
 </div>
+<script type="text/javascript">
+$(document).ready(function()
+{
 <?php if($logincheck): ?>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			$(".login-err").show();
-		});
-	</script>
+		$(".login-err").show();
 <?php else: ?>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			$(".login-err").hide();
-		});
-	</script>
+		$(".login-err").hide();
 <?php endif; ?>
+
+
+<?php if(!$cdetails): ?>
+		$(".track-err").hide();
+<?php else: ?>
+		$(".track-err").show();
+<?php endif; ?>
+});
+</script>

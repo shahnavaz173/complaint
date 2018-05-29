@@ -42,6 +42,7 @@
 						<li role = "presentation" ><a href = "<?=base_url('login'); ?>" <?php if($title=='Login'){ echo "class='active'"; }?>  ><span class = "glyphicon glyphicon-log-in" > </span> Login</a></li>
 					<?php else: ?>
 						<li role = "presentation" ><a href = "<?=base_url('complaintregister'); ?>" <?php if($title=='Complaintregister'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-plus">	</span> Complaint Register</a></li>
+						<li role = "presentation" ><a href = "<?=base_url('complaints'); ?>" <?php if($title=='Complaints'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Complaints By You</a></li>
 					<?php endif; ?>
 
 

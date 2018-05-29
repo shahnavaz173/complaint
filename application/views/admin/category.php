@@ -3,39 +3,35 @@
 		redirect(base_url('login'));
 ?>
 <div class="container-home worker-main">
-  <div class="jumbotron jumbotron-main">
-		<h1>Common Complaints</h1>
-	</div>
+
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-12 ">
 			<div class="form-row">
-				<div class="form-group col-md-3 ">
+				<div class="form-group col-md-2 col-md-offset-10 ">
 					<button class="btn btn-warning click-to-add" ><span class="glyphicon glyphicon-plus"></span> Click To Add New </button>
 				</div>
 				<?=form_open('',array()); ?>
-				<div class="form-group col-md-5 col-md-offset-1">
-					<label for="category">Category: </label>
-					<select name="category" class="form-control category">
-						<option value="">Select Category</option>
-						<option value="all">All</option>
-						<?php foreach ($complain_caategory as $category): ?>
-							<option value="<?php echo $category->cate_id; ?>"><?php echo $category->category; ?></option>
-						<?php endforeach; ?>
-					</select>
-				</div>
+
 			</div>
 			<?=form_close(); ?>
 		</div>
 	</div>
 	<div class="row" >
-		<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+		<div class="col-md-12">
 			<div class="table-responsive">
-				<table class="table  table-bordered category-table" id="table" >
-					<tr class="list-head ">
-            <th>Category</th>
-            <th>Complaint Description</th>
-            <th>For Whom</th>
-					</tr>
+				<table class="table  table-bordered category-table" id="datatable" >
+					<caption><center><h5><b>Common Complaints</b></h5></center></caption>
+					<thead>
+						<tr class="list-head ">
+	            <th>Category</th>
+	            <th>Complaint Description</th>
+	            <th>For Whom</th>
+							<th style="width:1em">Update</th>
+							<th style="width:1em">Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -44,6 +40,7 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
+	$("#datatable").dataTable();
 	$(window).load(function()
 	{
 		displayComplaints('all');
@@ -82,12 +79,17 @@ function displayComplaints(id)
 						var level = "For Campus Only";
 					else
 						var level = "For All";
-					var html = "<tr class='"+chclass+"'>\
-					<td>"+dataArr[i].category+"</td>\
-					<td>"+dataArr[i].description+"</td>\
-					<td>"+level+"</td>\
-					</tr>";
-					$(".category-table").append(html);
+
+					var table = $("#datatable").dataTable();
+					var added = table.fnAddData([
+						dataArr[i].category,
+						dataArr[i].description,
+						level,
+						"<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-worker'></button><input type='hidden' class='row-no' value='"+i+"' >",
+						"<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>"
+					]);
+					var ntr = table.fnSettings().aoData[ added[0] ].nTr;
+					ntr.className = chclass;
 				}
 			}
 

@@ -37,6 +37,14 @@ class Site extends CI_Controller
 			$data['logincheck'] = FALSE;
 			if($this->session->userdata('check_login') == TRUE )
 				$data['logincheck'] = TRUE;
+
+				if($this->session->userdata('cdetails'))
+				{
+						$data['cdetails'] = $this->session->userdata('cdetails');
+						$this->session->unset_userdata('cdetails');
+				}
+				else
+					$data['cdetails'] = FALSE;
 		}
 		else if( $page == 'complaintregister')
 		{
@@ -48,9 +56,16 @@ class Site extends CI_Controller
 		else if($page == 'trackcomplaint')
 		{
 			if($this->session->userdata('cdetails'))
-				$data['cdetails'] = $this->session->userdata('cdetails');
+			{
+					$data['cdetails'] = $this->session->userdata('cdetails');
+					$this->session->unset_userdata('cdetails');
+			}
 			else
 				$data['cdetails'] = FALSE;
+		}
+		else if($page == 'complaints')
+		{
+			$data['ucomplaints'] = $this->cm->get_complaints_by_user($this->session->userdata('user_id'));
 		}
 
 		$data['title']=ucfirst($page);

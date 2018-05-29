@@ -17,6 +17,7 @@
 		<div class="col-md-12">
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered worker-table"  id ="datatable" >
+					<caption><center><b>Workers</b></center></caption>
 					<thead>
 						<tr class="list-head ">
 							<th>Name</th>

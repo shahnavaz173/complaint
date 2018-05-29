@@ -160,17 +160,13 @@ $(document).ready(function()
 								var html = data+"<input type='hidden' class='worker-id' value='"+id+"' >";
 								if(data.localeCompare('Active'))
 								{
-									ele.parent('tr').removeClass('bg-info');
-									ele.parent('tr').removeClass('text-info');
-									ele.parent('tr').addClass('bg-danger');
-									ele.parent('tr').addClass('text-danger');
+									ele.parent('td').parent('tr').removeClass('text-info');
+									ele.parent('td').parent('tr').addClass('text-danger');
 								}
 								else
 								{
-									ele.parent('tr').removeClass('bg-danger');
-									ele.parent('tr').removeClass('text-danger');
-									ele.parent('tr').addClass('bg-info');
-									ele.parent('tr').addClass('text-info');
+									ele.parent('td').parent('tr').removeClass('text-danger');
+									ele.parent('td').parent('tr').addClass('text-info');
 								}
 								ele.html(html);
 						}
@@ -207,50 +203,6 @@ function display_workers(id)
 
 	        for(i = 0; i<dataArr.length; i++)
 	        {
-	          var html = "";
-						if(dataArr[i].w_status != 'Active')
-							var chkclass = "bg-danger text-danger";
-						else
-							var chkclass = "bg-info text-info";
-	          /*if(id == 'all')
-	          {
-	            $(".skill-row").show();
-	            html = "\
-	            <tr class='lists "+chkclass+"'>\
-	              <td>"+dataArr[i].w_name+"</td>\
-	              <td>"+dataArr[i].ph_no+"</td>\
-	              <td>"+dataArr[i].email+"</td>\
-	              <td>"+dataArr[i].address+"</td>\
-	              <td class='wcate'>"+dataArr[i].category+" </td>\
-	              <td style='cursor:pointer' class='change-status'><span class='change-status'>"+dataArr[i].w_status+"<input type='hidden' class='worker-id' value='"+dataArr[i].w_id+"' ></td>\
-								<td style='cursor:pointer'>\
-									<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-worker'></button>\
-									<input type='hidden' class='row-no' value='"+i+"' >\
-								</td>\
-								<td style='cursor:pointer'>\
-									<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>\
-								</td>\
-	            </tr>";
-	          }
-	          else
-	          {
-	            $(".skill-row").hide();
-	            html = "\
-	            <tr class='lists "+chkclass+"'>\
-	              <td>"+dataArr[i].w_name+"</td>\
-	              <td>"+dataArr[i].ph_no+"</td>\
-	              <td>"+dataArr[i].email+"</td>\
-	              <td>"+dataArr[i].address+"</td>\
-	              <td class='change-status'>"+dataArr[i].w_status+"<input type='hidden' class='worker-id' value='"+dataArr[i].w_id+"' ></td>\
-								<td style='cursor:pointer' >\
-									<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-worker'></button>\
-									<input type='hidden' class='row-no' value='"+i+"' >\
-								</td>\
-								<td style='cursor:pointer'>\
-									<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>\
-								</td>\
-	            </tr>";
-	          }*/
 						var table = $("#datatable").dataTable();
 						var added =	table.fnAddData([
 								dataArr[i].w_name,
@@ -263,6 +215,11 @@ function display_workers(id)
 								"<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>"
 							]);
 						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
+						if(dataArr[i].w_status.localeCompare('Active') == 0)
+							var chclass = 'text-info';
+						else
+							var chclass = 'text-danger';
+						ntr.className = chclass;
 	        }
 				}
 			}

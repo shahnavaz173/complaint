@@ -48,7 +48,13 @@ class ComplaintModel extends CI_Model
       }
       return $news;
     }
-
+    public function get_complaints_by_user($uid)
+    {
+      $this->complaint_list();
+      $this->db->where('user.u_id',$uid);
+      $q = $this->db->get();
+      return $q->result();
+    }
     public function get_complaints_by_address($uid)
     {
       $this->db->select(array('user.address','user_dept.office_location'));
