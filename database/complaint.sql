@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2018 at 02:31 PM
+-- Generation Time: May 30, 2018 at 12:17 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -116,25 +116,29 @@ INSERT INTO `complaint_location` (`loc_id`, `c_id`, `location`) VALUES
 
 CREATE TABLE `complaint_register` (
   `c_id` varchar(20) NOT NULL,
-  `cate_id` int(11) DEFAULT NULL,
-  `u_id` varchar(10) DEFAULT NULL,
-  `c_description` longtext,
-  `c_date` date DEFAULT '1996-05-02',
+  `cate_id` int(11) NOT NULL,
+  `u_id` varchar(10) NOT NULL,
+  `c_description` longtext NOT NULL,
+  `c_date` date NOT NULL DEFAULT '1996-05-02',
   `s_date` date DEFAULT NULL,
   `c_status` varchar(20) DEFAULT NULL,
   `solution_duration` int(11) DEFAULT NULL,
-  `w_id` int(11) DEFAULT NULL
+  `w_id` int(11) DEFAULT NULL,
+  `f_date` date DEFAULT NULL,
+  `satisfaction_level` int(1) DEFAULT NULL,
+  `f_status` tinyint(1) DEFAULT NULL,
+  `f_available` tinyint(1) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaint_register`
 --
 
-INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `solution_duration`, `w_id`) VALUES
-('20180528-101-0001', 1, '101', 'Fan Not Working', '2018-05-28', '2018-05-29', 'Complete', NULL, 1),
-('20180528-102-0002', 1, '102', 'Tube Light Not Working', '2018-05-03', NULL, 'Under Construction', NULL, 1),
-('20180528-101-0003', 3, '101', 'Pipe Leakage', '2018-05-28', NULL, 'Under Construction', NULL, NULL),
-('20180528-101-0004', 4, '101', 'Door is Broken', '2018-05-24', NULL, 'Under Construction', NULL, NULL);
+INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `solution_duration`, `w_id`, `f_date`, `satisfaction_level`, `f_status`, `f_available`) VALUES
+('20180528-101-0001', 1, '101', 'Fan Not Working', '2018-05-28', '2018-05-30', 'Complete', NULL, 1, '2018-05-30', 2, 1, 0),
+('20180528-102-0002', 1, '102', 'Tube Light Not Working', '2018-05-03', NULL, 'Under Construction', NULL, 1, NULL, NULL, NULL, 1),
+('20180528-101-0003', 3, '101', 'Pipe Leakage', '2018-05-28', NULL, 'Under Construction', NULL, NULL, NULL, NULL, NULL, 0),
+('20180528-101-0004', 4, '101', 'Door is Broken', '2018-05-24', NULL, 'Under Construction', NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -264,7 +268,8 @@ CREATE TABLE `worker` (
 
 INSERT INTO `worker` (`w_id`, `w_name`, `ph_no`, `email`, `address`, `skill`, `w_status`) VALUES
 (1, 'Ramesh', '9657452365', 'ramesh@gmail.com', '110,Usmanpura Ahmedabad,\nAhmedabad- 380014', 1, 'Active'),
-(2, 'Suresh', '9657452366', 'suresh@gmail.com', '92,Incometax Ahmedabad,\nAhmedabad- 380014', 3, 'Not Active');
+(2, 'Suresh', '9657452366', 'suresh@gmail.com', '92,Incometax Ahmedabad,\nAhmedabad- 380014', 3, 'Not Active'),
+(9, 'Shahnavaz Saiyadmiyan Saiyed', '9726321433', 'ssaiyed173@gmail.com', 'Vansda', 4, 'Active');
 
 --
 -- Indexes for dumped tables
@@ -373,7 +378,7 @@ ALTER TABLE `deptmst`
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
-  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
