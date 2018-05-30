@@ -40,7 +40,7 @@
 				<label for="email">Enter E-mail Address: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-					<?=form_input(array('type' => 'email','class' => 'form-control', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Enter E-mail', 'onkeyup'=> 'validateField(this)','onchange' => 'validateField(this)', 'required' => 'true' )); ?>
+					<input type="email" class="form-control" id="email" name="email" placeholder="Enter E-mail" onkeyup="validateField(this)" onchange="validateField(this)" required />
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="em" ></p>

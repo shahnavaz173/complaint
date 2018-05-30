@@ -44,7 +44,7 @@
 $(document).ready(function()
 {
   var table = $("#datatable").dataTable({
-		ordering:false;
+		"ordering":false
 	});
   table.find("tr:odd").addClass('bg-info');
   table.find("tr:odd").addClass('text-info');

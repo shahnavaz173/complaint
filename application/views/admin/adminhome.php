@@ -173,7 +173,7 @@ function display_complaints(id)
 						var table = $("#datatable").dataTable();
 						var added =	table.fnAddData([
 								dataArr[i].c_date,
-								dataArr[i].full_name,
+								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br>"+dataArr[i].c_id+"</span>",
 								dataArr[i].category,
 								dataArr[i].c_description,
 								dataArr[i].location,
@@ -182,12 +182,22 @@ function display_complaints(id)
 							]);
 						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
 						ntr.className = chkclass;
+						$(".cid-name").hide();
 						}
 					}
 				}
 		});
 	}
 }
+
+$(".complaint-table").on("mouseenter",".uname",function()
+{
+	$(this).next().show();
+});
+$(".complaint-table").on("mouseleave",".uname",function()
+{
+	$(this).next().hide();
+});
 $(".complaint-table").on("change",".select-status",function()
 {
 	var stat = $(this).val();
@@ -272,6 +282,7 @@ $(".complaint-table").on("click",".worker",function()
 		});
 	}
 });
+
 $(".cancel-assign").click(function()
 {
 	$(".assign-worker").slideUp("slow");

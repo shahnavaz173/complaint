@@ -25,7 +25,7 @@ form#smileys input[type="radio"].happy {
 
 form#smileys input[type="radio"].happy:hover, form#smileys input[type="radio"].happy:checked
 {
-  background-color: #dff0d8 !important;
+  background-color: #baf1a4 !important;
 }
 
 form#smileys input[type="radio"].neutral {
@@ -34,7 +34,7 @@ form#smileys input[type="radio"].neutral {
 }
 form#smileys input[type="radio"].neutral:hover, form#smileys input[type="radio"].neutral:checked
 {
-  background-color: #fcf8e3 !important;
+  background-color: #ecd380  !important;
 }
 form#smileys input[type="radio"].sad {
   background: url("../images/sad_bj1tuj.svg") center;
@@ -43,5 +43,5 @@ form#smileys input[type="radio"].sad {
 
 form#smileys input[type="radio"].sad:hover, form#smileys input[type="radio"].sad:checked
 {
-  background-color: #f2dede !important;
+  background-color: #f57171 !important;
 }

@@ -12,45 +12,25 @@
        <div class="card col-md-10 col-md-offset-1" style="box-shadow:0px 0px 5px 0px #000;background-color:#fbfaf9;">
          <div class="container">
            <form id="smileys" action="Feedback/submit" method="post">
-             <div class="col-md-12">
-               <h3 class=  "text-info"><b>1. Is your Complaint Solved in Time? </b></h3>
-                <div class="col-md-2">
-                  <center>
-                    <input type="radio" name="time" value="happy" class="happy" checked="checked">
-                    <h5><b>In 24 Hours</b></h5>
-                  </center>
-                </div>
-                <div class="col-md-2 col-md-offset-1">
-                <center>
-                  <input type="radio" name="time" value="neutral" class="neutral">
-                  <h5><b>In 48 Hours</b></h5>
-                </center>
-                </div>
-                <div class="col-md-2 col-md-offset-1">
-                  <center>
-                    <input type="radio" name="time" value="sad" class="sad">
-                    <h5><b>More Then 48 Hours</b></h5>
-                  </center>
-                </div>
-              </div>
+
               <div class="col-md-12" style="padding-top:2em">
-                <h3 class=  "text-info"><b>2. Are You Satisfy with Our work? </b></h3>
+                <h3 class=  "text-info"><b>1. Are You Satisfy with Our work? </b></h3>
                  <div class="col-md-2">
                    <center>
-                     <input type="radio" name="work" value="happy" class="happy" checked="checked">
-                     <h5><b>Excellent</b></h5>
+                     <input type="radio" name="work" value="1" class="happy" checked="checked">
+                     <h5><b>Satisfied</b></h5>
                    </center>
                  </div>
                  <div class="col-md-2 col-md-offset-1">
                  <center>
-                   <input type="radio" name="work" value="neutral" class="neutral">
-                   <h5><b>Good</b></h5>
+                   <input type="radio" name="work" value="2" class="neutral">
+                   <h5><b>Average</b></h5>
                  </center>
                  </div>
                  <div class="col-md-2 col-md-offset-1">
                    <center>
-                     <input type="radio" name="work" value="sad" class="sad ">
-                     <h5><b>Bad</b></h5>
+                     <input type="radio" name="work" value="3" class="sad ">
+                     <h5><b>Not Satisfied</b></h5>
                    </center>
                  </div>
                </div>

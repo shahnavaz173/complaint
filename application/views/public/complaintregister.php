@@ -152,7 +152,7 @@ $(document).ready(function()
 $(function()
 {
 		$("#datatable").dataTable({
-			ordering:false;
+			"ordering": false
 		});
 });
 $(document).ready(function()

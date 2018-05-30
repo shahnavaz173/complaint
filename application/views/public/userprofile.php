@@ -39,13 +39,11 @@
 						<select name="department" id="department" class="form-control selectpicker" data-live-search="true" required>
 
               <?php foreach($departments as $d): ?>
-                <?php if($udetails[0]->deptid == $d->deptid)
-                {echo "<option value='$d->deptid;' checked>$d->Dept_Name;</option>";
-                 }
-                 else {
-                   echo "<option value='$d->deptid;'>$d->Dept_Name;</option>";
-                 } ?>
-
+                <?php if($udetails[0]->deptid == $d->deptid): ?>
+									<option value="<?=$d->deptid; ?>" checked><?=$d->Dept_Name; ?></option>
+								<?php else: ?>
+									<option value="<?=$d->deptid; ?>"><?=$d->Dept_Name; ?></option>
+								<?php endif; ?>
 							<?php endforeach; ?>
 						</select>
 				</div>
@@ -86,7 +84,7 @@
 				<label for="address">Office Address: (Office No/Room No)</label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
-						<?=form_textarea(array('class' => 'form-control', 'rows' => '2', 'name' => 'oaddress','value' =>$udetails[0]->address,'id' => 'oaddress', 'placeholder' => 'Office address', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)',  'required' => 'required')); ?>
+						<?=form_textarea(array('class' => 'form-control', 'rows' => '2', 'name' => 'oaddress','value' =>$udetails[0]->office_location,'id' => 'oaddress', 'placeholder' => 'Office address', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)',  'required' => 'required')); ?>
 						<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" ></p>
@@ -106,14 +104,22 @@
 		<div class="row">
 			<div class="form-group col-md-12">
 				<label for="gender">Gender:</label>
-					<div class="radio-inline">
-            <input type="radio" name="gender" id="genderm" required="required" class="gender" value="M" checked=<?php if($udetails[0]->gender == 'M'){ echo "true";  } ?>/>
-            Male
-					</div>
-      		<div class="radio-inline">
-            <input type="radio" name="gender" id="genderf" required="required" class="gender"  value="F" checked=<?php if($udetails[0]->gender == 'F'){ echo "true"; } ?>/>
-            Female
-					</div>
+					<?php if($udetails[0]->gender == 'M'): ?>
+						<div class="radio-inline">
+						  <input type="radio" name="gender" id="genderm" required="required" class="gender" value="M" checked/>: Male
+						</div>
+	      		<div class="radio-inline">
+	            <input type="radio" name="gender" id="genderf" required="required" class="gender"  value="F"/>: Female
+						</div>
+					<?php else: ?>
+						<div class="radio-inline">
+							<input type="radio" name="gender" id="genderm" required="required" class="gender" value="M"/>: Male
+						</div>
+						<div class="radio-inline">
+							<input type="radio" name="gender" id="genderf" required="required" class="gender"  value="F" checked/>: Female
+						</div>
+
+					<?php endif; ?>
 			</div>
 		</div>
 
