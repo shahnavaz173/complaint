@@ -64,5 +64,14 @@ class Complaint extends CI_Controller
     $result = $this->ComplaintModel->get_common_complaints($id);
     echo json_encode($result);
   }
+  public function change_status()
+  {
+    $obj_json = $this->input->post('obj');
+    $obj = json_decode($obj_json);
+    if($this->ComplaintModel->update_complaint_status($obj->status,$obj->cid))
+    {
+      echo $obj->status;
+    }
+  }
 }
  ?>

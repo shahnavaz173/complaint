@@ -121,7 +121,6 @@ $(document).ready(function()
 	{
 		display_complaints('all');
 	});
-
 });
 function display_complaints(id)
 {
@@ -147,14 +146,16 @@ function display_complaints(id)
 					{
 						if(dataArr[i].flag == 0)
 						{
-							if(dataArr[i].c_status == 'Solved')
+							if(dataArr[i].c_status == 'Complete')
 								chkclass = 'bg-success text-success';
+							else if(dataArr[i].c_status == 'Under Construction')
+								chkclass = 'bg-warning text-warning';
 							else
 								chkclass = 'bg-danger text-danger';
 						}
 						else
 						{
-							if(dataArr[i].c_status == 'Solved')
+							if(dataArr[i].c_status == 'Complete')
 								chkclass = 'bg-success text-success';
 							else
 								chkclass = 'bg-info text-info';
@@ -169,36 +170,6 @@ function display_complaints(id)
 						{
 							wclass = dataArr[i].w_id;
 						}
-						var html = "";
-						if(id != 'all')
-						{
-							$(".ctype-row").hide()
-								html = "\
-								<tr class='"+chkclass+" lists'>\
-									<td>"+dataArr[i].c_id+"</td>\
-									<td>"+dataArr[i].full_name+"</td>\
-									<td>"+dataArr[i].c_description+"</td>\
-									<td>"+dataArr[i].Dept_Name+" , "+dataArr[i].location+"</td>\
-									<td>"+dataArr[i].c_date+" </td>\
-									<td>"+dataArr[i].c_status+"</td>\
-								<td class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'> "+worker+" </td>\
-								</tr>";
-						}
-						else
-						{
-							$(".ctype-row").show()
-							html = "\
-							<tr class='"+chkclass+" lists'>\
-								<td> "+dataArr[i].c_id+" </td>\
-								<td> "+dataArr[i].full_name+" </td>\
-								<td> "+dataArr[i].category+" </td>\
-								<td> "+dataArr[i].c_description+" </td>\
-								<td> "+dataArr[i].location+" </td>\
-								<td> "+dataArr[i].c_date+" </td>\
-								<td> "+dataArr[i].c_status+" </td>\
-								<td class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'> "+worker+" </td>\
-							</tr>";
-						}
 						var table = $("#datatable").dataTable();
 						var added =	table.fnAddData([
 								dataArr[i].c_date,
@@ -206,7 +177,7 @@ function display_complaints(id)
 								dataArr[i].category,
 								dataArr[i].c_description,
 								dataArr[i].location,
-								dataArr[i].c_status,
+								"<span style='cursor:pointer;' class='change-status'>"+dataArr[i].c_status+"</span><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'>",
 								"<span class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'>"+worker+"</span>"
 							]);
 						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
@@ -217,46 +188,95 @@ function display_complaints(id)
 		});
 	}
 }
-
-	$(".assign-worker").hide();
-	$(".complaint-table").on("click",".worker",function()
-	{
-		$(this).parent().parent().clone().appendTo(".complaint-table-worker");
-		var cid = $(this).find('.cidhidden').val();
-		var wcate = $(this).find('.wcate').val();
-		var val = $(this).text();
-		if(val.localeCompare("Click To Assign") == 0)
+$(".complaint-table").on("change",".select-status",function()
+{
+	var stat = $(this).val();
+	var cid = $(this).next().val();
+	var obj = {status: stat, cid: cid};
+	var datastring = 'obj='+JSON.stringify(obj);
+	$.ajax
+	({
+		type: "POST",
+		url: "<?=base_url('Complaint/change_status')?>",
+		data: datastring,
+		cache: false,
+		success: function(data)
 		{
+				$(".select-status").prev('span').text(data);
+				$(".select-status").remove();
+				$(".change-status").prop("disabled",false);
 
-			$(".assign-worker").slideDown("slow");
-			$(".container-home").hide();
-			//var id = wcate;
-			var dataString = 'cate='+ wcate;
-			$.ajax
-			({
-				type: "POST",
-				url: "<?=base_url('Worker/get_workers'); ?>",
-				data: dataString,
-				cache: false,
-				success: function(data)
-				{
-						var wlist = JSON.parse(data);
-						for(var i=0;i<wlist.length;i++)
-						{
-							var option = "<option class='woption' value="+wlist[i].w_id+">"+wlist[i].w_name+"</option";
-							$(".select-worker").append(option);
-						}
-						var hidden = "<input type='hidden' class='woption' name='cid' value='"+cid+"' >";
-						$(".select-worker").append(hidden);
-				}
-			});
+			if(data.localeCompare("Pending")  == 0)
+			{
+			}
+			else if(data.localeCompare("Under Construction") == 0)
+			{
+			}
+			else if(data.localeCompare("Complete") == 0)
+			{
+			}
 		}
 	});
-	$(".cancel-assign").click(function()
+});
+$(".complaint-table").on("click",".change-status",function()
+{
+	var val = $(this).text().trim();
+	$(this).text("");
+	$(".change-status").prop("disabled",true);
+	var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
+			<option value='Pending' >Pending</option>\
+			<option value='Under Construction'>Under Construction</option>\
+			<option value='Complete'>Complete</option>\
+		</select>";
+
+	$(this).after(html);
+	$(".select-status option").each(function()
 	{
-		$(".assign-worker").slideUp("slow");
-		$(".container-home").show();
-		$(".assign-worker").find("td").remove();
-		$(".assign-worker").find("select").find(".woption").remove();
-	})
+		if($(this).val() == val)
+		{
+			$(this).attr("selected","selected");
+		}
+	});
+});
+$(".assign-worker").hide();
+$(".complaint-table").on("click",".worker",function()
+{
+	$(this).parent().parent().clone().appendTo(".complaint-table-worker");
+	var cid = $(this).find('.cidhidden').val();
+	var wcate = $(this).find('.wcate').val();
+	var val = $(this).text();
+	if(val.localeCompare("Click To Assign") == 0)
+	{
+
+		$(".assign-worker").slideDown("slow");
+		$(".container-home").hide();
+		//var id = wcate;
+		var dataString = 'cate='+ wcate;
+		$.ajax
+		({
+			type: "POST",
+			url: "<?=base_url('Worker/get_workers'); ?>",
+			data: dataString,
+			cache: false,
+			success: function(data)
+			{
+					var wlist = JSON.parse(data);
+					for(var i=0;i<wlist.length;i++)
+					{
+						var option = "<option class='woption' value="+wlist[i].w_id+">"+wlist[i].w_name+"</option";
+						$(".select-worker").append(option);
+					}
+					var hidden = "<input type='hidden' class='woption' name='cid' value='"+cid+"' >";
+					$(".select-worker").append(hidden);
+			}
+		});
+	}
+});
+$(".cancel-assign").click(function()
+{
+	$(".assign-worker").slideUp("slow");
+	$(".container-home").show();
+	$(".assign-worker").find("td").remove();
+	$(".assign-worker").find("select").find(".woption").remove();
+});
 </script>
