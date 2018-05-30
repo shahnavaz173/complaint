@@ -74,5 +74,19 @@ class Complaint extends CI_Controller
       echo $obj->status;
     }
   }
+  public function submit_feedback()
+  {
+    $rating = $this->input->post('work');
+    $cid = $this->input->post('cid');
+    $submit_response = $this->ComplaintModel->submit_feedback($rating,$cid);
+    if($submit_response == "submitted")
+    {
+      echo "Feedback Submitted";
+    }
+    else
+    {
+        echo "Not Submitted";
+    }
+  }
 }
  ?>

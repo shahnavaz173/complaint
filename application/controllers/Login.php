@@ -41,7 +41,14 @@ class Login extends CI_Controller
   				$this->session->set_userdata('check_login',FALSE);
   				$this->session->set_userdata('user_id',$login_id);
 					$this->session->set_userdata('usertype',$utype);
-  				redirect(base_url('home'));
+					$pending_feedback = $this->ComplaintModel->get_pending_feedback($this->session->userdata('user_id'));
+					if(sizeof($pending_feedback) > 0)
+					{
+						$this->session->set_userdata('pending_feedback',$pending_feedback[0]->c_id);
+						redirect(base_url('feedback'));
+					}
+					else
+  					redirect(base_url('home'));
   		}
   		else
   		{

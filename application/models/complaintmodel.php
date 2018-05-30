@@ -195,5 +195,30 @@ class ComplaintModel extends CI_Model
     $this->db->update('complaint_register');
     return TRUE;
   }
+  public function get_pending_feedback($uid)
+  {
+    $where = array('u_id' => $uid, 'f_available' => TRUE, 'f_status' => FALSE);
+    $this->db->select('c_id');
+    $this->db->from('complaint_register');
+    $this->db->where($where);
+    $q = $this->db->get();
+    return $q->result();
+  }
+  public function get_complaint_by_cid($cid)
+  {
+    $this->db->select(array('c_id','c_description'));
+    $this->db->from('complaint_register');
+    $this->db->where('c_id',$cid);
+    $q = $this->db->get();
+    return $q->result();
+  }
+  public function submit_feedback($rating,$cid)
+  {
+    $today = date('Y-m-d');
+    $this->db->set(array('f_date' => $today,'satisfaction_level' => $rating, 'f_status' => TRUE, 'f_available' => FALSE));
+    $this->db->where('c_id',$cid);
+    $this->db->update('complaint_register');
+    redirect(base_url('home'));
+  }
 }
 ?>

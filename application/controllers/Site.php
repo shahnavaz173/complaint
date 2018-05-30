@@ -75,7 +75,8 @@ class Site extends CI_Controller
 		{
 			$data['registered_complaint'] = $this->session->userdata('registered_complaint');
 		}
-
+		else if($page == 'feedback')
+			$data['pending_cid'] = $this->cm->get_complaint_by_cid($this->session->userdata('pending_feedback'));
 		$data['title']=ucfirst($page);
 		$data['viewuser'] = 'public';
 		//$data['islogin'] = false;
