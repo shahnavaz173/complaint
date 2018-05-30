@@ -43,5 +43,26 @@ class User extends CI_Model
       $this->db->insert('user_dept',$department);
 
     }
+    public function get_user_detail($uid)
+    {
+      $this->db->select(array('user.u_type','user.full_name','deptmst.Dept_name','user.emp_no','user.email','user.ph_no','user.address','user_dept.office_location','user.gender','deptmst.deptid'));
+      $this->db->from('user');
+      $this->db->join('user_dept','user_dept.u_id = user.u_id','INNER');
+      $this->db->join('deptmst','user_dept.deptid = deptmst.deptid','INNER');
+      $this->db->where('user.u_id',$uid);
+      $q = $this->db->get();
+      return $q->result();
+    }
+    public function update_user_detail($uid,$user_data,$dept_data)
+    {
+      echo "yes";
+      $this->db->set($user_data);
+      $this->db->where('u_id', $uid);
+      $this->db->update('user');
+      $this->db->set($dept_data);
+      $this->db->where('u_id', $uid);
+      $this->db->update('user_dept', $dept_data);
+      
+    }
 }
  ?>

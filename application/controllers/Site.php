@@ -67,6 +67,11 @@ class Site extends CI_Controller
 		{
 			$data['ucomplaints'] = $this->cm->get_complaints_by_user($this->session->userdata('user_id'));
 		}
+		else if($page == 'userprofile')
+		{
+			$data['udetails'] = $this->User->get_user_detail($this->session->userdata('user_id'));
+			$data['departments']=$this->User->get_department();
+		}
 
 		$data['title']=ucfirst($page);
 		$data['viewuser'] = 'public';
@@ -76,6 +81,28 @@ class Site extends CI_Controller
 		$this->load->view('public/footer',$data);
 		if($this->session->userdata('check_login'))
 			$this->session->unset_userdata('check_login');
+	}
+	public function update_profile()
+	{
+
+		$userid =$this->session->userdata('user_id');
+		$user_data=array(
+							'u_id'=> $this->input->post('empnumber'),
+							'full_name' => $this->input->post('fullname'),
+							'emp_no' => $this->input->post('empnumber'),
+							'email' => $this->input->post('email'),
+							'ph_no' => $this->input->post('contact'),
+							'address' => $this->input->post('address'),
+							'u_type' => $this->input->post('usertype'),
+							'gender'=>$this->input->post('gender'));
+					$dept_data = array(
+						'u_id' => $this->input->post('empnumber'),
+						'deptid' => $this->input->post('department'),
+						'office_location' => $this->input->post('oaddress'));
+					$this->User->update_user_detail($userid,$user_data,$dept_data);
+					  redirect(base_url('userprofile'));
+					//$this->session->set_userdata('user_id',$this->input->post('empnumber'));
+					//$this->session->set_userdata('usertype',$this->input->post('usertype'));
 	}
 	public function get_user()
 	{

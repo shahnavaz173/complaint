@@ -43,6 +43,7 @@
 					<?php else: ?>
 						<li role = "presentation" ><a href = "<?=base_url('complaintregister'); ?>" <?php if($title=='Complaintregister'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-plus">	</span> Complaint Register</a></li>
 						<li role = "presentation" ><a href = "<?=base_url('complaints'); ?>" <?php if($title=='Complaints'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Complaints By You</a></li>
+						<li role = "presentation" ><a href = "<?=base_url('userprofile'); ?>" <?php if($title=='userprofile'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Profile</a></li>
 					<?php endif; ?>
 
 
