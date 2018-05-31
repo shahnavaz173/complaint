@@ -3,8 +3,8 @@
 	<div class="row">
 		<div class="col-md-4 col-md-offset-1" style="background-color:#FFF;margin-top:5em;margin-bottom:5em;" >
 			<div class="row">
-				<div class="jumbotron jumbotron-box">
-					<h3>Add New Category</h3>
+				<div class="jumbotron jumbotron-box" style="padding:0.5em">
+					<h3 style="color:#FFF">Add New Category</h3>
 				</div>
 			</div>
 			<?=form_open(base_url('Complaint/add_complaint_category'));?>
@@ -30,8 +30,8 @@
 		</div>
 		<div class="col-md-4 col-md-offset-1"  style="background-color:#FFF;margin-top:5em;margin-bottom:5em;">
 			<div class="row">
-				<div class="jumbotron jumbotron-box">
-					<h3>Add Common Complaint</h3>
+				<div class="jumbotron jumbotron-box" style="padding:0.5em">
+					<h3 style="color:#FFF">Add Common Complaint</h3>
 				</div>
 			</div>
 			<?=form_open('Complaint/add_common_complaint');?>

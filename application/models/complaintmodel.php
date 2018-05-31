@@ -198,7 +198,7 @@ class ComplaintModel extends CI_Model
   public function get_pending_feedback($uid)
   {
     $where = array('u_id' => $uid, 'f_available' => TRUE, 'f_status' => FALSE);
-    $this->db->select('c_id');
+    $this->db->select(array('c_id','c_description'));
     $this->db->from('complaint_register');
     $this->db->where($where);
     $q = $this->db->get();
@@ -215,9 +215,13 @@ class ComplaintModel extends CI_Model
   public function submit_feedback($rating,$cid)
   {
     $today = date('Y-m-d');
-    $this->db->set(array('f_date' => $today,'satisfaction_level' => $rating, 'f_status' => TRUE, 'f_available' => FALSE));
-    $this->db->where('c_id',$cid);
-    $this->db->update('complaint_register');
+    for($i=1;$i<sizeof($cid);$i++)
+    {
+      $this->db->set(array('f_date' => $today,'satisfaction_level' => $rating[$i], 'f_status' => TRUE, 'f_available' => FALSE));
+      $this->db->where('c_id',$cid[$i]);
+      $this->db->update('complaint_register');
+    }
+    $this->session->unset_userdata('pending_feedback');
     redirect(base_url('home'));
   }
   public function add_new_category($category)

@@ -76,8 +76,9 @@ class Complaint extends CI_Controller
   }
   public function submit_feedback()
   {
-    $rating = $this->input->post('work');
     $cid = $this->input->post('cid');
+    $rating = $this->input->post('work');
+    $data = array($cid,$rating);
     $submit_response = $this->ComplaintModel->submit_feedback($rating,$cid);
     if($submit_response == "submitted")
     {
