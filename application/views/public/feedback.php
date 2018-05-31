@@ -13,6 +13,9 @@
          <div class="container">
            <form id="smileys" action="<?=base_url('Complaint/submit_feedback'); ?>" method="post">
 						 <?php $i = 1;?>
+						 <?php if(sizeof($fcomplaints) <= 0): ?>
+							 <h3>No Pending Feedbacks Available</h3>
+						 <?php else: ?>
 						 <?php foreach($fcomplaints as $fc): ?>
 							 <div class="col-md-12" style="padding-top:2em">
                  <h3 class=  "text-info"><?=$i.". ".$fc->c_description;?>  </b></h3>
@@ -42,6 +45,8 @@
                <div class="col-md-5" style="padding-top:2em;padding-bottom:3em">
                  <button alt="submit"type="submit" class="btn  btn-info" name="submit"  />Click to Send Your Feedback <i class="glyphicon glyphicon-send"></i>  </button>
                </div>
+						 <?php endif; ?>
+
             </form>
          </div>
        </div>

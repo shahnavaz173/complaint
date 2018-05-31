@@ -8,9 +8,11 @@ class ComplaintModel extends CI_Model
   }
   public function complaint_list()
   {
-    $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','worker.w_name','worker.ph_no'));
+    $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','user.ph_no','worker.w_name','worker.ph_no','Dept_Name'));
     $this->db->from('complaint_register');
     $this->db->join('user','complaint_register.u_id = user.u_id','INNER');
+    $this->db->join('user_dept','user.u_id = user_dept.u_id');
+    $this->db->join('deptmst','user_dept.deptid = deptmst.deptid');
     $this->db->join('category','complaint_register.cate_id = category.cate_id','LEFT');
     $this->db->join('complaint_location','complaint_location.c_id = complaint_register.c_id');
     $this->db->join('worker','complaint_register.w_id = worker.w_id','LEFT');
@@ -165,7 +167,7 @@ class ComplaintModel extends CI_Model
   }
   public function get_common_complaints($id)
   {
-    $this->db->select(array('category.category','complaint.c_level','complaint.description'));
+    $this->db->select(array('complaint.co_id','category.category','complaint.c_level','complaint.description'));
     $this->db->from('complaint');
     $this->db->join('category','category.cate_id = complaint.cate_id');
     if($id != 'all')
@@ -215,7 +217,7 @@ class ComplaintModel extends CI_Model
   public function submit_feedback($rating,$cid)
   {
     $today = date('Y-m-d');
-    for($i=1;$i<sizeof($cid);$i++)
+    for($i=1;$i<=sizeof($cid);$i++)
     {
       $this->db->set(array('f_date' => $today,'satisfaction_level' => $rating[$i], 'f_status' => TRUE, 'f_available' => FALSE));
       $this->db->where('c_id',$cid[$i]);
@@ -228,9 +230,15 @@ class ComplaintModel extends CI_Model
   {
       $this->db->insert('category',$category);
   }
-public function add_new_common_complaint($cinfo)
+  public function add_new_common_complaint($cinfo)
   {
       $this->db->insert('complaint',$cinfo);
+  }
+  public function delete_common_complaint($co_id)
+  {
+    $this->db->where('co_id',$co_id);
+    $this->db->delete('complaint');
+    return TRUE;
   }
 }
 ?>

@@ -15,6 +15,7 @@
 						<tr class="list-head ">
 							<th>Date</th>
 							<th>Student/Emp Name</th>
+							<th>Department</th>
 							<th class="ctype-row">Complain Type</th>
 							<th>Description</th>
 							<th>Location</th>
@@ -77,6 +78,7 @@
 						<tr class="list-head ">
 							<th>Date</th>
 							<th>User Name</th>
+							<th>Department</th>
 							<th class="ctype-row">Type</th>
 							<th>Description</th>
 							<th>Complaint Location</th>
@@ -173,7 +175,8 @@ function display_complaints(id)
 						var table = $("#datatable").dataTable();
 						var added =	table.fnAddData([
 								dataArr[i].c_date,
-								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br>"+dataArr[i].c_id+"</span>",
+								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br>"+dataArr[i].ph_no+"</span>",
+								dataArr[i].Dept_Name,
 								dataArr[i].category,
 								dataArr[i].c_description,
 								dataArr[i].location,

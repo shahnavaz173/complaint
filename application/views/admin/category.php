@@ -37,10 +37,21 @@
 		</div>
 	</div>
 </div>
+<?php
+include('addcategory.php');
+ ?>
 <script type="text/javascript">
 $(document).ready(function()
 {
-	$("#datatable").dataTable();
+	$(".add-category").hide();
+	$(".click-to-add").click(function()
+	{
+		$(".add-category").slideDown("slow");
+		$(".category-main").hide();
+	});
+	$("#datatable").dataTable({
+		"ordering": false
+	});
 	$(window).load(function()
 	{
 		displayComplaints('all');
@@ -48,6 +59,65 @@ $(document).ready(function()
 	$(".category").change(function()
 	{
 		displayComplaints($(this).val());
+	});
+	$("#datatable").on("click",".delete-cate",function()
+	{
+		var parent = $(this).parent().parent();
+		var conf = confirm("Are you sure You want to Delete?");
+		if(conf)
+		{
+			var cid = $(this).next('.c-id').val();
+			var datastring = 'cid='+cid;
+			$.ajax
+			({
+				type: "POST",
+				url: "<?=base_url("Complaint/delete_common_complaint"); ?>",
+				data: datastring,
+				cache: false,
+				success: function(data)
+				{
+					parent.remove();
+				}
+			});
+		}
+	});
+	$("#datatable").on("click",".update-cate",function()
+	{
+		$(".update-cate").prop('disabled','true');
+		$(".update-cate").css('cursor','not-allowed');
+		$(this).hide();
+		var row = parseInt($(this).next(".row-no").val());
+		var cele = $(this).parent("td").parent("tr").find(".wcate");
+		var catext = cele.text();
+		cele.text("");
+		$(".complaintype").clone().appendTo(cele);
+		cele.find("select option").each(function()
+		{
+			if($(this).text() == catext.trim())
+			{
+				$(this).attr("selected","selected");
+			}
+		});
+		var description = document.getElementById("datatable").rows[row+1].cells[1].innerHTML;
+		document.getElementById("datatable").rows[row+1].cells[1].innerHTML = "<textarea rows='3' cols='40' id='description' class='form-control'>"+description+"</textarea>";
+		var level = document.getElementById("datatable").rows[row+1].cells[2].innerHTML;
+			if(level != 'For Campus Only')
+			{
+				var html = "<select id='level' class='form-control'>\
+										<option value='1' selected>For All</option>\
+										<option value='2'>For Campus Only</option>\
+										</select>";
+			}
+			else
+			{
+				var html = "<select id='level' class='form-control'>\
+										<option value='1'>For All</option>\
+										<option value='2' selected>For Campus Only</option>\
+										</select>";
+			}
+			document.getElementById("datatable").rows[row+1].cells[2].innerHTML = html;
+			$(this).after("<button style='background:none;border:none' title='Save Update' class='glyphicon glyphicon-floppy-save text-success save-update'></button>");
+			$(this).parent("td").append("<button style='background:none; border:none' title='Cancel Update' class='glyphicon glyphicon-remove text-danger cancel-update'></button>");
 	});
 });
 function displayComplaints(id)
@@ -63,12 +133,7 @@ function displayComplaints(id)
 		success: function(data)
 		{
 			var dataArr =JSON.parse(data);
-			if(dataArr.length == 0)
-			{
-				$(".category-table").append("<tr class='lists bg-warning text-warning'><td colspan='3'><center><h3>No Complaints Found</h3></center></td></tr>");
-			}
-			else
-			{
+
 				for(var i=0;i<dataArr.length;i++)
 				{
 					if(i%2 == 0)
@@ -82,32 +147,31 @@ function displayComplaints(id)
 
 					var table = $("#datatable").dataTable();
 					var added = table.fnAddData([
-						dataArr[i].category,
+						"<span class='wcate'>"+dataArr[i].category+"</span>",
 						dataArr[i].description,
 						level,
-						"<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-worker'></button><input type='hidden' class='row-no' value='"+i+"' >",
-						"<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-worker'></button>"
+						"<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-cate'></button><input type='hidden' class='row-no' value='"+i+"' >",
+						"<button style='background:none;border:none' title='Delete' class='glyphicon glyphicon-trash text-danger delete-cate'></button><input type='hidden' class='c-id' value='"+dataArr[i].co_id+"' />"
 					]);
 					var ntr = table.fnSettings().aoData[ added[0] ].nTr;
 					ntr.className = chclass;
-				}
+
 			}
 
 		}
 	});
 }
 </script>
-<?php
-include('addcategory.php');
- ?>
-<script type="text/javascript">
-$(document).ready(function()
+<style>
+.pagination > li > a, .pagination > li > span
 {
-	$(".add-category").hide();
-	$(".click-to-add").click(function()
-	{
-		$(".add-category").slideDown("slow");
-		$(".category-main").hide();
-	});
-});
-</script>
+	background-color:#337ab7 !important;
+	opacity:.8;
+	margin-left:1px;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover
+{
+		opacity:1;
+		background-color:#337ab7 !important;
+}
+</style>

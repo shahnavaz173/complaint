@@ -78,16 +78,7 @@ class Complaint extends CI_Controller
   {
     $cid = $this->input->post('cid');
     $rating = $this->input->post('work');
-    $data = array($cid,$rating);
     $submit_response = $this->ComplaintModel->submit_feedback($rating,$cid);
-    if($submit_response == "submitted")
-    {
-      echo "Feedback Submitted";
-    }
-    else
-    {
-        echo "Not Submitted";
-    }
   }
   public function add_complaint_category()
   {
@@ -105,6 +96,11 @@ class Complaint extends CI_Controller
     $compinfo = array('cate_id' => $category, 'c_level' => $forwhom, 'description' => $cdescription);
     $this->ComplaintModel->add_new_common_complaint($compinfo);
     redirect(base_url('admin/category'));
+  }
+  public function delete_common_complaint()
+  {
+    $co_id =$this->input->post('cid');
+    echo $this->ComplaintModel->delete_common_complaint($co_id);
   }
 }
  ?>

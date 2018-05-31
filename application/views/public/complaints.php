@@ -40,6 +40,7 @@
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 $(document).ready(function()
 {
@@ -50,3 +51,16 @@ $(document).ready(function()
   table.find("tr:odd").addClass('text-info');
 });
 </script>
+<style>
+.pagination > li > a, .pagination > li > span
+{
+	background-color:#337ab7 !important;
+	opacity:.8;
+	margin-left:1px;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover
+{
+		opacity:1;
+		background-color:#337ab7 !important;
+}
+</style>
