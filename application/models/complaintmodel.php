@@ -220,5 +220,13 @@ class ComplaintModel extends CI_Model
     $this->db->update('complaint_register');
     redirect(base_url('home'));
   }
+  public function add_new_category($category)
+  {
+      $this->db->insert('category',$category);
+  }
+public function add_new_common_complaint($cinfo)
+  {
+      $this->db->insert('complaint',$cinfo);
+  }
 }
 ?>

@@ -88,5 +88,22 @@ class Complaint extends CI_Controller
         echo "Not Submitted";
     }
   }
+  public function add_complaint_category()
+  {
+    $c_category = $this->input->post('ccategory');
+    $data=array('category'=>$c_category);
+    //echo $data[0];
+    $this->ComplaintModel->add_new_category($data);
+    redirect(base_url('admin/category'));
+  }
+  public function add_common_complaint()
+  {
+    $category = $this->input->post('category');
+    $cdescription = $this->input->post('cdescription');
+    $forwhom = $this->input->post('forwhom');
+    $compinfo = array('cate_id' => $category, 'c_level' => $forwhom, 'description' => $cdescription);
+    $this->ComplaintModel->add_new_common_complaint($compinfo);
+    redirect(base_url('admin/category'));
+  }
 }
  ?>

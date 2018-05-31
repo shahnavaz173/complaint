@@ -18,14 +18,14 @@
 				<label for="fullname">User Type: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
-						<?=form_dropdown('usertype',array('' => 'Select user type','employee' => 'Employee', 'recident' => 'Recident'),$udetails[0]->u_type,array('class' => 'form-control', 'id' => 'usertype', 'required' => 'required')); ?>
+						<?=form_dropdown('usertype',array('' => 'Select user type','employee' => 'Employee', 'recident' => 'Recident'),$udetails[0]->u_type,array('class' => 'form-control', 'id' => 'usertype', 'required' => 'required','disabled'=>'true')); ?>
 				</div>
 			</div>
 			<div class="form-group has-feedback col-md-6">
 				<label for="fullname">Full Name: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'fullname','value' => $udetails[0]->full_name,'name' => 'fullname', 'placeholder' => 'Enter Full Name', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)', 'autocomplete' => 'off', 'required' => 'required' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'fullname','value' => $udetails[0]->full_name,'name' => 'fullname', 'placeholder' => 'Enter Full Name', 'onkeyup' => 'validateField(this)','onchange' => 'validateField(this)', 'autocomplete' => 'off', 'required' => 'required','disabled'=>'true' )); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="fn" ></p>
@@ -36,7 +36,7 @@
 				<label for="department">Department: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-list"></span></span>
-						<select name="department" id="department" class="form-control selectpicker" data-live-search="true" required>
+						<select name="department" id="department" class="form-control selectpicker" data-live-search="true" required disabled>
 
               <?php foreach($departments as $d): ?>
                 <?php if($udetails[0]->deptid == $d->deptid): ?>
@@ -52,7 +52,7 @@
 				<label for="empnumber">Employee Number: </label>
 				<div class="input-group">
 					<span class="input-group-addon"> <span class="glyphicon glyphicon-pencil"></span></span>
-					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'value' =>$udetails[0]->emp_no,'name' => 'empnumber', 'placeholder' => 'Enter Employee Number','onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)','autocomplete' => 'off',  'required' => 'required' )); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'empnumber', 'value' =>$udetails[0]->emp_no,'name' => 'empnumber', 'placeholder' => 'Enter Employee Number','onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)','autocomplete' => 'off',  'required' => 'required' ,'disabled'=>'true')); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="en" ></p>
@@ -106,17 +106,17 @@
 				<label for="gender">Gender:</label>
 					<?php if($udetails[0]->gender == 'M'): ?>
 						<div class="radio-inline">
-						  <input type="radio" name="gender" id="genderm" required="required" class="gender" value="M" checked/>: Male
+						  <input type="radio" name="gender" id="genderm" required="required" class="gender" value="M" checked disabled/>: Male
 						</div>
 	      		<div class="radio-inline">
-	            <input type="radio" name="gender" id="genderf" required="required" class="gender"  value="F"/>: Female
+	            <input type="radio" name="gender" id="genderf" required="required" class="gender"  value="F" disabled/>: Female
 						</div>
 					<?php else: ?>
 						<div class="radio-inline">
-							<input type="radio" name="gender" id="genderm" required="required" class="gender" value="M"/>: Male
+							<input type="radio" name="gender" id="genderm" required="required" class="gender" value="M" disabled/>: Male
 						</div>
 						<div class="radio-inline">
-							<input type="radio" name="gender" id="genderf" required="required" class="gender"  value="F" checked/>: Female
+							<input type="radio" name="gender" id="genderf" required="required" class="gender"  value="F" checked disabled/>: Female
 						</div>
 
 					<?php endif; ?>

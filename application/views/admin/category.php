@@ -2,7 +2,7 @@
 	if(!$islogin)
 		redirect(base_url('login'));
 ?>
-<div class="container-home worker-main">
+<div class="container-home category-main">
 
 	<div class="row">
 		<div class="col-md-12 ">
@@ -96,4 +96,18 @@ function displayComplaints(id)
 		}
 	});
 }
+</script>
+<?php
+include('addcategory.php');
+ ?>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$(".add-category").hide();
+	$(".click-to-add").click(function()
+	{
+		$(".add-category").slideDown("slow");
+		$(".category-main").hide();
+	});
+});
 </script>
