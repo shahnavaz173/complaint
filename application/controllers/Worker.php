@@ -52,8 +52,10 @@ class Worker extends CI_Controller
   public function assign_worker()
   {
     $wid = $this->input->post('selectworker');
+    $remark = $this->input->post('remark');
     $cid = $this->input->post('cid');
-    $this->ComplaintModel->assign_worker($wid,$cid);
+    echo $wid,$remark,$cid;
+    $this->ComplaintModel->assign_worker($wid,$cid,$remark);
   }
   public function change_status()
   {

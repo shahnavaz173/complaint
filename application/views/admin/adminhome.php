@@ -30,22 +30,31 @@
 
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<?=form_open('Worker/assign_worker',array()); ?>
-			<div class="form-row">
-				<div class="form-group col-md-6 col-md-offset-3">
-					<label for="selectworker">Select Worker: </label>
-					<select name="selectworker" class="form-control select-worker" required>
-						<option value="">Select Worker</option>
-					</select>
+				<?=form_open('Worker/assign_worker',array()); ?>
+				<div class="form-row col-md-8">
+					<div class="form-group col-md-8 col-md-offset-3">
+						<label for="selectworker">Select Worker: </label>
+						<select name="selectworker" class="form-control select-worker" required>
+							<option value="1">Select Worker</option>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-md-6 col-md-offset-3">
-					<input type="submit" class="btn btn-info" value="Click To Assign" >
-					<input type="button" class="btn btn-warning cancel-assign" value="Cancel" >
+				<div class="form-row col-md-8 ">
+					<div class = "form-group col-md-8 col-md-offset-3">
+						<label for = "remark">Add Remark:
+						<div class = "input-group " >
+							<textarea name="remark" id="remark" rows="3" cols="40" class="form-control" placeholder="You must have to solave this complaint in 1 hour"></textarea>
+						</div>
+						</label>
+					</div>
 				</div>
-			</div>
-			<?=form_close(); ?>
+				<div class="form-row">
+					<div class="form-group col-md-6 col-md-offset-3">
+						<input type="submit" class="btn btn-info" value="Click To Assign" >
+						<input type="button" class="btn btn-warning cancel-assign" value="Cancel" >
+					</div>
+				</div>
+				<?=form_close(); ?>
 		</div>
 	</div>
 </div>

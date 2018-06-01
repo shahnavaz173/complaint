@@ -101,11 +101,12 @@ class ComplaintModel extends CI_Model
       $q = $this->db->query("SELECT * FROM worker INNER JOIN category ON worker.skill=category.cate_id WHERE worker.skill=".$cate_id." AND w_status='Active' ");
     return $q->result();
   }
-  public function assign_worker($wid,$cid)
+  public function assign_worker($wid,$cid,$remark)
   {
     $this->db->set('w_id',$wid);
     $this->db->where('c_id',$cid);
     $this->db->update('complaint_register');
+    $this->db->insert('remark',array('c_id'=>$cid,'w_id'=>$wid,'comment'=>$remark));
     redirect(base_url('admin'));
   }
   public function get_category_description($cid,$level)
