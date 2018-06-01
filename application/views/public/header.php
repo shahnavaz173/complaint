@@ -43,26 +43,28 @@
 				<ul class="nav navbar-nav ">
 				<?php	if(strcmp($viewuser,'public') == 0): ?>
 						<li role = "presentation" ><a href = "<?=base_url(); ?>" <?php if($title=='Home'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-home">	</span> Home</a></li>
-					<?php if(!$islogin):?>
-						<li role = "presentation" ><a href = "<?=base_url('register'); ?>" <?php if($title=='Register'){ echo "class='active'"; }?>  ><span class = "glyphicon glyphicon-user">	</span> Register</a></li>
-						<li role = "presentation" ><a href = "<?=base_url('login'); ?>" <?php if($title=='Login'){ echo "class='active'"; }?>  ><span class = "glyphicon glyphicon-log-in" > </span> Login</a></li>
-					<?php else: ?>
-						<li role = "presentation" ><a href = "<?=base_url('complaintregister'); ?>" <?php if($title=='Complaintregister'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-plus">	</span> Complaint Register</a></li>
-						<li role = "presentation" ><a href = "<?=base_url('complaints'); ?>" <?php if($title=='Complaints'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Complaints By You</a></li>
-					<?php endif; ?>
-
-
+						<?php if(!$islogin):?>
+							<li role = "presentation" ><a href = "<?=base_url('register'); ?>" <?php if($title=='Register'){ echo "class='active'"; }?>  ><span class = "glyphicon glyphicon-user">	</span> Register</a></li>
+							<li role = "presentation" ><a href = "<?=base_url('login'); ?>" <?php if($title=='Login'){ echo "class='active'"; }?>  ><span class = "glyphicon glyphicon-log-in" > </span> Login</a></li>
+						<?php else: ?>
+							<li role = "presentation" ><a href = "<?=base_url('complaintregister'); ?>" <?php if($title=='Complaintregister'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-plus">	</span> Complaint Register</a></li>
+							<li role = "presentation" ><a href = "<?=base_url('complaints'); ?>" <?php if($title=='Complaints'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Complaints By You</a></li>
+						<?php endif; ?>
 				<?php 	elseif(strcmp($viewuser,'admin') == 0): ?>
-					<li role = "presentation" ><a href = "<?=base_url('admin/adminhome'); ?>" <?php if($title=='Adminhome'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-home">	</span> Home</a></li>
-					<?php if($islogin):?>
-						<li role = "presentation" ><a href = "<?=base_url('admin/worker'); ?>" <?php if($title=='Worker'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> Worker</a></li>
-						<li role = "presentation" ><a href = "<?=base_url('admin/category'); ?>" <?php if($title=='Category'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Category</a></li>
-					<?php endif; ?>
-				<?php endif ?>
+						<li role = "presentation" ><a href = "<?=base_url('admin/adminhome'); ?>" <?php if($title=='Adminhome'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-home">	</span> Home</a></li>
+						<?php if($islogin):?>
+							<li role = "presentation" ><a href = "<?=base_url('admin/worker'); ?>" <?php if($title=='Worker'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> Worker</a></li>
+							<li role = "presentation" ><a href = "<?=base_url('admin/category'); ?>" <?php if($title=='Category'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Category</a></li>
+						<?php endif; ?>
+			<?php 	elseif(strcmp($viewuser,'worker') == 0): ?>
+						<?php if($islogin):?>
+								<li role = "presentation" ><a href = "<?=base_url('worker/home'); ?>" <?php if($title=='Home'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-home">	</span> Home</a></li>
+						<?php endif; ?>
+			<?php endif ?>
 					</ul>
 				<?php if($islogin):?>
 					<ul class="nav navbar-nav" style="float:right;">
-						<?php if(strcmp($viewuser,'admin') == 0): ?>
+						<?php if(strcmp($viewuser,'admin') == 0 || strcmp($viewuser,'worker') == 0): ?>
 							<li role = "presentation" ><a href = "<?=base_url('Login/logout'); ?>" ><span class = "glyphicon glyphicon-log-out">	</span> Logout</a></li>
 						<?php else: ?>
 							<li role = "presentation" ><a href = "<?=base_url('userprofile'); ?>" <?php if($title=='userprofile'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> User Profile</a></li>

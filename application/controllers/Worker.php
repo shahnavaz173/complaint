@@ -8,6 +8,34 @@ class Worker extends CI_Controller
     $this->load->model('ComplaintModel');
     $this->load->model('WorkerModel');
   }
+  public function view($page = 'home')
+	{
+		if(!file_exists(APPPATH.'views/worker/'.$page.'.php'))
+		{
+			show_404();
+		}
+    //check login or not
+		if($this->session->userdata('w_id'))
+			$data['islogin'] = TRUE;
+		else
+			$data['islogin'] = FALSE;
+
+    if($data['islogin'])
+    {
+      //echo $this->session->userdata('w_id');
+      if($page =='home')
+      {
+        $data['clist'] = $this->ComplaintModel->get_complaints_for_worker($this->session->userdata('w_id'));
+      }
+    }
+
+		$data['title'] = ucfirst($page);
+		$data['viewuser'] = 'worker';
+
+		$this->load->view('public/header',$data);
+		$this->load->view('worker/'.$page,$data);
+		$this->load->view('public/footer',$data);
+	}
 
 	public function get_worker_list()
 	{

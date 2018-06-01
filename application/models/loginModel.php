@@ -31,5 +31,21 @@ class LoginModel extends CI_Model
          return FALSE;
        }
     }
+    public function worker_login($logindata)
+    {
+       $table='worker';
+       $this->db->select('w_id');
+       $this->db->from($table);
+       $this->db->where($logindata);
+       $q=$this->db->get();
+       if($q->num_rows() == 1)
+       {
+         return  $q->row()->w_id;
+       }
+       else
+       {
+         return FALSE;
+       }
+    }
 }
 ?>
