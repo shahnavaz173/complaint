@@ -175,7 +175,7 @@ function display_complaints(id)
 						var table = $("#datatable").dataTable();
 						var added =	table.fnAddData([
 								dataArr[i].c_date,
-								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br>"+dataArr[i].ph_no+"</span>",
+								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br>"+dataArr[i].pho_no+"</span>",
 								dataArr[i].Dept_Name,
 								dataArr[i].category,
 								dataArr[i].c_description,

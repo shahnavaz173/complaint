@@ -73,7 +73,7 @@
 				<label for="contact">Contact Number: </label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></div>
-					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'value' =>$udetails[0]->ph_no,'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off',  'required' => 'required')); ?>
+					<?=form_input(array('class' => 'form-control', 'id' => 'contact', 'value' =>$udetails[0]->pho_no,'name' => 'contact', 'placeholder' => 'Enter Contact No', 'onkeyup' => 'validateField(this)','onchange' => 'validateUnique(this)', 'autocomplete' => 'off',  'required' => 'required')); ?>
 					<span class="glyphicon  form-control-feedback"></span>
 				</div>
 				<p class="bg-danger text-danger validation-error" id="ph" ></p>
