@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
--- https://www.phpmyadmin.net/
+-- version 4.4.14
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2018 at 11:39 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Generation Time: Jun 02, 2018 at 12:18 AM
+-- Server version: 5.6.26
+-- PHP Version: 5.5.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
+CREATE TABLE IF NOT EXISTS `admin` (
   `a_id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL,
   `email` varchar(40) NOT NULL,
@@ -48,10 +46,10 @@ INSERT INTO `admin` (`a_id`, `name`, `email`, `password`) VALUES
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
+CREATE TABLE IF NOT EXISTS `category` (
   `cate_id` int(11) NOT NULL,
   `category` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -70,31 +68,20 @@ INSERT INTO `category` (`cate_id`, `category`) VALUES
 -- Table structure for table `complaint`
 --
 
-CREATE TABLE `complaint` (
+CREATE TABLE IF NOT EXISTS `complaint` (
   `co_id` int(11) NOT NULL,
   `cate_id` int(11) DEFAULT NULL,
   `c_level` int(1) DEFAULT NULL,
   `description` longtext
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaint`
 --
 
 INSERT INTO `complaint` (`co_id`, `cate_id`, `c_level`, `description`) VALUES
-(1, 1, 1, 'Fan Not Working'),
 (2, 1, 1, 'Tube Light Not Working'),
-(8, 1, 1, 'Shot circuit.'),
-(7, 1, 1, 'Power Cut'),
-(9, 1, 2, 'Switch Board'),
-(10, 1, 2, 'Fan Regulator'),
-(11, 3, 1, 'Water Leakage'),
-(12, 3, 1, 'Tap Leakage'),
-(13, 3, 1, 'Pipe Leakage'),
-(14, 4, 2, 'Door Break'),
-(15, 3, 2, 'Window Break'),
-(16, 4, 2, 'Door Stopper'),
-(17, 5, 1, 'Cleaning');
+(3, 3, 2, 'Pipe Leakage');
 
 -- --------------------------------------------------------
 
@@ -102,27 +89,21 @@ INSERT INTO `complaint` (`co_id`, `cate_id`, `c_level`, `description`) VALUES
 -- Table structure for table `complaint_location`
 --
 
-CREATE TABLE `complaint_location` (
+CREATE TABLE IF NOT EXISTS `complaint_location` (
   `loc_id` int(11) NOT NULL,
   `c_id` varchar(20) NOT NULL,
   `location` varchar(100) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaint_location`
 --
 
 INSERT INTO `complaint_location` (`loc_id`, `c_id`, `location`) VALUES
-(1, '20180531-103-0001', 'Post Graduation Boys Hostel,\r\nRoom no 42.'),
-(2, '20180531-103-0002', 'Social Work, Room No 3'),
-(3, '20180531-101-0003', 'Computer Science Office No 3'),
-(4, '20180531-101-0004', 'Computer Science Bathroom no 1'),
-(5, '20180531-101-0005', 'Apartment D,\r\nBuilding No 5,\r\nRoom No 1'),
-(6, '20180531-101-0006', 'Apartment D,\r\nBuilding No 5,\r\nRoom No 1'),
-(7, '20180531-102-0007', 'Computer Science Office No 1'),
-(8, '20180531-102-0008', 'Appartment A,\r\nBuilding No 2,\r\nRoom No 1.'),
-(9, '20180531-102-0009', 'Computer Science Office No 1'),
-(10, '20180531-103-0010', 'Post Graduation Boys Hostel,\r\nRoom no 42.');
+(1, '20180528-101-0001', 'Computer Science Office No 3'),
+(2, '20180528-102-0002', 'Computer Science Class Room 3'),
+(3, '20180528-101-0003', 'Apartment D,\r\nBuilding No 5,\r\nRoom No 1'),
+(4, '20180528-101-0004', 'Apartment D,\r\nBuilding No 5,\r\nRoom No 1');
 
 -- --------------------------------------------------------
 
@@ -130,7 +111,7 @@ INSERT INTO `complaint_location` (`loc_id`, `c_id`, `location`) VALUES
 -- Table structure for table `complaint_register`
 --
 
-CREATE TABLE `complaint_register` (
+CREATE TABLE IF NOT EXISTS `complaint_register` (
   `c_id` varchar(20) NOT NULL,
   `cate_id` int(11) NOT NULL,
   `u_id` varchar(10) NOT NULL,
@@ -142,7 +123,7 @@ CREATE TABLE `complaint_register` (
   `w_id` int(11) DEFAULT NULL,
   `f_date` date DEFAULT NULL,
   `satisfaction_level` int(1) DEFAULT NULL,
-  `f_status` tinyint(1) NOT NULL,
+  `f_status` tinyint(1) DEFAULT NULL,
   `f_available` tinyint(1) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -151,16 +132,10 @@ CREATE TABLE `complaint_register` (
 --
 
 INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `solution_duration`, `w_id`, `f_date`, `satisfaction_level`, `f_status`, `f_available`) VALUES
-('20180531-103-0001', 1, '11708103', 'Fan Not Working', '2018-05-12', NULL, 'Pending', NULL, 1, NULL, NULL, 0, 0),
-('20180531-103-0002', 1, '11708103', 'Tube Light Not Working', '2018-05-17', NULL, 'Under Construction', NULL, 1, NULL, NULL, 0, 0),
-('20180531-101-0003', 1, '101', 'Tube Light Not Working', '2018-05-31', NULL, 'Under Construction', NULL, 1, '2018-05-31', 2, 1, 0),
-('20180531-101-0004', 3, '101', 'Pipe Leakage', '2018-05-31', '2018-05-31', 'Complete', NULL, 2, '2018-05-31', 3, 1, 0),
-('20180531-101-0005', 1, '101', 'Fan Not Working', '2018-05-31', '2018-05-31', 'Complete', NULL, 1, '2018-05-31', 2, 1, 0),
-('20180531-101-0006', 1, '101', 'Tube Light Not Working', '2018-05-31', NULL, 'Under Construction', NULL, 1, '2018-05-31', 1, 1, 0),
-('20180531-102-0007', 3, '102', 'Pipe Leakage', '2018-05-31', '2018-05-31', 'Complete', NULL, 2, '2018-05-31', 1, 1, 0),
-('20180531-102-0008', 1, '102', 'Fan Not Working', '2018-05-31', '2018-05-31', 'Complete', NULL, 1, '2018-05-31', 2, 1, 0),
-('20180531-102-0009', 1, '102', 'Tube Light Not Working', '2018-05-31', '2018-05-31', 'Complete', NULL, 1, '2018-05-31', 3, 1, 0),
-('20180531-103-0010', 1, '11708103', 'Power Cut', '2018-05-31', NULL, 'Pending', NULL, NULL, NULL, NULL, 0, 0);
+('20180528-101-0001', 1, '101', 'Fan Not Working', '2018-05-28', '2018-05-30', 'Complete', NULL, 1, '2018-05-30', 2, 1, 0),
+('20180528-102-0002', 1, '102', 'Tube Light Not Working', '2018-05-03', NULL, 'Pending', NULL, 1, NULL, NULL, NULL, 1),
+('20180528-101-0003', 3, '101', 'Pipe Leakage', '2018-05-28', NULL, 'Pending', NULL, 2, NULL, NULL, NULL, 0),
+('20180528-101-0004', 4, '101', 'Door is Broken', '2018-05-24', NULL, 'Under Construction', NULL, 9, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -168,13 +143,13 @@ INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c
 -- Table structure for table `deptmst`
 --
 
-CREATE TABLE `deptmst` (
+CREATE TABLE IF NOT EXISTS `deptmst` (
   `deptid` int(11) NOT NULL,
   `Dept_Name` varchar(100) NOT NULL,
   `HOD` varchar(50) NOT NULL,
   `Pho_No` varchar(20) NOT NULL,
   `Email` varchar(40) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `deptmst`
@@ -182,7 +157,28 @@ CREATE TABLE `deptmst` (
 
 INSERT INTO `deptmst` (`deptid`, `Dept_Name`, `HOD`, `Pho_No`, `Email`) VALUES
 (1, 'Computer Science', 'Ajaybhai Parikh', '9874563210', 'csdept.gvp@gujaratvidyapith.org'),
-(3, 'Social Work', 'xyz', '9685632142', 'sw.gvp@gujratvidyapith.org');
+(2, 'Post Graduation Boys Hostel', 'Pradip Bhai Patel', '9652341523', 'pgboyshostel.gvp@gujaratvidyapith.org');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `remark`
+--
+
+CREATE TABLE IF NOT EXISTS `remark` (
+  `c_id` varchar(20) NOT NULL,
+  `w_id` int(11) NOT NULL,
+  `comment` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `remark`
+--
+
+INSERT INTO `remark` (`c_id`, `w_id`, `comment`) VALUES
+('20180528-101-0003', 1, 'lsd'),
+('20180528-101-0003', 2, 'hello...'),
+('20180528-102-0002', 1, 'vffvfv');
 
 -- --------------------------------------------------------
 
@@ -190,7 +186,7 @@ INSERT INTO `deptmst` (`deptid`, `Dept_Name`, `HOD`, `Pho_No`, `Email`) VALUES
 -- Table structure for table `studmst`
 --
 
-CREATE TABLE `studmst` (
+CREATE TABLE IF NOT EXISTS `studmst` (
   `Stud_ID` varchar(10) NOT NULL,
   `Pwd` varchar(20) NOT NULL,
   `Stud_Name` varchar(200) NOT NULL,
@@ -228,12 +224,12 @@ INSERT INTO `studmst` (`Stud_ID`, `Pwd`, `Stud_Name`, `stud_name_eng`, `Email`, 
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `u_id` varchar(10) NOT NULL,
   `full_name` varchar(60) NOT NULL,
   `emp_no` varchar(15) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `pho_no` varchar(13) NOT NULL,
+  `ph_no` varchar(13) NOT NULL,
   `address` longtext NOT NULL,
   `u_type` varchar(10) NOT NULL,
   `gender` char(1) NOT NULL,
@@ -244,11 +240,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`u_id`, `full_name`, `emp_no`, `email`, `pho_no`, `address`, `u_type`, `gender`, `password`) VALUES
+INSERT INTO `user` (`u_id`, `full_name`, `emp_no`, `email`, `ph_no`, `address`, `u_type`, `gender`, `password`) VALUES
 ('101', 'Shahnavaz Saiyad', '101', 'ssaiyed173@gmail.com', '9726321433', 'Apartment D,\r\nBuilding No 5,\r\nRoom No 1', 'employee', 'M', 'Vf2fh2nt7'),
-('102', 'Mehul Zala', '102', 'mehul@gmail.com', '9632587410', 'Appartment A,\r\nBuilding No 2,\r\nRoom No 1.', 'employee', 'M', 'mehulzala'),
-('11708103', 'Urvesh Gayakwad', '11708103', 'uv@gmail.com', '9658745632', 'Post Graduation Boys Hostel,\r\nRoom no 42.', 'student', 'M', 'Urvesh'),
-('11708120', 'parmar surbhi j', '11708120', 'parmarsurbhi@gmail.com', '9099609852', 'kanya chatralaya room no:47', 'student', 'F', 'subh123');
+('102', 'Mehul Zala', '102', 'mehul@gmail.com', '9632587410', 'Appartment A,\r\nBuilding No 2,\r\nRoom No 1.', 'employee', 'M', 'mehulzala');
 
 -- --------------------------------------------------------
 
@@ -256,8 +250,8 @@ INSERT INTO `user` (`u_id`, `full_name`, `emp_no`, `email`, `pho_no`, `address`,
 -- Table structure for table `user_dept`
 --
 
-CREATE TABLE `user_dept` (
-  `u_id` varchar(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user_dept` (
+  `u_id` int(11) NOT NULL,
   `deptid` int(11) NOT NULL,
   `office_location` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -267,10 +261,8 @@ CREATE TABLE `user_dept` (
 --
 
 INSERT INTO `user_dept` (`u_id`, `deptid`, `office_location`) VALUES
-('101', 1, 'Computer Science Office No 3'),
-('102', 1, 'Computer Science Office No 1'),
-('11708103', 3, 'Social Work'),
-('11708120', 1, 'Computer Science');
+(101, 1, 'Computer Science Office No 3'),
+(102, 1, 'Computer Science Office No 1');
 
 -- --------------------------------------------------------
 
@@ -278,23 +270,25 @@ INSERT INTO `user_dept` (`u_id`, `deptid`, `office_location`) VALUES
 -- Table structure for table `worker`
 --
 
-CREATE TABLE `worker` (
+CREATE TABLE IF NOT EXISTS `worker` (
   `w_id` int(11) NOT NULL,
   `w_name` varchar(60) NOT NULL,
   `ph_no` varchar(13) NOT NULL,
   `email` varchar(40) NOT NULL,
   `address` varchar(100) NOT NULL,
   `skill` int(11) NOT NULL,
-  `w_status` varchar(15) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `w_status` varchar(15) NOT NULL,
+  `password` varchar(14) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `worker`
 --
 
-INSERT INTO `worker` (`w_id`, `w_name`, `ph_no`, `email`, `address`, `skill`, `w_status`) VALUES
-(1, 'Ramesh', '9657452365', 'ramesh@gmail.com', '110,Usmanpura Ahmedabad,\nAhmedabad- 380014', 1, 'Active'),
-(2, 'Suresh', '9657452366', 'suresh@gmail.com', '92,Incometax Ahmedabad,\nAhmedabad- 380014', 3, 'Active');
+INSERT INTO `worker` (`w_id`, `w_name`, `ph_no`, `email`, `address`, `skill`, `w_status`, `password`) VALUES
+(1, 'Ramesh', '9657452365', 'ramesh@gmail.com', '110,Usmanpura Ahmedabad,\nAhmedabad- 380014', 1, 'Active', ''),
+(2, 'Suresh', '9657452366', 'suresh@gmail.com', '92,Incometax Ahmedabad,\nAhmedabad- 380014', 3, 'Active', 'suresh'),
+(9, 'Shahnavaz Saiyadmiyan Saiyed', '9726321433', 'ssaiyed173@gmail.com', 'Vansda', 4, 'Active', '');
 
 --
 -- Indexes for dumped tables
@@ -354,7 +348,7 @@ ALTER TABLE `studmst`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`u_id`),
-  ADD UNIQUE KEY `email` (`email`,`pho_no`);
+  ADD UNIQUE KEY `email` (`email`,`ph_no`);
 
 --
 -- Indexes for table `user_dept`
@@ -379,33 +373,27 @@ ALTER TABLE `worker`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `cate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `cate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `complaint`
 --
 ALTER TABLE `complaint`
-  MODIFY `co_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
+  MODIFY `co_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `complaint_location`
 --
 ALTER TABLE `complaint_location`
-  MODIFY `loc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `loc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `deptmst`
 --
 ALTER TABLE `deptmst`
-  MODIFY `deptid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `deptid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
-  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-COMMIT;
-
+  MODIFY `w_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
