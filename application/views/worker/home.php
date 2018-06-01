@@ -30,31 +30,22 @@
 
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-				<?=form_open('Worker/assign_worker',array()); ?>
-				<div class="form-row col-md-8">
-					<div class="form-group col-md-8 col-md-offset-3">
-						<label for="selectworker">Select Worker: </label>
-						<select name="selectworker" class="form-control select-worker" required>
-							<option value="1">Select Worker</option>
-						</select>
-					</div>
+			<?=form_open('Worker/assign_worker',array()); ?>
+			<div class="form-row">
+				<div class="form-group col-md-6 col-md-offset-3">
+					<label for="selectworker">Select Worker: </label>
+					<select name="selectworker" class="form-control select-worker" required>
+						<option value="">Select Worker</option>
+					</select>
 				</div>
-				<div class="form-row col-md-8 ">
-					<div class = "form-group col-md-8 col-md-offset-3">
-						<label for = "remark">Add Remark:
-						<div class = "input-group " >
-							<textarea name="remark" id="remark" rows="3" cols="40" class="form-control" placeholder="You must have to solave this complaint in 1 hour"></textarea>
-						</div>
-						</label>
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6 col-md-offset-3">
+					<input type="submit" class="btn btn-info" value="Click To Assign" >
+					<input type="button" class="btn btn-warning cancel-assign" value="Cancel" >
 				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6 col-md-offset-3">
-						<input type="submit" class="btn btn-info" value="Click To Assign" >
-						<input type="button" class="btn btn-warning cancel-assign" value="Cancel" >
-					</div>
-				</div>
-				<?=form_close(); ?>
+			</div>
+			<?=form_close(); ?>
 		</div>
 	</div>
 </div>
@@ -92,10 +83,22 @@
 							<th>Description</th>
 							<th>Complaint Location</th>
 							<th>Status</th>
-							<th class="assign-th">Worker</th>
 						</tr>
 					<thead>
 					<tbody>
+
+						<?php foreach($clist as $datalist):?>
+
+						<tr>
+							<td><?php echo $datalist->c_date; ?></td>
+							<td><span class='uname'><?=$datalist->full_name; ?></span><span class='cid-name'><br><?=$datalist->ph_no; ?></span></td>
+							<td><?=$datalist->Dept_Name; ?></td>
+							<td><?=$datalist->category; ?></td>
+							<td><?=$datalist->c_description; ?></td>
+							<td><?=$datalist->location; ?></td>
+							<td><span style='cursor:pointer;' class='change-status'><?=$datalist->c_status; ?></span><input type='hidden' class='cidhidden' value='<?=$datalist->c_id; ?>'></td>
+						</tr>
+						<?php endforeach; ?>
 
 					</tbody>
 				</table>
@@ -128,79 +131,9 @@ $(document).ready(function()
 		var id=$(this).val();
 		display_complaints(id);
 	});
-	$(window).load(function()
-	{
-		display_complaints('all');
-	});
+	$(".cid-name").hide();
 });
-function display_complaints(id)
-{
-	var dataString = 'id='+ id;
-	if(id != '')
-	{
-		$.ajax
-		({
-			type: "POST",
-			url: "<?=base_url('Admin/get_complaint_list'); ?>",
-			data: dataString,
-			cache: false,
-			success: function(data)
-			{
-				var dataArr = JSON.parse(data);
-				if(dataArr.length == 0)
-				{
-				}
-				else
-				{
-					var chkclass = 'bg-success text-success';
-					for(i = 0; i<dataArr.length; i++)
-					{
-						if(dataArr[i].flag == 0)
-						{
-							if(dataArr[i].c_status == 'Complete')
-								chkclass = 'bg-success text-success';
-							else if(dataArr[i].c_status == 'Under Construction')
-								chkclass = 'bg-warning text-warning';
-							else
-								chkclass = 'bg-danger text-danger';
-						}
-						else
-						{
-							if(dataArr[i].c_status == 'Complete')
-								chkclass = 'bg-success text-success';
-							else
-								chkclass = 'bg-info text-info';
-						}
-						var worker = "Click To Assign";
-						var wclass = "not-assigned"
-						if(dataArr[i].w_id != null)
-						{
-							worker = dataArr[i].w_name;
-						}
-						else
-						{
-							wclass = dataArr[i].w_id;
-						}
-						var table = $("#datatable").dataTable();
-						var added =	table.fnAddData([
-								dataArr[i].c_date,
-								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br>"+dataArr[i].pho_no+"</span>",
-								dataArr[i].Dept_Name,
-								dataArr[i].category,
-								dataArr[i].c_description,
-								dataArr[i].location,
-								"<span style='cursor:pointer;' class='change-status'>"+dataArr[i].c_status+"</span><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'>",
-								"<span class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'>"+worker+"</span>"
-							]);
-						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
-						ntr.className = chkclass;
-						$(".cid-name").hide();
-						}
-					}
-				}
-		});
-	}
-}
+
 
 $(".complaint-table").on("mouseenter",".uname",function()
 {

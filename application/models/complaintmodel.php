@@ -8,7 +8,11 @@ class ComplaintModel extends CI_Model
   }
   public function complaint_list()
   {
+<<<<<<< HEAD
     $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','user.pho_no','worker.w_name','worker.ph_no','Dept_Name'));
+=======
+    $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','user.ph_no','worker.w_name','worker.ph_no','deptmst.Dept_Name'));
+>>>>>>> c69b530fa6bf0c4ba8fb752903d4a79481b2f0e4
     $this->db->from('complaint_register');
     $this->db->join('user','complaint_register.u_id = user.u_id','INNER');
     $this->db->join('user_dept','user.u_id = user_dept.u_id');
@@ -101,11 +105,12 @@ class ComplaintModel extends CI_Model
       $q = $this->db->query("SELECT * FROM worker INNER JOIN category ON worker.skill=category.cate_id WHERE worker.skill=".$cate_id." AND w_status='Active' ");
     return $q->result();
   }
-  public function assign_worker($wid,$cid)
+  public function assign_worker($wid,$cid,$remark)
   {
     $this->db->set('w_id',$wid);
     $this->db->where('c_id',$cid);
     $this->db->update('complaint_register');
+    $this->db->insert('remark',array('c_id'=>$cid,'w_id'=>$wid,'comment'=>$remark));
     redirect(base_url('admin'));
   }
   public function get_category_description($cid,$level)
@@ -239,6 +244,13 @@ class ComplaintModel extends CI_Model
     $this->db->where('co_id',$co_id);
     $this->db->delete('complaint');
     return TRUE;
+  }
+  public function get_complaints_for_worker($wid)
+  {
+    $this->complaint_list();
+    $this->db->where('complaint_register.w_id',$wid);
+    $q=$this->db->get();
+    return $q->result();
   }
 }
 ?>

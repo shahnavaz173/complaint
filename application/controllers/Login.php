@@ -31,6 +31,26 @@ class Login extends CI_Controller
   			redirect(base_url('login'));
   		}
     }
+		else if($utype=='worker')
+		{
+			$logindata = array('email' => $this->input->post('email'), 'password' => $this->input->post('password'));
+
+      $login_id = $this->LoginModel->worker_login($logindata);
+
+      if($login_id)
+  		{
+  				$this->session->set_userdata('check_login',FALSE);
+  				$this->session->set_userdata('w_id',$login_id);
+					$this->session->set_userdata('usertype',$utype);
+  				redirect(base_url('worker/home'));
+  		}
+  		else
+  		{
+  			$this->session->set_userdata('check_login',TRUE);
+  			redirect(base_url('login'));
+  		}
+
+		}
     else
     {
 			$loginenrol = array('emp_no' => $this->input->post('email'), 'password' => $this->input->post('password'),'u_type' => $this->input->post('usertype'));
