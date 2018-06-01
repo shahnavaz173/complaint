@@ -75,8 +75,26 @@
 					</div>
 			</div>
 		</div>
-
-
+		<div class="row">
+			<div class="form-group has-feedback col-md-6">
+				<label for="password">Enter Password:</label>
+				<div class="input-group">
+					<div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+						<?=form_input(array('name' => 'password', 'id' => 'password', 'placeholder' => 'Enter Password', 'class' => 'form-control', 'required' => 'true', 'type' => 'password', 'onkeyup' => 'validateField(this)')); ?>
+						<span class="glyphicon  form-control-feedback"></span>
+				</div>
+				<p class="bg-danger text-danger validation-error" ></p>
+			</div>
+			<div class="form-group has-feedback col-md-6">
+				<label for="cpassword">Confirm Password: </label>
+				<div class="input-group">
+					<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+					<?=form_password(array('name' => 'cpassword', 'class' => 'form-control', 'id' => 'cpassword','placeholder' => 'Confirm Password','onkeyup' => 'validate_pwd(this)',  'required' => 'required')); ?>
+					<span class="glyphicon  form-control-feedback"></span>
+				</div>
+				<p class="bg-danger text-danger validation-error" id="cpwd" ></p>
+			</div>
+		</div>
 		<div class = "row" >
 			<div  class = "form-group col-md-6">
 					<?=form_submit('submit','Submit',array('class' => 'btn btn-primary btn-lg btn-block form-buttons', 'id' => 'submit')); ?>

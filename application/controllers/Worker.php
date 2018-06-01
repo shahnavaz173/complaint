@@ -82,7 +82,8 @@ class Worker extends CI_Controller
       'email' => $this->input->post('email'),
       'address' => $this->input->post('address'),
       'skill' => $this->input->post('workerskill'),
-      'w_status' => $this->input->post('status')
+      'w_status' => $this->input->post('status'),
+      'password' => $this->input->post('password')
     );
     if($this->WorkerModel->add_worker($data))
       redirect(base_url('admin/worker'));
