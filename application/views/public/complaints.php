@@ -21,11 +21,31 @@
 					<tbody>
             <?php foreach ($ucomplaints as $c): ?>
               <tr>
+								<?php
+								switch($c->c_status)
+								{
+									case 1:
+										$status = "Open";
+									break;
+									case 2:
+										$status = "Pending";
+									break;
+									case 3:
+										$status = "Under Observation";
+									break;
+									case 4:
+										$status = "Closed But Not Complete";
+									break;
+									case 5:
+										$status = "Closed";
+									break;
+								}
+								?>
                 <td><?=$c->c_date;?></td>
                 <td><?=$c->category;?></td>
                 <td><?=$c->c_description;?></td>
                 <td><?=$c->location;?></td>
-                <td><?=$c->c_status;?></td>
+                <td><?=$status;?></td>
                 <td><?php
                 if($c->w_name == NULL)
                   echo "Not Assigned";

@@ -33,6 +33,8 @@ class Site extends CI_Controller
 				$page = 'home';
 			else if($this->session->userdata('admin_id'))
 				redirect(base_url('admin'));
+			else if($this->session->userdata('w_id'))
+				redirect(base_url('worker'));
 
 			$data['logincheck'] = FALSE;
 			if($this->session->userdata('check_login') == TRUE )

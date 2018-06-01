@@ -20,7 +20,6 @@ $(document).ready(function()
 						<caption><h5><b>Complaints that already registered from your location</b></h5></caption>
 						<thead>
 							<tr class="list-head ">
-								<th>Complain id</th>
 								<th>Student/Emp Name</th>
 								<th class="ctype-row">Complain Type</th>
 								<th>Description</th>
@@ -33,13 +32,32 @@ $(document).ready(function()
 						<tbody>
 							<?php foreach($complaints as $complaint): ?>
 								<tr>
-									<td><?=$complaint->c_id; ?></td>
+									<?php
+									switch($complaint->c_status)
+									{
+										case 1:
+											$status = "Open";
+										break;
+										case 2:
+											$status = "Pending";
+										break;
+										case 3:
+											$status = "Under Observation";
+										break;
+										case 4:
+											$status = "Closed But Not Complete";
+										break;
+										case 5:
+											$status = "Closed";
+										break;
+									}
+									?>
 									<td><?=$complaint->full_name; ?></td>
 									<td><?=$complaint->category; ?></td>
 									<td><?=$complaint->c_description; ?></td>
 									<td><?=$complaint->location; ?></td>
 									<td><?=$complaint->c_date; ?></td>
-									<td><?=$complaint->c_status; ?></td>
+									<td><?=$status; ?></td>
 									<td>
 										<?php
 										if($complaint->w_name == null)
@@ -248,3 +266,17 @@ $(document).ready(function()
 	});
 });
 </script>
+
+<style>
+.pagination > li > a, .pagination > li > span
+{
+	background-color:#337ab7 !important;
+	opacity:.8;
+	margin-left:1px;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover
+{
+		opacity:1;
+		background-color:#337ab7 !important;
+}
+</style>

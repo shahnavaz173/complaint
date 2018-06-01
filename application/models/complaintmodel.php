@@ -101,11 +101,14 @@ class ComplaintModel extends CI_Model
       $q = $this->db->query("SELECT * FROM worker INNER JOIN category ON worker.skill=category.cate_id WHERE worker.skill=".$cate_id." AND w_status='Active' ");
     return $q->result();
   }
-  public function assign_worker($wid,$cid)
+  public function assign_worker($wid,$cid,$remark)
   {
-    $this->db->set('w_id',$wid);
+    $data = array('c_status' => 2,'w_id' => $wid);
+    $this->db->set($data);
     $this->db->where('c_id',$cid);
     $this->db->update('complaint_register');
+    $data = array('c_id' => $cid,'w_id' => $wid,'comment' => $remark);
+    $this->db->insert('remark',$data);
     redirect(base_url('admin'));
   }
   public function get_category_description($cid,$level)
@@ -183,7 +186,7 @@ class ComplaintModel extends CI_Model
     $q = $this->db->get();
     $q = $q->result();
     $today = date('Y-m-d');
-    if($status == 'Complete')
+    if($status == 4 || $status == 5)
     {
       if($q[0]->f_status == FALSE)
         $this->db->set(array('c_status' => $status, 's_date' => $today, 'f_available' => TRUE));
@@ -239,6 +242,13 @@ class ComplaintModel extends CI_Model
     $this->db->where('co_id',$co_id);
     $this->db->delete('complaint');
     return TRUE;
+  }
+  public function get_complaints_for_worker($wid)
+  {
+    $this->complaint_list();
+    $this->db->where('complaint_register.w_id',$wid);
+    $q = $this->db->get();
+    return $q->result();
   }
 }
 ?>

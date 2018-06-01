@@ -71,7 +71,7 @@ class Complaint extends CI_Controller
     $obj = json_decode($obj_json);
     if($this->ComplaintModel->update_complaint_status($obj->status,$obj->cid))
     {
-      echo $obj->status;
+        echo $obj->status;
     }
   }
   public function submit_feedback()

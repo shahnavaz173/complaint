@@ -3,72 +3,9 @@
 		redirect(base_url('login'));
 ?>
 
-<div class="assign-worker">
-	<div class="jumbotron jumbotron-main">
-			<h1>Asssign Worker To Complaint</h1>
-	</div>
-	<div class="row" >
-		<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
-			<div class="table-responsive">
-				<table class="table  table-bordered complaint-table-worker">
-					<thead>
-						<tr class="list-head ">
-							<th>Date</th>
-							<th>Student/Emp Name</th>
-							<th>Department</th>
-							<th class="ctype-row">Complain Type</th>
-							<th>Description</th>
-							<th>Location</th>
-							<th>Status</th>
-							<th>Assigned to</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<?=form_open('Worker/assign_worker',array()); ?>
-			<div class="form-row">
-				<div class="form-group col-md-6 col-md-offset-3">
-					<label for="selectworker">Select Worker: </label>
-					<select name="selectworker" class="form-control select-worker" required>
-						<option value="">Select Worker</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-md-6 col-md-offset-3">
-					<input type="submit" class="btn btn-info" value="Click To Assign" >
-					<input type="button" class="btn btn-warning cancel-assign" value="Cancel" >
-				</div>
-			</div>
-			<?=form_close(); ?>
-		</div>
-	</div>
-</div>
 <div class="container-home">
 
-	<?php /*<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<?=form_open('',array()); ?>
-			<div class="form-row">
-				<div class="form-group col-md-8 col-md-offset-2">
-					<label for="complaintype">Complaint Category: </label>
-					<select name="complaintype" class="form-control complaintype">
-						<option value="">Select Category</option>
-						<option value="all">All</option>
-						<?php foreach ($complain_caategory as $category): ?>
-							<option value="<?php echo $category->cate_id; ?>"><?php echo $category->category; ?></option>
-						<?php endforeach; ?>
-					</select>
-				</div>
-			</div>
-			<?=form_close(); ?>
-		</div>
-	</div>*/ ?>
 	<div class="row" >
 		<div class="col-md-12">
 			<div class="table-responsive">
@@ -86,17 +23,41 @@
 						</tr>
 					<thead>
 					<tbody>
-
 						<?php foreach($clist as $datalist):?>
+							<?php
+							switch($datalist->c_status)
+							{
+								case 1:
+									$status = "Open";
+									$chkclass = 'bg-danger text-danger';
+								break;
+								case 2:
+									$status = "Pending";
+									$chkclass = 'bg-danger text-danger';
+								break;
+								case 3:
+									$status = "Under Observation";
+									$chkclass = 'bg-warning text-warning';
+								break;
+								case 4:
+									$status = "Closed But Not Complete";
+									$chkclass = 'bg-warning text-warning';
+								break;
+								case 5:
+									$status = "Closed";
+									$chkclass = 'bg-success text-success';
+								break;
+							}
+							?>
+						<tr class="<?=$chkclass; ?>">
 
-						<tr>
 							<td><?php echo $datalist->c_date; ?></td>
 							<td><span class='uname'><?=$datalist->full_name; ?></span><span class='cid-name'><br><?=$datalist->ph_no; ?></span></td>
 							<td><?=$datalist->Dept_Name; ?></td>
 							<td><?=$datalist->category; ?></td>
 							<td><?=$datalist->c_description; ?></td>
 							<td><?=$datalist->location; ?></td>
-							<td><span style='cursor:pointer;' class='change-status'><?=$datalist->c_status; ?></span><input type='hidden' class='cidhidden' value='<?=$datalist->c_id; ?>'></td>
+							<td><span style='cursor:pointer;' class='change-status'><?=$status; ?></span><input type='hidden' class='cidhidden' value='<?=$datalist->c_id; ?>'></td>
 						</tr>
 						<?php endforeach; ?>
 
@@ -157,18 +118,27 @@ $(".complaint-table").on("change",".select-status",function()
 		cache: false,
 		success: function(data)
 		{
-				$(".select-status").prev('span').text(data);
+				if(data == 3)
+					var status = "Under Observation";
+				else if (data == 4)
+				 	var status = "Closed But Not Complete";
+				else if(data == 5)
+					var status = "Closed";
+
+				$(".select-status").prev('span').text(status);
 				$(".select-status").remove();
 				$(".change-status").prop("disabled",false);
 
-			if(data.localeCompare("Pending")  == 0)
+			if(data == 3)
+			{
+
+			}
+			else if(data == 4)
 			{
 			}
-			else if(data.localeCompare("Under Construction") == 0)
+			else if(data == 5)
 			{
-			}
-			else if(data.localeCompare("Complete") == 0)
-			{
+
 			}
 		}
 	});
@@ -176,63 +146,38 @@ $(".complaint-table").on("change",".select-status",function()
 $(".complaint-table").on("click",".change-status",function()
 {
 	var val = $(this).text().trim();
-	$(this).text("");
-	$(".change-status").prop("disabled",true);
-	var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
-			<option value='Pending' >Pending</option>\
-			<option value='Under Construction'>Under Construction</option>\
-			<option value='Complete'>Complete</option>\
-		</select>";
-
-	$(this).after(html);
-	$(".select-status option").each(function()
-	{
-		if($(this).val() == val)
+		switch(val)
 		{
-			$(this).attr("selected","selected");
+			case 'Open':
+
+			break;
+			case 'Pending':
+				var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
+											<option value='2' selected>Pending</option>\
+											<option value='3' >Under Observation</option>\
+											<option value='4'>Closed But Not Complete</option>\
+											<option value='5'>Closed</option>\
+										</select>";
+				$(this).text("");
+				$(".change-status").prop("disabled",true);
+				$(this).after(html);
+			break;
+			case 'Under Observation':
+				var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
+											<option value='3' selected>Under Observation</option>\
+											<option value='4'>Closed But Not Complete</option>\
+											<option value='5'>Closed</option>\
+										</select>";
+				$(this).text("");
+				$(".change-status").prop("disabled",true);
+				$(this).after(html);
+			break;
+			case 'Closed But Not Complete':
+			break;
+			case 'Closed':
+			break;
 		}
-	});
-});
-$(".assign-worker").hide();
-$(".complaint-table").on("click",".worker",function()
-{
-	$(this).parent().parent().clone().appendTo(".complaint-table-worker");
-	var cid = $(this).find('.cidhidden').val();
-	var wcate = $(this).find('.wcate').val();
-	var val = $(this).text();
-	if(val.localeCompare("Click To Assign") == 0)
-	{
 
-		$(".assign-worker").slideDown("slow");
-		$(".container-home").hide();
-		//var id = wcate;
-		var dataString = 'cate='+ wcate;
-		$.ajax
-		({
-			type: "POST",
-			url: "<?=base_url('Worker/get_workers'); ?>",
-			data: dataString,
-			cache: false,
-			success: function(data)
-			{
-					var wlist = JSON.parse(data);
-					for(var i=0;i<wlist.length;i++)
-					{
-						var option = "<option class='woption' value="+wlist[i].w_id+">"+wlist[i].w_name+"</option";
-						$(".select-worker").append(option);
-					}
-					var hidden = "<input type='hidden' class='woption' name='cid' value='"+cid+"' >";
-					$(".select-worker").append(hidden);
-			}
-		});
-	}
 });
 
-$(".cancel-assign").click(function()
-{
-	$(".assign-worker").slideUp("slow");
-	$(".container-home").show();
-	$(".assign-worker").find("td").remove();
-	$(".assign-worker").find("select").find(".woption").remove();
-});
 </script>

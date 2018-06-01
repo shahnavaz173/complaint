@@ -83,6 +83,10 @@ class Login extends CI_Controller
     {
 			$this->session->unset_userdata('user_id');
     }
+    elseif($this->session->userdata('w_id') )
+    {
+			$this->session->unset_userdata('w_id');
+    }
 		else
     {
       $this->session->unset_userdata('admin_id');

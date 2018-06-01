@@ -17,15 +17,35 @@
             <p><?=$cdetails[0]->c_date;?></p>
          </div>
        </div>
+       <?php
+       switch($cdetails[0]->c_status)
+       {
+         case 1:
+           $status = "Open";
+         break;
+         case 2:
+           $status = "Pending";
+         break;
+         case 3:
+           $status = "Under Observation";
+         break;
+         case 4:
+           $status = "Closed But Not Complete";
+         break;
+         case 5:
+           $status = "Closed";
+         break;
+       }
+       ?>
 			 <div class="card col-md-5 col-md-offset-1" style="box-shadow:0px 0px 5px 0px #000;background-color:#fbfaf9;">
          <div class="container">
             <h4 class="text-info"><b>Complaint Status :</b></h4>
-            <?php if($cdetails[0]->c_status == 'Pending'): ?>
-              <p class="text-danger"><?=$cdetails[0]->c_status;?></p>
-            <?php elseif($cdetails[0]->c_status == 'Under Construction'): ?>
-              <p class="text-warning"><?=$cdetails[0]->c_status;?></p>
+            <?php if($cdetails[0]->c_status == 1 || $cdetails[0]->c_status == 2): ?>
+              <p class="text-danger"><?=$status;?></p>
+            <?php elseif($cdetails[0]->c_status == 3 || $cdetails[0]->c_status == 4): ?>
+              <p class="text-warning"><?=$status;?></p>
             <?php else: ?>
-              <p class="text-success"><?=$cdetails[0]->c_status;?></p>
+              <p class="text-success"><?=$status;?></p>
             <?php endif; ?>
             <h4 class="text-info"><b>Solution Date :</b></h4>
             <?php

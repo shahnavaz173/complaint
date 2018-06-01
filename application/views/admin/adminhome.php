@@ -60,24 +60,6 @@
 </div>
 <div class="container-home">
 
-	<?php /*<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<?=form_open('',array()); ?>
-			<div class="form-row">
-				<div class="form-group col-md-8 col-md-offset-2">
-					<label for="complaintype">Complaint Category: </label>
-					<select name="complaintype" class="form-control complaintype">
-						<option value="">Select Category</option>
-						<option value="all">All</option>
-						<?php foreach ($complain_caategory as $category): ?>
-							<option value="<?php echo $category->cate_id; ?>"><?php echo $category->category; ?></option>
-						<?php endforeach; ?>
-					</select>
-				</div>
-			</div>
-			<?=form_close(); ?>
-		</div>
-	</div>*/ ?>
 	<div class="row" >
 		<div class="col-md-12">
 			<div class="table-responsive">
@@ -173,7 +155,7 @@ function display_complaints(id)
 							else
 							{
 								chkclass = 'bg-success text-success';
-								var status = "Complete";
+								var status = "Closed";
 
 							}
 						var worker = "Click To Assign";
@@ -229,18 +211,27 @@ $(".complaint-table").on("change",".select-status",function()
 		cache: false,
 		success: function(data)
 		{
-				$(".select-status").prev('span').text(data);
+				if(data == 3)
+					var status = "Under Observation";
+				else if (data == 4)
+				 	var status = "Closed But Not Complete";
+				else if(data == 5)
+					var status = "Closed";
+
+				$(".select-status").prev('span').text(status);
 				$(".select-status").remove();
 				$(".change-status").prop("disabled",false);
 
-			if(data.localeCompare("Pending")  == 0)
+			if(data == 3)
+			{
+
+			}
+			else if(data == 4)
 			{
 			}
-			else if(data.localeCompare("Under Construction") == 0)
+			else if(data == 5)
 			{
-			}
-			else if(data.localeCompare("Complete") == 0)
-			{
+
 			}
 		}
 	});
@@ -258,7 +249,7 @@ $(".complaint-table").on("click",".change-status",function()
 											<option value='2' selected>Pending</option>\
 											<option value='3' >Under Observation</option>\
 											<option value='4'>Closed But Not Complete</option>\
-											<option value='5'>Complete</option>\
+											<option value='5'>Closed</option>\
 										</select>";
 				$(this).text("");
 				$(".change-status").prop("disabled",true);
@@ -268,7 +259,7 @@ $(".complaint-table").on("click",".change-status",function()
 				var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
 											<option value='3' selected>Under Observation</option>\
 											<option value='4'>Closed But Not Complete</option>\
-											<option value='Complete'>Complete</option>\
+											<option value='5'>Closed</option>\
 										</select>";
 				$(this).text("");
 				$(".change-status").prop("disabled",true);
