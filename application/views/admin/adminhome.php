@@ -123,11 +123,6 @@ $(function()
 });
 $(document).ready(function()
 {
-	$(".complaintype").change(function()
-	{
-		var id=$(this).val();
-		display_complaints(id);
-	});
 	$(window).load(function()
 	{
 		display_complaints('all');
@@ -155,22 +150,32 @@ function display_complaints(id)
 					var chkclass = 'bg-success text-success';
 					for(i = 0; i<dataArr.length; i++)
 					{
-						if(dataArr[i].flag == 0)
-						{
-							if(dataArr[i].c_status == 'Complete')
-								chkclass = 'bg-success text-success';
-							else if(dataArr[i].c_status == 'Under Construction')
-								chkclass = 'bg-warning text-warning';
-							else
+							if(dataArr[i].c_status == 1 )
+							{
 								chkclass = 'bg-danger text-danger';
-						}
-						else
-						{
-							if(dataArr[i].c_status == 'Complete')
-								chkclass = 'bg-success text-success';
+								var status = 'Open';
+							}
+							else if ( dataArr[i].c_status == 2)
+							{
+									chkclass = 'bg-danger text-danger';
+									var status = 'Pending';
+							}
+							else if(dataArr[i].c_status == 3)
+							{
+								chkclass = 'bg-warning text-warning';
+								var status = "Under Observation";
+							}
+							else if ( dataArr[i].c_status == 4)
+							{
+								chkclass = 'bg-warning text-warning';
+								var status = "Closed But Not Complete";
+							}
 							else
-								chkclass = 'bg-info text-info';
-						}
+							{
+								chkclass = 'bg-success text-success';
+								var status = "Complete";
+
+							}
 						var worker = "Click To Assign";
 						var wclass = "not-assigned"
 						if(dataArr[i].w_id != null)
@@ -189,7 +194,7 @@ function display_complaints(id)
 								dataArr[i].category,
 								dataArr[i].c_description,
 								dataArr[i].location,
-								"<span style='cursor:pointer;' class='change-status'>"+dataArr[i].c_status+"</span><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'>",
+								"<span style='cursor:pointer;' class='change-status'>"+status+"</span><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'>",
 								"<span class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='"+dataArr[i].c_id+"'><input type='hidden' class='wcate' value='"+dataArr[i].cate_id+"'>"+worker+"</span>"
 							]);
 						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
@@ -243,22 +248,38 @@ $(".complaint-table").on("change",".select-status",function()
 $(".complaint-table").on("click",".change-status",function()
 {
 	var val = $(this).text().trim();
-	$(this).text("");
-	$(".change-status").prop("disabled",true);
-	var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
-			<option value='Pending' >Pending</option>\
-			<option value='Under Construction'>Under Construction</option>\
-			<option value='Complete'>Complete</option>\
-		</select>";
-
-	$(this).after(html);
-	$(".select-status option").each(function()
-	{
-		if($(this).val() == val)
+		switch(val)
 		{
-			$(this).attr("selected","selected");
+			case 'Open':
+
+			break;
+			case 'Pending':
+				var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
+											<option value='2' selected>Pending</option>\
+											<option value='3' >Under Observation</option>\
+											<option value='4'>Closed But Not Complete</option>\
+											<option value='5'>Complete</option>\
+										</select>";
+				$(this).text("");
+				$(".change-status").prop("disabled",true);
+				$(this).after(html);
+			break;
+			case 'Under Observation':
+				var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
+											<option value='3' selected>Under Observation</option>\
+											<option value='4'>Closed But Not Complete</option>\
+											<option value='Complete'>Complete</option>\
+										</select>";
+				$(this).text("");
+				$(".change-status").prop("disabled",true);
+				$(this).after(html);
+			break;
+			case 'Closed But Not Complete':
+			break;
+			case 'Closed':
+			break;
 		}
-	});
+
 });
 $(".assign-worker").hide();
 $(".complaint-table").on("click",".worker",function()
