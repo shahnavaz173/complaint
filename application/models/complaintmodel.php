@@ -250,5 +250,44 @@ class ComplaintModel extends CI_Model
     $q = $this->db->get();
     return $q->result();
   }
+  public function count_by_status($uid)
+  {
+    $this->db->select('c_id');
+    $this->db->from('complaint_register');
+    $this->db->where('u_id',$uid);
+    $this->db->where('c_status',1);
+    $q = $this->db->get();
+    $count['Open'] = $q->num_rows();
+
+    $this->db->select('c_id');
+    $this->db->from('complaint_register');
+    $this->db->where('u_id',$uid);
+    $this->db->where('c_status',2);
+    $q = $this->db->get();
+    $count['Pending'] = $q->num_rows();
+
+    $this->db->select('c_id');
+    $this->db->from('complaint_register');
+    $this->db->where('u_id',$uid);
+    $this->db->where('c_status',3);
+    $q = $this->db->get();
+    $count['UnderObservation'] = $q->num_rows();
+
+    $this->db->select('c_id');
+    $this->db->from('complaint_register');
+    $this->db->where('u_id',$uid);
+    $this->db->where('c_status',4);
+    $q = $this->db->get();
+    $count['ClosedButNotComplete'] = $q->num_rows();
+
+    $this->db->select('c_id');
+    $this->db->from('complaint_register');
+    $this->db->where('u_id',$uid);
+    $this->db->where('c_status',5);
+    $q = $this->db->get();
+    $count['Closed'] = $q->num_rows();
+
+    return $count;
+  }
 }
 ?>

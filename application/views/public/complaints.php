@@ -2,9 +2,10 @@
 	if(!$islogin)
 		redirect(base_url('login'));
 ?>
+<script type="text/javascript" src="<?=base_url('assets/js/chart.js'); ?>"></script>
 <div class="container-home">
   <div class="row" >
-		<div class="col-md-12">
+		<div class="col-md-9">
 			<div class="table-responsive">
 				<table class="table  table-bordered complaint-table"  id ="datatable" >
 					<caption><center><h4>Complaint List</h4></center></caption>
@@ -58,14 +59,37 @@
 				</table>
 			</div>
 		</div>
+		<div class="col-md-3 " id="chart" style="padding:0.5em">
+
+		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
+google.charts.load('current',{'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart()
+{
+	var data = google.visualization.arrayToDataTable([
+		['Complaint Status', 'No of Complaints'],
+		['Open', <?=$chartdata['Open']; ?>],
+		['Pending', <?=$chartdata['Pending']; ?>],
+		['Under Observation', <?=$chartdata['UnderObservation']; ?>],
+		['Closed But Not Complete',<?=$chartdata['ClosedButNotComplete']; ?>],
+		['Closed',<?=$chartdata['Closed']; ?>]
+	]);
+	var options = {"title":"Complaint Analysis","width":360,"height":300};
+	var chart = new google.visualization.PieChart(document.getElementById('chart'));
+	chart.draw(data,options);
+}
 $(document).ready(function()
 {
   var table = $("#datatable").dataTable({
 		"ordering":false
+	});
+	$("input[type='search']").on("change",function()
+	{
+		
 	});
   table.find("tr:odd").addClass('bg-info');
   table.find("tr:odd").addClass('text-info');

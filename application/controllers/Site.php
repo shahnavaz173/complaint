@@ -67,6 +67,7 @@ class Site extends CI_Controller
 		else if($page == 'complaints')
 		{
 			$data['ucomplaints'] = $this->cm->get_complaints_by_user($this->session->userdata('user_id'));
+			$data['chartdata'] = $this->cm->count_by_status($this->session->userdata('user_id'));
 		}
 		else if($page == 'userprofile')
 		{
