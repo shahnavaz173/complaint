@@ -30,8 +30,8 @@ $(document).ready(function()
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach($complaints as $complaint): ?>
-								<tr>
+							<?php foreach ($complaints as $complaint): ?>
+	              <tr>
 									<?php
 									switch($complaint->c_status)
 									{
@@ -49,6 +49,9 @@ $(document).ready(function()
 										break;
 										case 5:
 											$status = "Closed";
+										break;
+										case 6:
+											$status = "Rejected";
 										break;
 									}
 									?>

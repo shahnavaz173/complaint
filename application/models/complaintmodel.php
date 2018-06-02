@@ -5,6 +5,7 @@ class ComplaintModel extends CI_Model
   public function __construct()
   {
     parent::__construct();
+    date_default_timezone_set('Asia/kolkata');
   }
   public function complaint_list()
   {
@@ -135,6 +136,7 @@ class ComplaintModel extends CI_Model
   public function generate_complaint_id()
   {
     $today=date('Y-m-d');
+    echo $today;
     $this->db->select('*');
     $this->db->from('complaint_register');
     $this->db->join('complaint_location','complaint_location.c_id = complaint_register.c_id','INNER');
@@ -150,13 +152,13 @@ class ComplaintModel extends CI_Model
     }
     else
     {
-      $last_cid=$q[0]->$cid;
+      $last_cid=$q[0]->c_id;
       $last_cid=intval(substr($last_cid,-3))+1;
       if($last_cid <= 9)
         $last_cid = "00".$last_cid;
       else if($last_cid <= 99)
         $last_cid = "0".$last_cid;
-      $cid=$today.$last_cid;
+      $cid=$today."-".$last_cid;
 
     }
     return $cid;
