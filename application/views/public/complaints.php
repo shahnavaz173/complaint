@@ -59,7 +59,7 @@
 				</table>
 			</div>
 		</div>
-		<div class="col-md-3 " id="chart" style="padding:0.2em">
+		<div class="col-md-3 " id="chart" style="padding:0.2em; margin-top:6.6em;">
 
 		</div>
 	</div>
@@ -78,7 +78,7 @@ function drawChart()
 		['Closed But Not Complete',<?=$chartdata['ClosedButNotComplete']; ?>],
 		['Closed',<?=$chartdata['Closed']; ?>]
 	]);
-	var options = {"title":"Complaint Analysis","width":360,"height":300};
+	var options = {"title":"Complaint Analysis","width":300,"height":260};
 	var chart = new google.visualization.PieChart(document.getElementById('chart'));
 	chart.draw(data,options);
 }
