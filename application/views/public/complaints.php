@@ -59,7 +59,7 @@
 				</table>
 			</div>
 		</div>
-		<div class="col-md-3 " id="chart" style="padding:0.5em">
+		<div class="col-md-3 " id="chart" style="padding:0.2em">
 
 		</div>
 	</div>
@@ -89,7 +89,7 @@ $(document).ready(function()
 	});
 	$("input[type='search']").on("change",function()
 	{
-		
+
 	});
   table.find("tr:odd").addClass('bg-info');
   table.find("tr:odd").addClass('text-info');
