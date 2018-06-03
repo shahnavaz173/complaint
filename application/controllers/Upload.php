@@ -16,11 +16,11 @@ class Upload extends CI_Controller
 		$this->load->library('upload',$config);
 		if(!$this->upload->do_upload('file'))
 		{
-			echo $this->upload->display_errors();
+			echo json_encode(array('error'=> $this->upload->display_errors(), 'has-error' =>  'TRUE'));
 		}
 		else
 		{
-			json_encode($this->upload->data());
+			json_encode(aray('data' => $this->upload->data(), 'has-error' => FALSE));
 		}
 	}
 }

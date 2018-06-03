@@ -160,6 +160,7 @@ $(document).ready(function()
 });
 function uploadImage(property,forwhat)
 {
+
 	var image_name = property.name;
 	var image_extension = image_name.split('.').pop().toLowerCase();
 	if(jQuery.inArray(image_extension,['gif','jpg','jpeg','png']) == -1)
