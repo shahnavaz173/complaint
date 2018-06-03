@@ -93,8 +93,19 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-md-12">
-				<label for="gender">Gender:</label>
+			<div class="form-group col-md-6">
+				<label>Select profile Photo:</label>
+				<div class="input-group">
+					<label class="input-group-btn">
+						<span class="btn btn-primary">
+							Browse&hellip; <input type="file" id="file" style="display:none;">
+						</span>
+					</label><input type="text"id="filename" class="form-control" readonly>
+				</div>
+				<p class="bg-danger text-danger validation-error img-err" ></p>
+			</div>
+			<div class="form-group col-md-6 ">
+				<label for="gender">Gender:</label><br />
 					<div class="radio-inline">
 						<?=form_radio(array('class' => 'gender', 'id' => 'genderm', 'name' => 'gender', 'required' => 'required'),'M','checked'); ?>: Male
 					</div>
@@ -138,7 +149,52 @@
 	</div>
 </div>
 <script type="text/javascript">
-
+$(document).ready(function()
+{
+	$("#file").change(function()
+	{
+		var file = document.getElementById('file').files[0];
+		$("#filename").val(file.name);
+		uploadImage(file,"profile");
+	});
+});
+function uploadImage(property,forwhat)
+{
+	var image_name = property.name;
+	var image_extension = image_name.split('.').pop().toLowerCase();
+	if(jQuery.inArray(image_extension,['gif','jpg','jpeg','png']) == -1)
+	{
+		$(".img-err").text("Invalid file format please Select an Image file");
+	}
+	else if(property.size > 102400)
+	{
+		$(".img-err").text("File Size Should be less then 100kb");
+	}
+	else
+	{
+		var formData = new FormData();
+		formData.append("file",property);
+		formData.append("forwhat",forwhat);
+		formData.append("fname",forwhat+"."+image_extension);
+		$.ajax
+		({
+			method: "POST",
+			url: "upload/upload_image",
+			data: formData,
+			contentType: false,
+			cache: false,
+			processData: false,
+			beforeSend: function()
+			{
+				$("#img-err").text("Uploading...");
+			},
+			success: function(data)
+			{
+				alert(data);
+			}
+		});
+	}
+}
 
 	function validateUnique(element)
 	{
