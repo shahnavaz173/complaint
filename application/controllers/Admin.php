@@ -34,6 +34,11 @@ class Admin extends CI_Controller
 		{
 			$data['complain_caategory'] = $this->ComplaintModel->get_complaint_category();
 		}
+		else if($page == 'print')
+		{
+			$data['printc'] = $this->session->userdata('printc');
+			$data['printcomplaint'] = $this->ComplaintModel->get_complaint_details_by_cid($data['printc']['c_id']);
+		}
 
 		$data['title'] = ucfirst($page);
 		$data['viewuser'] = 'admin';

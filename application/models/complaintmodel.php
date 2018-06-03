@@ -110,7 +110,48 @@ class ComplaintModel extends CI_Model
     $this->db->update('complaint_register');
     $data = array('c_id' => $cid,'w_id' => $wid,'comment' => $remark);
     $this->db->insert('remark',$data);
-    redirect(base_url('admin'));
+    $this->session->set_userdata('printc',$data);
+    $this->send_mail(array('w_id' => $wid, 'c_id' =>$cid,'mailfor' => 'assign'));
+    redirect(base_url('admin/print'));
+  }
+  public function send_mail($data)
+  {
+    $this->db->select(array('user.full_name','user.email','complaint_register.c_date','complaint_register.c_description','complaint_location.location','worker.w_name','worker.ph_no'));
+    $this->db->from('user');
+    $this->db->join('complaint_register','user.u_id = complaint_register.u_id');
+    $this->db->join('complaint_location','complaint_register.c_id = complaint_location.c_id');
+    $this->db->join('worker','complaint_register.w_id = worker.w_id');
+    $this->db->where('complaint_register.c_id',$data['c_id']);
+    $user = $this->db->get()->result();
+
+    $this->db->select(array('user.pho_no','worker.email','remark.comment'));
+    $this->db->from('user');
+    $this->db->join('complaint_register','complaint_register.u_id = user.u_id');
+    $this->db->join('worker','complaint_register.w_id = worker.w_id');
+    $this->db->join('remark','complaint_register.c_id = remark.c_id');
+    $this->db->where('remark.c_id',$data['c_id']);
+    $this->db->where('remark.w_id',$data['w_id']);
+    $worker = $this->db->get()->result();
+
+
+    $data['to'] = $user[0]->email;
+    $data['subject'] = "Your Complaint at Astate Department";
+    $dataw['to'] = $worker[0]->email;
+    switch($data['mailfor'])
+    {
+      case 'assign':
+      $data['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location." Registered on ".$user[0]->c_date." Is Assigned to Worker: ".$user[0]->w_name." His Phone Number is: ".$user[0]->ph_no;
+      $dataw['message'] ="<b>Hellow ".$user[0]->w_name."</b><br /> New Complaint Assigned to you. ".$user[0]->c_description." at ".$user[0]->location." Registered on ".$user[0]->c_date." Complaint Registered By: ".$user[0]->full_name." His Phone Number is: ".$worker[0]->pho_no."<br /><b>Remarkfor you: ".$worker[0]->comment."</b>";
+      $dataw['subject'] = "Astate Department New Complaint Assigned to you";
+      break;
+      case 'closed':
+
+      break;
+    }
+    $this->load->model('MailModel','mymail');
+    $this->mymail->send($data);
+    $this->mymail->send($dataw);
+
   }
   public function get_category_description($cid,$level)
   {
@@ -245,6 +286,12 @@ class ComplaintModel extends CI_Model
     $this->db->where('c_id',$cid);
     $q = $this->db->get();
     return $q->result();
+  }
+  public function get_complaint_details_by_cid($cid)
+  {
+    $this->complaint_list();
+    $this->db->where('complaint_register.c_id',$cid);
+    return $this->db->get()->result();
   }
   public function submit_feedback($rating,$cid)
   {

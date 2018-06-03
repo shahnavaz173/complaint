@@ -275,12 +275,12 @@ $(".complaint-table").on("click",".change-status",function()
 $(".assign-worker").hide();
 $(".complaint-table").on("click",".worker",function()
 {
-	$(this).parent().parent().clone().appendTo(".complaint-table-worker");
 	var cid = $(this).find('.cidhidden').val();
 	var wcate = $(this).find('.wcate').val();
 	var val = $(this).text();
 	if(val.localeCompare("Click To Assign") == 0)
 	{
+		$(this).parent().parent().clone().appendTo(".complaint-table-worker");
 
 		$(".assign-worker").slideDown("slow");
 		$(".container-home").hide();
