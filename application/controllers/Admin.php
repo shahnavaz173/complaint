@@ -32,6 +32,7 @@ class Admin extends CI_Controller
 		}
 		else if($page == 'adminhome' || $page == 'worker' || $page == 'category')
 		{
+			$data['complaints'] =  $this->get_complaint_list();
 			$data['complain_caategory'] = $this->ComplaintModel->get_complaint_category();
 		}
 		else if($page == 'print')
@@ -46,6 +47,12 @@ class Admin extends CI_Controller
 		$this->load->view('public/header',$data);
 		$this->load->view('admin/'.$page,$data);
 		$this->load->view('public/footer',$data);
+	}
+	public function get_complaint_for_home()
+	{
+		$old = $this->ComplaintModel->get_old_complaint_list_cat(4,'all');
+		$new = $this->ComplaintModel->get_new_complaint_list_cat(4,'all');
+		return array_merge($old,$new);
 	}
 	public function get_complaint_list()
 	{
