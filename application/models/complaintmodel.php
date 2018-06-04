@@ -114,7 +114,7 @@ class ComplaintModel extends CI_Model
     $this->send_mail(array('w_id' => $wid, 'c_id' =>$cid,'mailfor' => 'assign'));
     redirect(base_url('admin/print'));
   }
-  public function send_mail($data)
+  public function send_assign_mail($data)
   {
     $this->db->select(array('user.full_name','user.email','complaint_register.c_date','complaint_register.c_description','complaint_location.location','worker.w_name','worker.ph_no'));
     $this->db->from('user');
@@ -268,7 +268,12 @@ class ComplaintModel extends CI_Model
       $this->db->set(array('c_status' => $status,  's_date' => NULL, 'solution_duration' => NULL));
     $this->db->where('c_id',$cid);
     $this->db->update('complaint_register');
+    
     return TRUE;
+  }
+  public function send_status_mail($data)
+  {
+
   }
   public function get_pending_feedback($uid)
   {
