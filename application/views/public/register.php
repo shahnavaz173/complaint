@@ -97,7 +97,7 @@
 				<label>Select profile Photo:</label>
 				<div class="input-group">
 					<label class="input-group-btn">
-						<span class="btn btn-primary ">
+						<span class="btn btn-warning ">
 							Browse&hellip; <input type="file" id="file" style="display:none;">
 						</span>
 					</label><input type="text"id="filename" class="form-control" readonly>
