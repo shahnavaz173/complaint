@@ -9,7 +9,7 @@ class ComplaintModel extends CI_Model
   }
   public function complaint_list()
   {
-    $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','user.pho_no','worker.w_name','worker.ph_no','Dept_Name'));
+    $this->db->select(array('complaint_register.c_id','complaint_location.location','complaint_register.c_date','complaint_register.s_date','complaint_register.c_status','complaint_register.c_description','category.category','category.cate_id','complaint_register.u_id','complaint_register.w_id','user.full_name','user.pho_no','user.user_photo','worker.w_name','worker.ph_no','Dept_Name'));
     $this->db->from('complaint_register');
     $this->db->join('user','complaint_register.u_id = user.u_id','INNER');
     $this->db->join('user_dept','user.u_id = user_dept.u_id');
@@ -268,7 +268,7 @@ class ComplaintModel extends CI_Model
       $this->db->set(array('c_status' => $status,  's_date' => NULL, 'solution_duration' => NULL));
     $this->db->where('c_id',$cid);
     $this->db->update('complaint_register');
-    
+
     return TRUE;
   }
   public function send_status_mail($data)
