@@ -82,7 +82,7 @@
 				<p class="bg-danger text-danger validation-error" ></p>
 			</div>
 
-			<div class="form-group has-feedback col-md-6" id="ad2">
+			<div class="form-group  has-feedback col-md-6" id="ad2">
 				<label for="address">Enter Address: (Building No/Room No)</label>
 				<div class="input-group">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
@@ -93,14 +93,15 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-md-6">
+			<div class="form-group has-feedback  col-md-6">
 				<label>Select profile Photo:</label>
 				<div class="input-group">
 					<label class="input-group-btn">
-						<span class="btn btn-primary">
+						<span class="btn btn-primary ">
 							Browse&hellip; <input type="file" id="file" style="display:none;">
 						</span>
 					</label><input type="text"id="filename" class="form-control" readonly>
+
 				</div>
 				<p class="bg-danger text-danger validation-error img-err" ></p>
 			</div>
@@ -174,9 +175,9 @@ function uploadImage(property,forwhat)
 	else
 	{
 		var formData = new FormData();
+		var filename = forwhat+$("#empnumber").val()+"."+image_extension;
 		formData.append("file",property);
-		formData.append("forwhat",forwhat);
-		formData.append("fname",forwhat+"."+image_extension);
+		formData.append("filename",filename);
 		$.ajax
 		({
 			method: "POST",
@@ -187,11 +188,26 @@ function uploadImage(property,forwhat)
 			processData: false,
 			beforeSend: function()
 			{
-				$("#img-err").text("Uploading...");
+				$(".img-err").text("Uploading...");
 			},
 			success: function(data)
 			{
-				alert(data);
+				if(data == "No Errror")
+				{
+					$("#filename").parentsUntil('.form-group').removeClass('has-error');
+					$("#filename").parentsUntil('.form-group').addClass('has-success');
+					$("#filename").next('span').addClass('glyphicon-ok');
+					$("#filename").parent().next('.validation-error').html("<input type='hidden' name='profilephoto' value='"+filename+"' /> ");
+					$("#filename").next('span').removeClass('glyphicon-warning-sign');
+				}
+				else
+				{
+					$("#filename").parentsUntil('.form-group').removeClass('has-success');
+					$("#filename").parentsUntil('.form-group').addClass('has-error');
+					$("#filename").next('span').addClass('glyphicon-warning-sign');
+					$("#filename").parent().next('.validation-error').html(data);
+					$("#filename").next('span').removeClass('glyphicon-ok');
+				}
 			}
 		});
 	}

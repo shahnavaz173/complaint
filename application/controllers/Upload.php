@@ -9,18 +9,19 @@ class Upload extends CI_Controller
 	public function upload_image()
 	{
 		$config['upload_path'] = './assets/images/uploads';
-		$config['allowed_types'] = 'gif|jpg|png';
+		$config['allowed_types'] = 'gif|jpg|jpeg|png';
 		$config['max_size'] = 100;
-		$config['max_width'] = 1024;
-		$config['max_height'] = 720;
+		$config['max_width'] = 250;
+		$config['max_height'] = 250;
+		$config['file_name'] = $this->input->post('filename');
 		$this->load->library('upload',$config);
 		if(!$this->upload->do_upload('file'))
 		{
-			echo json_encode(array('error'=> $this->upload->display_errors(), 'has-error' =>  'TRUE'));
+			echo $this->upload->display_errors();
 		}
 		else
 		{
-			json_encode(aray('data' => $this->upload->data(), 'has-error' => FALSE));
+			echo "No Errror";
 		}
 	}
 }

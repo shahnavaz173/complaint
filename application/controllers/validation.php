@@ -108,10 +108,11 @@ public function ValidateUniqueEmail()
 								'full_name' => $this->input->post('fullname'),
 								'emp_no' => $this->input->post('empnumber'),
 								'email' => $this->input->post('email'),
-								'ph_no' => $this->input->post('contact'),
+								'pho_no' => $this->input->post('contact'),
 								'address' => $this->input->post('address'),
 								'u_type' => $this->input->post('usertype'),
                 'gender'=>$this->input->post('gender'),
+                'user_photo' => $this->input->post('profilephoto'),
 								'password' =>$this->input->post('password'));
             $dept_data = array(
               'u_id' => $this->input->post('empnumber'),
