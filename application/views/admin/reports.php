@@ -100,16 +100,20 @@ $(document).ready(function()
   $("#display").click(function()
   {
     var by = $("#by").val();
+
     if(by == 1)
     {
       $(".tbl-by-worker").hide();
       $(".tbl-by-complaint").show();
+
+      
     }
     else
     {
       $(".tbl-by-complaint").hide();
       $(".tbl-by-worker").show();
     }
+
 
   });
   $("#category").change(function()
