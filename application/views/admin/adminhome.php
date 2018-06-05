@@ -78,55 +78,6 @@
 						</tr>
 					<thead>
 					<tbody>
-						<?php /*
-						<?php foreach($complaints as $complaint): ?>
-							<?php
-							switch($complaint->c_status)
-							{
-								case 0:
-									$chkclass = 'bg-danger text-danger';
-									$status = 'Rejected';
-								break;
-								case 1:
-									$chkclass = 'bg-danger text-danger';
-									$status = 'Open';
-								break;
-								case 2:
-									$chkclass = 'bg-danger text-danger';
-									$status = 'Pending';
-								break;
-								case 3:
-									$chkclass = 'bg-warning text-warning';
-									$status = 'Under Observation';
-								break;
-								case 4:
-									$chkclass = 'bg-warning text-warning';
-									$status = 'Closed But Not Complete';
-								break;
-								case 5:
-									$chkclass = 'bg-success text-success';
-									$status = 'Closed';
-								break;
-							}
-							?>
-							<tr class="<?=$chkclass; ?>">
-								<td><?=$complaint->c_date; ?></td>
-								<td><span class='uname'><?=$complaint->full_name;?></span><span class='cid-name'><br><?=$complaint->pho_no; ?></span></td>
-								<td><?=$complaint->Dept_Name; ?></td>
-								<td><?=$complaint->category; ?></td>
-								<td><?=$complaint->c_description; ?></td>
-								<td><?=$complaint->location; ?></td>
-								<td><span style='cursor:pointer;' class='change-status'><?=$status; ?></span><input type='hidden' class='cidhidden' value='<?=$complaint->c_id; ?>'></td>
-								<td><span class = 'worker' style='cursor:pointer;'><input type='hidden' class='cidhidden' value='<?=$c_id; ?>'><input type='hidden' class='wcate' value='<?=$complaint->cate_id; ?>'>
-									<?php
-									if($complaint->w_name == NULL)
-									 	echo "Click To Assign";
-									else
-										echo $complaint->w_name;
-									?></span></td>
-							</tr>
-						<?php endforeach; ?>
-						*/?>
 					</tbody>
 				</table>
 			</div>
@@ -219,7 +170,7 @@ function display_complaints(id)
 						var table = $("#datatable").dataTable();
 						var added =	table.fnAddData([
 								dataArr[i].c_date,
-								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br><input type='hidden' class='user-hidden'  value='<?=base_url('assets/images/uploads/'); ?>"+dataArr[i].user_photo+"'></span>",
+								"<span class='uname'>"+dataArr[i].full_name+"</span><br /><span class='cid-name'><br><input type='hidden' class='user-hidden'  value='<?=base_url('assets/images/uploads/'); ?>"+dataArr[i].user_photo+"'></span>",
 								dataArr[i].Dept_Name,
 								dataArr[i].category,
 								dataArr[i].c_description,
@@ -243,7 +194,7 @@ $("#datatable").on("mouseenter","td",function()
 	if(src != undefined)
 	{
 		$(this).find('.user-photo').remove();
-		$(this).append("<br /><img class='user-photo' src='"+src+"' height='100' width='80'>");
+		$(this).append("<img class='user-photo' src='"+src+"' height='100' width='80'>");
 	}
 });
 $("#datatable").on("mouseleave","td",function()

@@ -370,5 +370,110 @@ class ComplaintModel extends CI_Model
 
     return $count;
   }
+  public function get_complaint_report($data)
+  {
+    switch($data->duration)
+    {
+      case 1:
+        $table = 'monthly_report';
+      break;
+      case 3:
+        $table = 'quarterly_report';
+      break;
+      case 6:
+        $table = 'six_monthly_report';
+      break;
+      case 12:
+        $table = 'yearly_report';
+      break;
+      default:
+        $table = 'complaint_register';
+
+    }
+
+          $this->db->select(array('c_description'));
+          $this->db->from($table);
+          $this->db->where('cate_id',$data->category);
+          $this->db->group_by('c_description');
+          $result = $this->db->get()->result();
+          foreach($result as $r)
+          {
+            $r->open = $this->get_count_complaint(1,$r->c_description,$table,$data);
+            $r->pending = $this->get_count_complaint(2,$r->c_description,$table,$data);
+            $r->uobserv = $this->get_count_complaint(3,$r->c_description,$table,$data);
+            $r->closed_not = $this->get_count_complaint(4,$r->c_description,$table,$data);
+            $r->closed = $this->get_count_complaint(5,$r->c_description,$table,$data);
+            $r->rejected = $this->get_count_complaint(0,$r->c_description,$table,$data);
+          }
+          return $result;
+  }
+
+  public function get_worker_report($data)
+  {
+    switch($data->duration)
+    {
+      case 1:
+        $table = 'monthly_report';
+      break;
+      case 3:
+        $table = 'quarterly_report';
+      break;
+      case 6:
+        $table = 'six_monthly_report';
+      break;
+      case 12:
+        $table = 'yearly_report';
+      break;
+      default:
+        $table = 'complaint_register';
+
+    }
+
+          $this->db->select(array('c_description'));
+          $this->db->from($table);
+          $this->db->where('cate_id',$data->category);
+          $this->db->where('w_id',$data->worker);
+          $this->db->group_by('c_description');
+          $result = $this->db->get()->result();
+          foreach($result as $r)
+          {
+            $r->open = $this->get_count_worker_complaint(1,$r->c_description,$table,$data);
+            $r->pending = $this->get_count_worker_complaint(2,$r->c_description,$table,$data);
+            $r->uobserv = $this->get_count_worker_complaint(3,$r->c_description,$table,$data);
+            $r->closed_not = $this->get_count_worker_complaint(4,$r->c_description,$table,$data);
+            $r->closed = $this->get_count_worker_complaint(5,$r->c_description,$table,$data);
+            $r->rejected = $this->get_count_worker_complaint(0,$r->c_description,$table,$data);
+          }
+          return $result;
+  }
+  public function get_count_complaint($status,$description,$table,$data)
+  {
+    $this->db->select(array('count(*) stat','c_description'));
+    $this->db->from($table);
+    $this->db->where('cate_id',$data->category);
+    $this->db->where('c_status',$status);
+    $this->db->like('c_description',$description);
+    $this->db->group_by('c_description');
+    $result = $this->db->get()->result();
+    if(sizeof($result) <= 0)
+      return 0;
+    else
+      return $result[0]->stat;
+  }
+  public function get_count_worker_complaint($status,$description,$table,$data)
+  {
+    $this->db->select(array('count(*) stat','c_description'));
+    $this->db->from($table);
+    $this->db->where('cate_id',$data->category);
+    $this->db->where('c_status',$status);
+    $this->db->where('w_id',$data->worker);
+    $this->db->like('c_description',$description);
+    $this->db->group_by('c_description');
+    $result = $this->db->get()->result();
+    if(sizeof($result) <= 0)
+      return 0;
+    else
+      return $result[0]->stat;
+  }
 }
 ?>

@@ -32,7 +32,6 @@ class Admin extends CI_Controller
 		}
 		else if($page == 'adminhome' || $page == 'worker' || $page == 'category')
 		{
-			$data['complaints'] =  $this->get_complaint_list();
 			$data['complain_caategory'] = $this->ComplaintModel->get_complaint_category();
 		}
 		else if($page == 'print')
