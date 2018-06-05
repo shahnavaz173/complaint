@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 04, 2018 at 04:43 AM
+-- Generation Time: Jun 05, 2018 at 06:22 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `complaint_register` (
 --
 
 INSERT INTO `complaint_register` (`c_id`, `cate_id`, `u_id`, `c_description`, `c_date`, `s_date`, `c_status`, `solution_duration`, `w_id`, `f_date`, `satisfaction_level`, `f_status`, `f_available`) VALUES
-('20180528-101-0001', 1, '101', 'Fan Not Working', '2018-05-28', '2018-06-02', 5, NULL, 1, NULL, NULL, 0, 1),
+('20180528-101-0001', 1, '101', 'Fan Not Working', '2018-04-28', '2018-06-02', 5, NULL, 1, NULL, NULL, 0, 1),
 ('20180528-102-0002', 1, '102', 'Tube Light Not Working', '2018-05-03', '2018-06-04', 4, NULL, 1, NULL, NULL, 0, 1),
 ('20180528-101-0003', 3, '101', 'Pipe Leakage', '2018-05-28', '2018-06-01', 5, NULL, 2, '2018-06-01', 3, 1, 0),
 ('20180528-101-0004', 4, '101', 'Door is Broken', '2018-05-24', '2018-06-02', 4, NULL, 9, '2018-06-02', 2, 1, 0),
@@ -211,6 +211,34 @@ INSERT INTO `deptmst` (`deptid`, `Dept_Name`, `HOD`, `Pho_No`, `Email`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `monthly_report`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `monthly_report`;
+CREATE TABLE IF NOT EXISTS `monthly_report` (
+`cate_id` int(11)
+,`c_description` longtext
+,`c_status` int(1)
+,`w_id` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `quarterly_report`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `quarterly_report`;
+CREATE TABLE IF NOT EXISTS `quarterly_report` (
+`cate_id` int(11)
+,`c_description` longtext
+,`c_status` int(1)
+,`w_id` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `remark`
 --
 
@@ -244,6 +272,20 @@ INSERT INTO `remark` (`c_id`, `w_id`, `comment`) VALUES
 ('20180528-101-0001', 1, 'gfgfgf'),
 ('20180528-101-0004', 9, 'fdfjkkjdjfkd'),
 ('20180528-102-0002', 1, 'Remark');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `six_monthly_report`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `six_monthly_report`;
+CREATE TABLE IF NOT EXISTS `six_monthly_report` (
+`cate_id` int(11)
+,`c_description` longtext
+,`c_status` int(1)
+,`w_id` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -312,8 +354,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`u_id`, `full_name`, `emp_no`, `email`, `pho_no`, `address`, `u_type`, `gender`, `user_photo`, `password`) VALUES
-('101', 'Shahnavaz Saiyad', '101', 'ssaiyed173@gmail.com', '9726321433', 'Apartment D,\r\nBuilding No 5,\r\nRoom No 1', 'employee', 'M', '', 'Vf2fh2nt7'),
-('102', 'Mehul Zala', '102', 'mehul@gmail.com', '9632587410', 'Appartment A,\r\nBuilding No 2,\r\nRoom No 1.', 'employee', 'M', '', 'mehulzala');
+('101', 'Shahnavaz Saiyad', '101', 'ssaiyed173@gmail.com', '9726321433', 'Apartment D,\r\nBuilding No 5,\r\nRoom No 1', 'employee', 'M', 'profile111.jpg', 'Vf2fh2nt7'),
+('102', 'Mehul Zala', '102', 'mehul@gmail.com', '9632587410', 'Appartment A,\r\nBuilding No 2,\r\nRoom No 1.', 'employee', 'M', 'profile111.jpg', 'mehulzala'),
+('111', 'Urvesh Gayakwad', '111', 'urvesh@gmail.com', '9563251230', 'Rasidence 3,\r\nBuilding No 2,\r\nRoom no 10', 'employee', 'M', 'profile111.jpg', 'urvesh');
 
 -- --------------------------------------------------------
 
@@ -336,7 +379,8 @@ CREATE TABLE IF NOT EXISTS `user_dept` (
 
 INSERT INTO `user_dept` (`u_id`, `deptid`, `office_location`) VALUES
 (101, 1, 'Computer Science Office No 3'),
-(102, 1, 'Computer Science Office No 1');
+(102, 1, 'Computer Science Office No 1'),
+(111, 1, 'Computer Science Office No 2');
 
 -- --------------------------------------------------------
 
@@ -367,6 +411,56 @@ INSERT INTO `worker` (`w_id`, `w_name`, `ph_no`, `email`, `address`, `skill`, `w
 (1, 'Ramesh', '9657452365', 'ramesh@gmail.com', '110,Usmanpura Ahmedabad,\nAhmedabad- 380014', 1, 'Active', ''),
 (2, 'Suresh', '9657452366', 'suresh@gmail.com', '92,Incometax Ahmedabad,\nAhmedabad- 380014', 3, 'Active', 'suresh'),
 (9, 'Shahnavaz Saiyadmiyan Saiyed', '9726321433', 'ssaiyed173@gmail.com', 'Vansda', 4, 'Active', '');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `yearly_report`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `yearly_report`;
+CREATE TABLE IF NOT EXISTS `yearly_report` (
+`cate_id` int(11)
+,`c_description` longtext
+,`c_status` int(1)
+,`w_id` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `monthly_report`
+--
+DROP TABLE IF EXISTS `monthly_report`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `monthly_report`  AS  select `complaint_register`.`cate_id` AS `cate_id`,`complaint_register`.`c_description` AS `c_description`,`complaint_register`.`c_status` AS `c_status`,`complaint_register`.`w_id` AS `w_id` from `complaint_register` where ((month(`complaint_register`.`c_date`) = month(curdate())) and (year(`complaint_register`.`c_date`) = year(curdate()))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `quarterly_report`
+--
+DROP TABLE IF EXISTS `quarterly_report`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `quarterly_report`  AS  select `complaint_register`.`cate_id` AS `cate_id`,`complaint_register`.`c_description` AS `c_description`,`complaint_register`.`c_status` AS `c_status`,`complaint_register`.`w_id` AS `w_id` from `complaint_register` where (`complaint_register`.`c_date` >= (now() - interval 2 month)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `six_monthly_report`
+--
+DROP TABLE IF EXISTS `six_monthly_report`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `six_monthly_report`  AS  select `complaint_register`.`cate_id` AS `cate_id`,`complaint_register`.`c_description` AS `c_description`,`complaint_register`.`c_status` AS `c_status`,`complaint_register`.`w_id` AS `w_id` from `complaint_register` where (`complaint_register`.`c_date` >= (now() - interval 5 month)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `yearly_report`
+--
+DROP TABLE IF EXISTS `yearly_report`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `yearly_report`  AS  select `complaint_register`.`cate_id` AS `cate_id`,`complaint_register`.`c_description` AS `c_description`,`complaint_register`.`c_status` AS `c_status`,`complaint_register`.`w_id` AS `w_id` from `complaint_register` where (year(`complaint_register`.`c_date`) = year(curdate())) ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

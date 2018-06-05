@@ -55,6 +55,7 @@
 						<?php if($islogin):?>
 							<li role = "presentation" ><a href = "<?=base_url('admin/worker'); ?>" <?php if($title=='Worker'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> Worker</a></li>
 							<li role = "presentation" ><a href = "<?=base_url('admin/category'); ?>" <?php if($title=='Category'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-list-alt">	</span> Category</a></li>
+							<li role = "presentation" ><a href = "<?=base_url('admin/reports'); ?>" <?php if($title=='Reports'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-file">	</span> Reports</a></li>
 						<?php endif; ?>
 			<?php 	elseif(strcmp($viewuser,'worker') == 0): ?>
 						<?php if($islogin):?>

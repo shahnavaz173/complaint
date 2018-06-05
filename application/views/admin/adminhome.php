@@ -171,7 +171,7 @@ function display_complaints(id)
 						var table = $("#datatable").dataTable();
 						var added =	table.fnAddData([
 								dataArr[i].c_date,
-								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br>"+dataArr[i].pho_no+"</span>",
+								"<span class='uname'>"+dataArr[i].full_name+"</span><span class='cid-name'><br><input type='hidden' class='user-hidden'  value='<?=base_url('assets/images/uploads/'); ?>"+dataArr[i].user_photo+"'></span>",
 								dataArr[i].Dept_Name,
 								dataArr[i].category,
 								dataArr[i].c_description,
@@ -182,20 +182,29 @@ function display_complaints(id)
 						var ntr = table.fnSettings().aoData[ added[0] ].nTr;
 						ntr.className = chkclass;
 						$(".cid-name").hide();
+
 						}
 					}
 				}
 		});
 	}
 }
-
-$(".complaint-table").on("mouseenter",".uname",function()
+$("#datatable").on("mouseenter","td",function()
 {
-	$(this).next().show();
+	var src = $(this).find(".cid-name").find('.user-hidden').val();
+	if(src != undefined)
+	{
+		$(this).find('.user-photo').remove();
+		$(this).append("<br /><img class='user-photo' src='"+src+"' height='100' width='80'>");
+	}
 });
-$(".complaint-table").on("mouseleave",".uname",function()
+$("#datatable").on("mouseleave","td",function()
 {
-	$(this).next().hide();
+		var src = $(this).find(".cid-name").find('.user-hidden').val();
+		if(src != undefined)
+		{
+				$(this).find('.user-photo').remove();
+		}
 });
 $(".complaint-table").on("change",".select-status",function()
 {
