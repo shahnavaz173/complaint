@@ -111,7 +111,7 @@ class ComplaintModel extends CI_Model
     $data = array('c_id' => $cid,'w_id' => $wid,'comment' => $remark);
     $this->db->insert('remark',$data);
     $this->session->set_userdata('printc',$data);
-    $this->send_mail(array('w_id' => $wid, 'c_id' =>$cid,'mailfor' => 'assign'));
+    $this->send_assign_mail(array('w_id' => $wid, 'c_id' =>$cid,'mailfor' => 'assign'));
     redirect(base_url('admin/print'));
   }
   public function send_assign_mail($data)
@@ -140,8 +140,8 @@ class ComplaintModel extends CI_Model
     switch($data['mailfor'])
     {
       case 'assign':
-      $data['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location." Registered on ".$user[0]->c_date." Is Assigned to Worker: ".$user[0]->w_name." His Phone Number is: ".$user[0]->ph_no;
-      $dataw['message'] ="<b>Hellow ".$user[0]->w_name."</b><br /> New Complaint Assigned to you. ".$user[0]->c_description." at ".$user[0]->location." Registered on ".$user[0]->c_date." Complaint Registered By: ".$user[0]->full_name." His Phone Number is: ".$worker[0]->pho_no."<br /><b>Remarkfor you: ".$worker[0]->comment."</b>";
+      $data['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br /> Assigned to Worker: ".$user[0]->w_name."<br /> His/her Phone Number is: ".$user[0]->ph_no;
+      $dataw['message'] ="<b>Hellow ".$user[0]->w_name."</b><br /> New Complaint Assigned to you.<br /> ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br />Complaint Registered By: ".$user[0]->full_name."<br /> His Phone Number is: ".$worker[0]->pho_no."<br /><b>Remarkfor you: ".$worker[0]->comment."</b>";
       $dataw['subject'] = "Astate Department New Complaint Assigned to you";
       break;
       case 'closed':
