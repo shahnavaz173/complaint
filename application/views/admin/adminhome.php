@@ -131,7 +131,13 @@ function display_complaints(id)
 					var chkclass = 'bg-success text-success';
 					for(i = 0; i<dataArr.length; i++)
 					{
-							if(dataArr[i].c_status == 1 )
+
+							if(dataArr[i].c_status == 0 )
+							{
+								chkclass = 'bg-danger text-danger';
+								var status = 'Rejected';
+							}
+							else if(dataArr[i].c_status == 1 )
 							{
 								chkclass = 'bg-danger text-danger';
 								var status = 'Open';
@@ -158,8 +164,12 @@ function display_complaints(id)
 
 							}
 						var worker = "Click To Assign";
-						var wclass = "not-assigned"
-						if(dataArr[i].w_id != null)
+						var wclass = "not-assigned";
+						if(dataArr[i].c_status == 0)
+						{
+							worker = "Rejected Complaint"
+						}
+						else if(dataArr[i].w_id != null)
 						{
 							worker = dataArr[i].w_name;
 						}
@@ -219,7 +229,9 @@ $(".complaint-table").on("change",".select-status",function()
 		cache: false,
 		success: function(data)
 		{
-				if(data == 3)
+				if(data == 0)
+					var status = "Rejected";
+				else if(data == 3)
 					var status = "Under Observation";
 				else if (data == 4)
 				 	var status = "Closed But Not Complete";
@@ -250,7 +262,13 @@ $(".complaint-table").on("click",".change-status",function()
 		switch(val)
 		{
 			case 'Open':
-
+				var html = "<select name='select-status' id='select-status' class='form-control select-status'>\
+											<option value='1' selected>Open</option>\
+											<option value='0' >Reject</option>\
+										</select>";
+				$(this).text("");
+				$(".change-status").prop("disabled",true);
+				$(this).after(html);
 			break;
 			case 'Pending':
 				var html = "<select name='select-status' id='select-status' class='form-control select-status'>\

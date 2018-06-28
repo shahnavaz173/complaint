@@ -6,6 +6,9 @@ class ComplaintModel extends CI_Model
   {
     parent::__construct();
     date_default_timezone_set('Asia/kolkata');
+    $this->load->helper('date');
+
+    $this->load->model('MailModel','mymail');
   }
   public function complaint_list()
   {
@@ -88,8 +91,10 @@ class ComplaintModel extends CI_Model
     //$this->db->from('worker');
     //$this->db-where('skill',$cate_id);
     //$q = $this->db->get();
-    if($cate_id == 'all')
+    if($cate_id == 'all' )
       $q = $this->db->query("SELECT * FROM worker INNER JOIN category ON worker.skill=category.cate_id");
+    elseif ($cate_id == 0)
+        $q = $this->db->query("SELECT * FROM worker");
     else
       $q = $this->db->query("SELECT * FROM worker INNER JOIN category ON worker.skill=category.cate_id WHERE worker.skill=".$cate_id);
     return $q->result();
@@ -135,20 +140,19 @@ class ComplaintModel extends CI_Model
 
 
     $data['to'] = $user[0]->email;
-    $data['subject'] = "Your Complaint at Astate Department";
+    $data['subject'] = "Your Complaint at Estate Department";
     $dataw['to'] = $worker[0]->email;
     switch($data['mailfor'])
     {
       case 'assign':
       $data['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br /> Assigned to Worker: ".$user[0]->w_name."<br /> His/her Phone Number is: ".$user[0]->ph_no;
       $dataw['message'] ="<b>Hellow ".$user[0]->w_name."</b><br /> New Complaint Assigned to you.<br /> ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br />Complaint Registered By: ".$user[0]->full_name."<br /> His Phone Number is: ".$worker[0]->pho_no."<br /><b>Remarkfor you: ".$worker[0]->comment."</b>";
-      $dataw['subject'] = "Astate Department New Complaint Assigned to you";
+      $dataw['subject'] = "Estate Department New Complaint Assigned to you";
       break;
       case 'closed':
 
       break;
     }
-    $this->load->model('MailModel','mymail');
     $this->mymail->send($data);
     $this->mymail->send($dataw);
 
@@ -269,10 +273,37 @@ class ComplaintModel extends CI_Model
     $this->db->where('c_id',$cid);
     $this->db->update('complaint_register');
 
+    $this->send_status_mail(array('c_id' => $cid,'c_status' => $status));
     return TRUE;
   }
   public function send_status_mail($data)
   {
+
+    $this->db->select(array('user.full_name','user.email','complaint_register.c_date','complaint_register.c_description','complaint_location.location'));
+    $this->db->from('user');
+    $this->db->join('complaint_register','user.u_id = complaint_register.u_id');
+    $this->db->join('complaint_location','complaint_register.c_id = complaint_location.c_id');
+    $this->db->where('complaint_register.c_id',$data['c_id']);
+    $user = $this->db->get()->result();
+    $maildata['to'] = $user[0]->email;
+    $maildata['subject'] = "Your Complaint at Estate Department";
+    switch($data['c_status'])
+    {
+      case 3:
+        $maildata['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br /> Is Under Construction. <br> Your Problem Will be Repaired soon.";
+      break;
+      case 4:
+        $maildata['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br /> Is Closed But Not Repaired Because of some reason.";
+      break;
+      case 5:
+        $maildata['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br /> Is Closed And Repaired.";
+      break;
+      case 0:
+        $maildata['message'] ="<b>Hellow ".$user[0]->full_name.",</b><br /> Your Complaint For ".$user[0]->c_description." at ".$user[0]->location."<br /> Registered on ".$user[0]->c_date." <br /> Is Rejected Because of some reason.";
+      break;
+
+    }
+    $this->mymail->send($maildata);
 
   }
   public function get_pending_feedback($uid)
@@ -336,6 +367,13 @@ class ComplaintModel extends CI_Model
     $this->db->select('c_id');
     $this->db->from('complaint_register');
     $this->db->where('u_id',$uid);
+    $this->db->where('c_status',0);
+    $q = $this->db->get();
+    $count['Rejected'] = $q->num_rows();
+
+    $this->db->select('c_id');
+    $this->db->from('complaint_register');
+    $this->db->where('u_id',$uid);
     $this->db->where('c_status',1);
     $q = $this->db->get();
     $count['Open'] = $q->num_rows();
@@ -393,7 +431,14 @@ class ComplaintModel extends CI_Model
 
           $this->db->select(array('c_description'));
           $this->db->from($table);
-          $this->db->where('cate_id',$data->category);
+          if($data->category != 0)
+            $this->db->where('cate_id',$data->category);
+          if($data->duration == 2)
+          {
+            $this->db->where('c_date>=',$data->begin);
+            $this->db->where('c_date<=',$data->end);
+
+          }
           $this->db->group_by('c_description');
           $result = $this->db->get()->result();
           foreach($result as $r)
@@ -431,8 +476,15 @@ class ComplaintModel extends CI_Model
 
           $this->db->select(array('c_description'));
           $this->db->from($table);
-          $this->db->where('cate_id',$data->category);
+          if($data->category != 0)
+            $this->db->where('cate_id',$data->category);
           $this->db->where('w_id',$data->worker);
+          if($data->duration == 2)
+          {
+            $this->db->where('c_date>=',$data->begin);
+            $this->db->where('c_date<=',$data->end);
+
+          }
           $this->db->group_by('c_description');
           $result = $this->db->get()->result();
           foreach($result as $r)
@@ -450,9 +502,17 @@ class ComplaintModel extends CI_Model
   {
     $this->db->select(array('count(*) stat','c_description'));
     $this->db->from($table);
-    $this->db->where('cate_id',$data->category);
+    if($data->category != 0)
+      $this->db->where('cate_id',$data->category);
+
     $this->db->where('c_status',$status);
     $this->db->like('c_description',$description);
+    if($data->duration == 2)
+    {
+      $this->db->where('c_date>=',$data->begin);
+      $this->db->where('c_date<=',$data->end);
+
+    }
     $this->db->group_by('c_description');
     $result = $this->db->get()->result();
     if(sizeof($result) <= 0)
@@ -464,16 +524,37 @@ class ComplaintModel extends CI_Model
   {
     $this->db->select(array('count(*) stat','c_description'));
     $this->db->from($table);
-    $this->db->where('cate_id',$data->category);
+    if($data->category != 0)
+      $this->db->where('cate_id',$data->category);
     $this->db->where('c_status',$status);
     $this->db->where('w_id',$data->worker);
     $this->db->like('c_description',$description);
+    if($data->duration == 2)
+    {
+      $this->db->where('c_date>=',$data->begin);
+      $this->db->where('c_date<=',$data->end);
+
+    }
     $this->db->group_by('c_description');
     $result = $this->db->get()->result();
     if(sizeof($result) <= 0)
       return 0;
     else
       return $result[0]->stat;
+  }
+  public function update_common($obj)
+  {
+    $this->db->set(array(
+      'cate_id' => $obj->category,
+      'c_level' => $obj->level,
+      'description' => $obj->desc
+    ));
+    $this->db->from('complaint');
+    $this->db->where('co_id',$obj->co_id);
+    if($this->db->update('complaint'))
+      return TRUE;
+    else
+      return FALSE;
   }
 }
 ?>

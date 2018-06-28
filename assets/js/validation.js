@@ -1,3 +1,5 @@
+
+
 function validateField(element)
 {
   //alert("called 2");
@@ -6,7 +8,8 @@ function validateField(element)
   switch(element.id)
   {
     case 'fullname':
-      regex=/^([a-zA-Z]{2,})(\s|\-)([a-zA-Z]{2,})?(\s|\-)?([a-zA-Z]{2,})?$/;
+      regex = /^['a-zA-Z\.'\s]{6,60}$/;
+      //regex=/^([a-zA-Z]{2,})(\s|\-)([a-zA-Z]{2,})?(\s|\-)?([a-zA-Z]{2,})?$/;
       errmsg = "First Name should contain Characters and spaces Only!";
       $label = "First Name";
       validate(eventsource,regex,errmsg,$label);
@@ -49,6 +52,7 @@ function validate(eventsource,regex,errmsg,$label)
     eventsource.next('span').addClass('glyphicon-warning-sign');
     eventsource.parent().next('.validation-error').html($label+" Field is Required");
     eventsource.next('span').removeClass('glyphicon-ok');
+    return false;
   }
   else if(regex.test(val))
   {
@@ -57,6 +61,7 @@ function validate(eventsource,regex,errmsg,$label)
     eventsource.parentsUntil('.form-group').addClass('has-success');
     eventsource.next('span').addClass('glyphicon-ok');
     eventsource.parent().next('.validation-error').html(null);
+    return true;
   }
   else
   {
@@ -65,6 +70,7 @@ function validate(eventsource,regex,errmsg,$label)
     eventsource.next('span').addClass('glyphicon-warning-sign');
     eventsource.parent().next('.validation-error').html(errmsg);
     eventsource.next('span').removeClass('glyphicon-ok');
+    return false;
   }
 }
 function validate_pwd()

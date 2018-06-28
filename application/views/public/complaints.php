@@ -72,6 +72,7 @@ function drawChart()
 {
 	var data = google.visualization.arrayToDataTable([
 		['Complaint Status', 'No of Complaints'],
+		['Rejected', <?=$chartdata['Rejected']; ?>],
 		['Open', <?=$chartdata['Open']; ?>],
 		['Pending', <?=$chartdata['Pending']; ?>],
 		['Under Observation', <?=$chartdata['UnderObservation']; ?>],

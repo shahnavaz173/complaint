@@ -48,7 +48,6 @@ class Admin extends CI_Controller
 
 		$this->load->view('public/header',$data);
 		$this->load->view('admin/'.$page,$data);
-		$this->load->view('public/footer',$data);
 	}
 	public function get_complaint_for_home()
 	{

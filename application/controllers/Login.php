@@ -55,7 +55,6 @@ class Login extends CI_Controller
     {
 			$loginenrol = array('emp_no' => $this->input->post('email'), 'password' => $this->input->post('password'),'u_type' => $this->input->post('usertype'));
       $login_id = $this->LoginModel->user_login($loginenrol);
-
       if($login_id)
   		{
   				$this->session->set_userdata('check_login',FALSE);
@@ -99,6 +98,23 @@ class Login extends CI_Controller
 		$old = $this->ComplaintModel->get_old_complaint_list_cat(5,$cate);
 		$new = $this->ComplaintModel->get_new_complaint_list_cat(5,$cate);
 		echo json_encode(array_merge($old,$new));
+	}
+	public function generate_password()
+	{
+		$data['password'] = $this->input->post('npassword');
+		$data['email'] = $this->input->post('email');
+		$data['utype'] = $this->input->post('futype');
+		$this->LoginModel->generate_password($data);
+		redirect(base_url("login"));
+	}
+	public function send_otp()
+	{
+		$jsonobj = $this->input->post('obj');
+		$data = json_decode($jsonobj,TRUE);
+		$otp = $this->LoginModel->send_otp($data);
+		$this->load->model('MailModel','mymail');
+		$this->mymail->send($otp['maildata']);
+		echo $otp['otp'];
 	}
 }
 ?>

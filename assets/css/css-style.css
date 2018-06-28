@@ -114,3 +114,7 @@ footer
 	background-color: #95724f !important;
 	color:#FFF;
 }
+.selectpicker option
+{
+	color:#000 !important;
+}

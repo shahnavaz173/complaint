@@ -119,6 +119,55 @@ $(document).ready(function()
 			$(this).after("<button style='background:none;border:none' title='Save Update' class='glyphicon glyphicon-floppy-save text-success save-update'></button>");
 			$(this).parent("td").append("<button style='background:none; border:none' title='Cancel Update' class='glyphicon glyphicon-remove text-danger cancel-update'></button>");
 	});
+	$("#datatable").on("click",".save-update",function()
+	{
+		var cate = $(this).parent("td").parent("tr").find(".wcate").find("select").val();
+		var coid = $(this).parent("td").parent("tr").find("#coid").val();
+		var desc = $("#description").val();
+		var level = $("#level").val();
+		var obj = {co_id: coid,category: cate,desc: desc, level: level};
+		var dataString = 'obj='+JSON.stringify(obj);
+		$.ajax
+		({
+			type: "POST",
+			url: "<?=base_url('Complaint/update_common'); ?>",
+			data: dataString,
+			cache: false,
+			success: function(data)
+			{
+
+			}
+		});
+
+		$(".cancel-update").remove();
+		$(".save-update").parent("td").find(".update-cate").show();
+		var cate = $(".save-update").parent("td").parent("tr").find(".wcate");
+		var desc = $("#description");
+		var level = $("#level");
+		var lvl = level.val() == 1?'For All':'For Campus Only'
+		cate.html(cate.find("select option:selected").text());
+		desc.parent("td").html(desc.val());
+		level.parent("td").html(lvl);
+		$(".update-cate").prop('disabled',false);
+		$(".update-cate").css('cursor','pointer');
+		$(".save-update").remove();
+	});
+
+	$("#datatable").on("click",".cancel-update",function()
+	{
+			$(".save-update").remove();
+			$(this).parent("td").find(".update-cate").show();
+			var cate = $(this).parent("td").parent("tr").find(".wcate");
+			var desc = $("#description");
+			var level = $("#level");
+			var lvl = level.val() == 1?'For All':'For Campus Only'
+			cate.html(cate.find("select option:selected").text());
+			desc.parent("td").html(desc.val());
+			level.parent("td").html(lvl);
+			$(".update-cate").prop('disabled',false);
+			$(".update-cate").css('cursor','pointer');
+			$(this).remove();
+	});
 });
 function displayComplaints(id)
 {
@@ -147,7 +196,7 @@ function displayComplaints(id)
 
 					var table = $("#datatable").dataTable();
 					var added = table.fnAddData([
-						"<span class='wcate'>"+dataArr[i].category+"</span>",
+						"<span class='wcate'>"+dataArr[i].category+"</span><input type='hidden' id='coid'value='"+dataArr[i].co_id+"' />",
 						dataArr[i].description,
 						level,
 						"<button style='background:none;border:none' title='Update' class='glyphicon glyphicon-pencil text-info update-cate'></button><input type='hidden' class='row-no' value='"+i+"' >",

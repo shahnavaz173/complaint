@@ -9,10 +9,10 @@ class Mailmodel extends CI_Model
 	{
 		$config['protocol']     = 'smtp';
 		$config['smtp_host']    = 'ssl://smtp.googlemail.com';
-		$config['smtp_user'] 	= '11708118.gvp@gujaratvidyapith.org';
-		$config['smtp_pass'] 	= 'Vf2fh2nt7';
+		$config['smtp_user'] 	= 'shahnavz73@gmail.com';
+		$config['smtp_pass'] 	= 'Vf2fh2nt9';
 		$config['smtp_port']    = 465;
-		$config['wordwrap']     = TRUE; 
+		$config['wordwrap']     = TRUE;
 		$config['mailtype']     = 'html';
 		$config['validate']     = FALSE;
 		return $config;
@@ -27,7 +27,7 @@ class Mailmodel extends CI_Model
 		$this->email->subject($data['subject']);
 		$this->email->message($data['message']);
 		return $this->email->send();
-		
+
 	}
 }
 ?>

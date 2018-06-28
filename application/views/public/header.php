@@ -5,6 +5,7 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="icon" href="<?=base_url('assets/images/favicon.ico'); ?>">
 
@@ -68,7 +69,7 @@
 						<?php if(strcmp($viewuser,'admin') == 0 || strcmp($viewuser,'worker') == 0): ?>
 							<li role = "presentation" ><a href = "<?=base_url('Login/logout'); ?>" ><span class = "glyphicon glyphicon-log-out">	</span> Logout</a></li>
 						<?php else: ?>
-							<li role = "presentation" ><a href = "<?=base_url('userprofile'); ?>" <?php if($title=='userprofile'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> User Profile</a></li>
+							<li role = "presentation" ><a href = "<?=base_url('userprofile'); ?>" <?php if($title=='userprofile'){ echo "class='active'"; }?> ><span class = "glyphicon glyphicon-user">	</span> <?=substr($uinfo[0]->full_name,0,strpos($uinfo[0]->full_name,' ')); ?></a></li>
 							<li role = "presentation" ><a href = "<?=base_url('Login/logout'); ?>" ><span class = "glyphicon glyphicon-log-out">	</span> Logout</a></li>
 						<?php endif; ?>
 					</ul>

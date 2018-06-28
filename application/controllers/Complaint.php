@@ -69,10 +69,8 @@ class Complaint extends CI_Controller
   {
     $obj_json = $this->input->post('obj');
     $obj = json_decode($obj_json);
-    if($this->ComplaintModel->update_complaint_status($obj->status,$obj->cid))
-    {
-        echo $obj->status;
-    }
+    $this->ComplaintModel->update_complaint_status($obj->status,$obj->cid);
+    echo $obj->status;
   }
   public function submit_feedback()
   {
@@ -101,6 +99,12 @@ class Complaint extends CI_Controller
   {
     $co_id =$this->input->post('cid');
     echo $this->ComplaintModel->delete_common_complaint($co_id);
+  }
+  public function update_common()
+  {
+    $json_obj = $this->input->post('obj');
+    $obj = json_decode($json_obj);
+    echo $this->ComplaintModel->update_common($obj);
   }
 }
  ?>

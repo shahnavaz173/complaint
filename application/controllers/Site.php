@@ -17,6 +17,7 @@ class Site extends CI_Controller
 		if($this->session->userdata('user_id'))
 		{
 			$data['uid'] = $this->session->userdata('user_id');
+			$data['uinfo'] = $this->User->get_user($data['uid']);
 			$data['islogin'] = TRUE;
 		}
 		else
