@@ -22,6 +22,6 @@ Engineer
 
 Other features
 1. Send E-mail
-   -To Estate department when new complaint registere
-   -To Engineer when complaint assigned to him
-   -To user when complaint status change
+   1. To Estate department when new complaint registere
+   2. To Engineer when complaint assigned to him
+   3. To user when complaint status change
